@@ -2,6 +2,19 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
+jar {
+    archiveName = "${rootProject.name}.jar"
+    manifest {
+        attributes(
+                'Main-Class': 'Gizmoball',
+                'Can-Redefine-Classes': 'true',
+                'Can-Retransform-Classes': 'true',
+                'Can-Set-Native-Method-Prefix': 'true',
+                'Implementation-Title': 'Test',
+        )
+    }
+}
+
 sourceCompatibility = 1.8
 
 repositories {
