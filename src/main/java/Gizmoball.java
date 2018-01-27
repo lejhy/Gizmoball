@@ -29,12 +29,13 @@ public class Gizmoball extends Application {
             Platform.exit();
         }
 
-        // CONTROLLER
-        Controller controller = loader.getController();
-        controller.initTimer();
-
         //MODEL
         Model model = new Model();
+        model.setBallSpeed(200, 200);
+
+        // CONTROLLER
+        Controller controller = loader.getController();
+        controller.initTimer(model);
 
         //VIEW
         primaryStage.setResizable(false);

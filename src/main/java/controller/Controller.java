@@ -3,11 +3,10 @@ package controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.util.Duration;
+import model.Model;
 
 public class Controller {
     public Slider gravity;
@@ -17,10 +16,11 @@ public class Controller {
     public ToggleButton toggleRunStop;
     final Timeline timeline = new Timeline();
 
-    public void initTimer() {
+    public void initTimer(Model model) {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(50),
-                event -> System.out.println("Render moving ball")));
+                event -> model.moveBall()
+        ));
     }
 
     // FILE ACTION LISTENERS

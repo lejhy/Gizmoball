@@ -5,9 +5,8 @@ import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
+import model.Ball;
 import model.Model;
-
-import java.awt.*;
 
 public class Board {
     private Model model;
@@ -21,7 +20,14 @@ public class Board {
     public void paintBoard() {
         Canvas canvas = (Canvas) scene.lookup("#canvas");
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.BLUE);
-        gc.fillRect(75,75,100,100);
+
+        Ball b = model.getBall();
+        if (b != null) {
+            gc.setFill(b.getColour());
+            int x = (int) (b.getExactX() - b.getRadius());
+            int y = (int) (b.getExactY() - b.getRadius());
+            int width = (int) (2 * b.getRadius());
+            gc.fillOval(x, y, width, width);
+        }
     }
 }
