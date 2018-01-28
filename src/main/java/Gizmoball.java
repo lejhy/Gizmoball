@@ -38,6 +38,22 @@ public class Gizmoball extends Application {
         model.addSquareBumper(17, 8);
         model.addTriangleBumper(10, 8);
 
+        model.addCircleBumper(16, 4);
+        model.addSquareBumper(11, 10);
+        model.addTriangleBumper(14, 13);
+
+        model.addCircleBumper(13, 7);
+        model.addSquareBumper(13, 9);
+        model.addTriangleBumper(14, 6);
+
+        model.addCircleBumper(5, 5);
+        model.addSquareBumper(12, 11);
+        model.addTriangleBumper(7, 17);
+
+        model.addCircleBumper(16, 16);
+        model.addSquareBumper(7, 1);
+        model.addTriangleBumper(1, 7);
+
         // VIEW
         Canvas canvas = (Canvas) primaryStage.getScene().lookup("#canvas");
         Board board = new Board(model, canvas);

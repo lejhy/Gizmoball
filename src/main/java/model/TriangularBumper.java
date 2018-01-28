@@ -27,12 +27,12 @@ public class TriangularBumper {
         model.addCircle(new Circle(leftCorner.x(),leftCorner.y(), 0)); // left corner
         model.addCircle(new Circle(rightCorner.x(), rightCorner.y(), 0)); // right corner
 
-        // Add horizontal lines
-        model.addHorizontalLine(new HorizontalLine(x, y + edgeLength, edgeLength)); // triangle base
+        // Add base line
+        model.addLine(new LineSegment(x, y + edgeLength, x + edgeLength, y + edgeLength));
 
         // Add inclined lines
-        model.addLine(new LineSegment(x + edgeLength/2, y, x, y + edgeLength)); // connect left corner
-        model.addLine(new LineSegment(x + edgeLength/2, y, x + edgeLength, y + edgeLength)); // connect right corner
+        model.addLine(new LineSegment(x + edgeLength/2, y, x, y + edgeLength)); // connect left corner to peak
+        model.addLine(new LineSegment(x + edgeLength/2, y, x + edgeLength, y + edgeLength)); // connect right corner to peak
 
         model.addTriangle(this);
     }

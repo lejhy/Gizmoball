@@ -1,8 +1,7 @@
 package model;
 
 import physics.Circle;
-
-import java.util.ArrayList;
+import physics.LineSegment;
 
 public class SquareBumper {
     private int xCoordinate; // X coordinates of upper left corner
@@ -20,12 +19,12 @@ public class SquareBumper {
         model.addCircle(new Circle(x + edgeLength, y + edgeLength, 0)); // bottom right corner
 
         // Add vertical lines
-        model.addVerticalLine(new VerticalLine(x, y, edgeLength)); // connect top corners
-        model.addVerticalLine(new VerticalLine(x + edgeLength, y, edgeLength)); // connect bottom corners
+        model.addLine(new LineSegment(x, y, x + edgeLength, y)); // connect top corners
+        model.addLine(new LineSegment(x, y + edgeLength, x + edgeLength, y + edgeLength)); // connect bottom corners
 
         // Add horizontal lines
-        model.addHorizontalLine(new HorizontalLine(x, y, edgeLength)); // connect left corners
-        model.addHorizontalLine(new HorizontalLine(x, y + edgeLength, edgeLength)); // connect right corners
+        model.addLine(new LineSegment(x, y, x + edgeLength, y)); // connect left corners
+        model.addLine(new LineSegment(x + edgeLength, y, x + edgeLength, y + edgeLength)); // connect right corners
 
         // Add square to fill with colour
         model.addSquare(this);

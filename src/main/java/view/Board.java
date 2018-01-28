@@ -1,11 +1,12 @@
 package view;
 
-import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
-import javafx.scene.shape.Line;
-import model.*;
+import model.Ball;
+import model.Model;
+import model.SquareBumper;
+import model.TriangularBumper;
 import physics.Circle;
 import physics.LineSegment;
 
@@ -24,50 +25,12 @@ public class Board {
 
     public void paintBoard() {
 
-        // Draw vertical lines
-        ArrayList<VerticalLine> vls = model.getVerticalLines();
-        if(vls.size() > 0) {
-            for (VerticalLine vl : vls) {
-                gc.setFill(Color.BLACK);
-                gc.fillRect(vl.getX(), vl.getY(), 1, vl.getHeight());
-            }
-        }
-
-        // Draw horizontal lines
-        ArrayList<HorizontalLine> hls = model.getHorizontalLines();
-        if(hls.size() > 0) {
-            for (HorizontalLine hl : hls) {
-                gc.setFill(Color.BLACK);
-                gc.fillRect(hl.getX(), hl.getY(), hl.getWidth(), 1);
-            }
-        }
-
-        // Draw other lines
+        // Draw lines
         ArrayList<LineSegment> ls = model.getLines();
         if(ls.size() > 0) {
             for (LineSegment l : ls) {
                 gc.setFill(Color.BLACK);
                 gc.strokeLine(l.p1().x(), l.p1().y(), l.p2().x(), l.p2().y());
-            }
-        }
-
-        // Color squares
-        ArrayList<SquareBumper> squares = model.getSquares();
-        if(squares.size() > 0) {
-            for (SquareBumper square : squares) {
-                gc.setFill(Color.GREEN);
-                gc.fillRect(square.getX(), square.getY(), square.getEdgeLength(), square.getEdgeLength());
-            }
-        }
-
-        // Color triangles
-        ArrayList<TriangularBumper> triangles = model.getTriangles();
-        if(triangles.size() > 0) {
-            for (TriangularBumper triangle : triangles) {
-                gc.setFill(Color.YELLOW);
-                double x[] = {triangle.getTopCorner().x(), triangle.getLeftCorner().x(), triangle.getRightCorner().x()};
-                double y[] = {triangle.getTopCorner().y(), triangle.getLeftCorner().y(), triangle.getRightCorner().y()};
-                gc.fillPolygon(x, y, 3);
             }
         }
 
@@ -88,6 +51,26 @@ public class Board {
             int y = (int) (b.getExactY() - b.getRadius());
             int width = (int) (2 * b.getRadius());
             gc.fillOval(x, y, width, width);
+        }
+
+        // Color squares
+        ArrayList<SquareBumper> squares = model.getSquares();
+        if(squares.size() > 0) {
+            for (SquareBumper square : squares) {
+                gc.setFill(Color.GREEN);
+                gc.fillRect(square.getX(), square.getY(), square.getEdgeLength(), square.getEdgeLength());
+            }
+        }
+
+        // Color triangles
+        ArrayList<TriangularBumper> triangles = model.getTriangles();
+        if(triangles.size() > 0) {
+            for (TriangularBumper triangle : triangles) {
+                gc.setFill(Color.YELLOW);
+                double x[] = {triangle.getTopCorner().x(), triangle.getLeftCorner().x(), triangle.getRightCorner().x()};
+                double y[] = {triangle.getTopCorner().y(), triangle.getLeftCorner().y(), triangle.getRightCorner().y()};
+                gc.fillPolygon(x, y, 3);
+            }
         }
     }
 
