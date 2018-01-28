@@ -11,15 +11,15 @@ import java.util.Observable;
 public class Model {
     private Ball ball;
     private Walls walls;
+    private final int L = 25;
 
 
     public Model() {
         ball = new Ball(25, 25, 0, 0);
-        walls = new Walls(0, 0, 500, 500);
+        walls = new Walls(0, 0, 800, 800);
     }
 
     public void moveBall() {
-        System.out.println("Ball is moving");
         double moveTime = 0.05; // 0.05 = 20 times per second as per Gizmoball
         double tickTime = moveTime;
 
@@ -33,12 +33,7 @@ public class Model {
                 ball.setVelo(cd.getVelo()); // Post collision velocity ...
                 //tickTime = tuc;
             }
-
-            // Notify observers ... redraw updated view
-            //this.setChanged();
-            //this.notifyObservers();
         }
-
     }
 
     private Ball movelBallForTime(Ball ball, double time) {
@@ -48,7 +43,7 @@ public class Model {
         double yVel = ball.getVelo().y();
         newX = ball.getExactX() + (xVel * time);
         newY = ball.getExactY() + (yVel * time);
-
+        /*
 		System.out.println("The current ball position is x: "
 				+ String.format("%.3f", ball.getExactX()) + " y: " + String.format("%.3f", ball.getExactY()) + "; "
 				+ " the updated ball position is x: " + String.format("%.3f", newX)
@@ -56,7 +51,7 @@ public class Model {
 				+ String.format("%.3f", time) + "ms");
 
         System.out.println("The velocity in x direction is " + String.format("%.3f", xVel) + " in y direction is " + String.format("%.3f", yVel));
-
+        */
         ball.setExactX(newX);
         ball.setExactY(newY);
         return ball;

@@ -1,26 +1,22 @@
 package view;
 
-import javafx.scene.*;
 import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.paint.*;
-import javafx.scene.paint.Color;
 import model.Ball;
 import model.Model;
 
 public class Board {
     private Model model;
-    private Scene scene;
+    private Canvas canvas;
+    private GraphicsContext gc;
 
-    public Board(Model model, Scene scene) {
+    public Board(Model model, Canvas canvas) {
         this.model = model;
-        this.scene = scene;
+        this.canvas = canvas;
+        this.gc = canvas.getGraphicsContext2D();
     }
 
     public void paintBoard() {
-        Canvas canvas = (Canvas) scene.lookup("#canvas");
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
         Ball b = model.getBall();
         if (b != null) {
             gc.setFill(b.getColour());
@@ -29,5 +25,10 @@ public class Board {
             int width = (int) (2 * b.getRadius());
             gc.fillOval(x, y, width, width);
         }
+    }
+
+    public void repaint() {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        paintBoard();
     }
 }

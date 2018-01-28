@@ -3,24 +3,38 @@ package controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.util.Duration;
 import model.Model;
+import view.Board;
 
 public class Controller {
+    private Model model;
+    private Board board;
+
     public Slider gravity;
     public Slider friction1;
     public Slider friction2;
     public Slider frameRate;
     public ToggleButton toggleRunStop;
-    final Timeline timeline = new Timeline();
 
-    public void initTimer(Model model) {
+    final Timeline timeline = new Timeline(); // timer
+
+    public void initController(Model model, Board board) {
+        this.model = model;
+        this.board = board;
+
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(50),
-                event -> model.moveBall()
-        ));
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                model.moveBall();
+                board.repaint();
+            }
+        }));
     }
 
     // FILE ACTION LISTENERS

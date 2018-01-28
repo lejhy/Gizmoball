@@ -29,19 +29,23 @@ public class Gizmoball extends Application {
             Platform.exit();
         }
 
-        //MODEL
+
+
+        // MODEL
         Model model = new Model();
         model.setBallSpeed(200, 200);
 
+        // VIEW
+        Canvas canvas = (Canvas) primaryStage.getScene().lookup("#canvas");
+        Board board = new Board(model, canvas);
+        board.paintBoard();
+
         // CONTROLLER
         Controller controller = loader.getController();
-        controller.initTimer(model);
+        controller.initController(model, board);
 
-        //VIEW
         primaryStage.setResizable(false);
         primaryStage.setTitle("Gizmoball");
-        Board board = new Board(model, primaryStage.getScene());
-        board.paintBoard();
         primaryStage.show();
     }
 }
