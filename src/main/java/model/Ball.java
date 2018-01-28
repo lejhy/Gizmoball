@@ -13,12 +13,12 @@ public class Ball {
     private Paint colour;
     private boolean stopped;
 
-    public Ball(double x, double y, double xv, double yv) {
+    public Ball(double x, double y, double xv, double yv, double diameter) {
         xpos = x; // Centre coordinates
         ypos = y;
         colour = Color.BLUE;
         velocity = new Vect(xv, yv);
-        radius = 10;
+        radius = diameter/2;
         stopped = false;
     }
 

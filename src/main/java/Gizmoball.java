@@ -29,11 +29,13 @@ public class Gizmoball extends Application {
             Platform.exit();
         }
 
-
-
         // MODEL
         Model model = new Model();
-        model.setBallSpeed(200, 200);
+        model.setBallSpeed(800, 800);
+
+        // tests
+        model.addSquareBumper(400, 500);
+        model.addCircleBumper(600, 200);
 
         // VIEW
         Canvas canvas = (Canvas) primaryStage.getScene().lookup("#canvas");

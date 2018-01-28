@@ -11,12 +11,23 @@ import java.util.Observable;
 public class Model {
     private Ball ball;
     private Walls walls;
-    private final int L = 25;
+    // DIMENSIONS
+    private final int areaSide = 800;
+    private final int L = areaSide/20;
+
+    private ArrayList<VerticalLine> verticalLines;
+    private ArrayList<HorizontalLine> horizontalLines;
+    private ArrayList<Circle> circles;
+    private ArrayList<SquareBumper> squares;
 
 
     public Model() {
-        ball = new Ball(25, 25, 0, 0);
-        walls = new Walls(0, 0, 800, 800);
+        ball = new Ball(25, 25, 0, 0, L/2);
+        walls = new Walls(0, 0, areaSide, areaSide);
+        verticalLines = new ArrayList<>();
+        horizontalLines = new ArrayList<>();
+        circles = new ArrayList<>();
+        squares = new ArrayList<>();
     }
 
     public void moveBall() {
@@ -77,6 +88,47 @@ public class Model {
             }
         }
 
+        /*
+        // Time to collide with the absorber
+        if(absorber != null) {
+            LineSegment abs = absorber.getLineSeg();
+            time = Geometry.timeUntilWallCollision(abs, ballCircle, ballVelocity);
+            if (time < shortestTime) { // collison with absorber happens, transfer the ball
+                shortestTime = time;
+                newVelo = Geometry.reflectWall(abs, ball.getVelo(), 0.0);
+            }
+        }
+        */
+
+        // Time to collide with any vertical lines
+        for (VerticalLine line : verticalLines) {
+            LineSegment ls = line.getLineSeg();
+            time = Geometry.timeUntilWallCollision(ls, ballCircle, ballVelocity);
+            if (time < shortestTime) {
+                shortestTime = time;
+                newVelo = Geometry.reflectWall(ls, ball.getVelo(), 1.0);
+            }
+        }
+
+        //Time to collide with any horizontal lines
+        for (HorizontalLine line : horizontalLines) {
+            LineSegment ls = line.getLineSeg();
+            time = Geometry.timeUntilWallCollision(ls, ballCircle, ballVelocity);
+            if (time < shortestTime) {
+                shortestTime = time;
+                newVelo = Geometry.reflectWall(ls, ball.getVelo(), 1.0);
+            }
+        }
+
+        // Time to collide with circles
+        for (Circle circle : circles) {
+            time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
+            if (time < shortestTime) {
+                shortestTime = time;
+                newVelo = Geometry.reflectCircle(circle.getCenter(), ball.getCircle().getCenter(), ball.getVelo());
+            }
+        }
+
         return new CollisionDetails(shortestTime, newVelo);
     }
 
@@ -88,7 +140,6 @@ public class Model {
         ball.setVelo(new Vect(x, y));
     }
 
-    /*
     public ArrayList<VerticalLine> getVerticalLines() {
         return verticalLines;
     }
@@ -96,7 +147,6 @@ public class Model {
     public ArrayList<HorizontalLine> getHorizontalLines() {
         return horizontalLines;
     }
-
 
     public void addVerticalLine(VerticalLine l) {
         verticalLines.add(l);
@@ -113,7 +163,17 @@ public class Model {
     public ArrayList<Circle> getCircles() {
         return circles;
     }
-    */
 
+    public ArrayList<SquareBumper> getSquares() {
+        return squares;
+    }
 
+    // TESTS: delete later
+    public void addSquareBumper(int x, int y) {
+        SquareBumper square = new SquareBumper(x, y, L, this);
+    }
+
+    public void addCircleBumper(int x, int y) {
+        CircularBumper circle = new CircularBumper(x, y, L, this);
+    }
 }
