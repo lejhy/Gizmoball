@@ -5,38 +5,30 @@ import physics.Circle;
 import java.util.ArrayList;
 
 public class SquareBumper {
-    private int xCoordinate;
-    private int yCoordinate;
-    private int edgeLength;
-    private ArrayList<Circle> circles;
-    private ArrayList<VerticalLine> verticalLines;
-    private ArrayList<HorizontalLine> horizontalLines;
+    private int xCoordinate; // X coordinates of upper left corner
+    private int yCoordinate; // Y coordinates of upper left corner
+    private final int edgeLength = 40;
 
-    public SquareBumper(int x, int y, int L, Model model) {
-        xCoordinate = x; // X coordinates of upper left corner
-        yCoordinate = y; // Y coordinates of upper left corner
-        edgeLength = L;
+    public SquareBumper(int x, int y, Model model) {
+        xCoordinate = x;
+        yCoordinate = y;
 
-        circles = new ArrayList<>();
-        verticalLines = new ArrayList<>();
-        horizontalLines = new ArrayList<>();
-
-        // Add the square
-        model.getSquares().add(this);
-
-        // Add circles at ends
-        model.getCircles().add(new Circle(x, y, 0)); // top left corner
-        model.getCircles().add(new Circle(x + edgeLength, y, 0)); // top right corner
-        model.getCircles().add(new Circle(x,y + edgeLength, 0)); // bottom left corner
-        model.getCircles().add(new Circle(x + edgeLength, y + edgeLength, 0)); // bottom right corner
+        // Add circles at the ends of lines
+        model.addCircle(new Circle(x, y, 0)); // top left corner
+        model.addCircle(new Circle(x + edgeLength, y, 0)); // top right corner
+        model.addCircle(new Circle(x,y + edgeLength, 0)); // bottom left corner
+        model.addCircle(new Circle(x + edgeLength, y + edgeLength, 0)); // bottom right corner
 
         // Add vertical lines
-        model.getVerticalLines().add(new VerticalLine(x, y, edgeLength)); // connect top corners
-        model.getVerticalLines().add(new VerticalLine(x + edgeLength, y, edgeLength)); // connect bottom corners
+        model.addVerticalLine(new VerticalLine(x, y, edgeLength)); // connect top corners
+        model.addVerticalLine(new VerticalLine(x + edgeLength, y, edgeLength)); // connect bottom corners
 
         // Add horizontal lines
-        model.getHorizontalLines().add(new HorizontalLine(x, y, edgeLength)); // connect left corners
-        model.getHorizontalLines().add(new HorizontalLine(x, y + edgeLength, edgeLength)); // connect right corners
+        model.addHorizontalLine(new HorizontalLine(x, y, edgeLength)); // connect left corners
+        model.addHorizontalLine(new HorizontalLine(x, y + edgeLength, edgeLength)); // connect right corners
+
+        // Add square to fill with colour
+        model.addSquare(this);
     }
 
     public int getX() {

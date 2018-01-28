@@ -11,23 +11,30 @@ import java.util.Observable;
 public class Model {
     private Ball ball;
     private Walls walls;
-    // DIMENSIONS
+
     private final int areaSide = 800;
     private final int L = areaSide/20;
 
     private ArrayList<VerticalLine> verticalLines;
     private ArrayList<HorizontalLine> horizontalLines;
+    private ArrayList<LineSegment> lines;
+
     private ArrayList<Circle> circles;
     private ArrayList<SquareBumper> squares;
+    private ArrayList<TriangularBumper> triangles;
 
 
     public Model() {
         ball = new Ball(25, 25, 0, 0, L/2);
         walls = new Walls(0, 0, areaSide, areaSide);
+
         verticalLines = new ArrayList<>();
         horizontalLines = new ArrayList<>();
+        lines = new ArrayList<>();
+
         circles = new ArrayList<>();
         squares = new ArrayList<>();
+        triangles = new ArrayList<>();
     }
 
     public void moveBall() {
@@ -140,6 +147,14 @@ public class Model {
         ball.setVelo(new Vect(x, y));
     }
 
+    public ArrayList<LineSegment> getLines() {
+        return lines;
+    }
+
+    public void addLine(LineSegment line) {
+        lines.add(line);
+    }
+
     public ArrayList<VerticalLine> getVerticalLines() {
         return verticalLines;
     }
@@ -168,12 +183,40 @@ public class Model {
         return squares;
     }
 
-    // TESTS: delete later
-    public void addSquareBumper(int x, int y) {
-        SquareBumper square = new SquareBumper(x, y, L, this);
+    public void addSquare(SquareBumper square) {
+        squares.add(square);
     }
 
-    public void addCircleBumper(int x, int y) {
-        CircularBumper circle = new CircularBumper(x, y, L, this);
+    public ArrayList<TriangularBumper> getTriangles() {
+        return triangles;
+    }
+
+    public void addTriangle(TriangularBumper triangle) {
+        triangles.add(triangle);
+    }
+
+    // TESTS: delete later
+    public void addSquareBumper(int Lx, int Ly) {
+        if(Lx >= 0 && Lx < 20 && Ly >= 0 && Ly < 20) {
+            SquareBumper square = new SquareBumper(L*Lx, L*Ly, this);
+        } else {
+            System.out.println("Can't palce it here. Provide values (0, 0) to (19, 19)");
+        }
+    }
+
+    public void addCircleBumper(int Lx, int Ly) {
+        if(Lx >= 0 && Lx < 20 && Ly >= 0 && Ly < 20) {
+            CircularBumper circle = new CircularBumper(L*Lx, L*Ly, this);
+        } else {
+            System.out.println("Can't palce it here. Provide values (0, 0) to (19, 19)");
+        }
+    }
+
+    public void addTriangleBumper(int Lx, int Ly) {
+        if(Lx >= 0 && Lx < 20 && Ly >= 0 && Ly < 20) {
+            TriangularBumper triangle = new TriangularBumper(L*Lx, L*Ly, this);
+        } else {
+            System.out.println("Can't palce it here. Provide values (0, 0) to (19, 19)");
+        }
     }
 }

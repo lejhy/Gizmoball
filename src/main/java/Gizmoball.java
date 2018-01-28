@@ -33,9 +33,10 @@ public class Gizmoball extends Application {
         Model model = new Model();
         model.setBallSpeed(800, 800);
 
-        // tests
-        model.addSquareBumper(400, 500);
-        model.addCircleBumper(600, 200);
+        // place different gizmos
+        model.addCircleBumper(2, 4);
+        model.addSquareBumper(17, 8);
+        model.addTriangleBumper(10, 8);
 
         // VIEW
         Canvas canvas = (Canvas) primaryStage.getScene().lookup("#canvas");
@@ -49,5 +50,30 @@ public class Gizmoball extends Application {
         primaryStage.setResizable(false);
         primaryStage.setTitle("Gizmoball");
         primaryStage.show();
+    }
+
+    // move to junit test class
+    public void putCircleBumpers(Model model) {
+        for(int i = 0; i < 20; i++) {
+            for(int j = 0; j < 20; j++) {
+                model.addCircleBumper(i, j);
+            }
+        }
+    }
+
+    public void putSquareBumpers(Model model) {
+        for(int i = 0; i < 20; i++) {
+            for(int j = 0; j < 20; j++) {
+                model.addSquareBumper(i, j);
+            }
+        }
+    }
+
+    public void putTriangleBumpers(Model model) {
+        for(int i = 0; i < 20; i++) {
+            for(int j = 0; j < 20; j++) {
+                model.addTriangleBumper(i, j);
+            }
+        }
     }
 }
