@@ -58,7 +58,7 @@ public class Board {
         if(squares.size() > 0) {
             for (SquareBumper square : squares) {
                 gc.setFill(Color.GREEN);
-                gc.fillRect(square.getX(), square.getY(), square.getEdgeLength(), square.getEdgeLength());
+                gc.fillRect(square.getxCoordinate(), square.getyCoordinate(), square.getEdgeLength(), square.getEdgeLength());
             }
         }
 

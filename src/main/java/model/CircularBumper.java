@@ -2,19 +2,19 @@ package model;
 
 import physics.Circle;
 
-public class CircularBumper {
-    private int xCoordinate; // X coordinates of upper left corner
-    private int yCoordinate; // Y coordinates of upper left corner
-    private final int edgeLength = 40;
-    private final int radius = 40/2;
-
+public class CircularBumper extends StandardGizmo {
     private Circle circle;
+    private int radius;
 
-    public CircularBumper(int x, int y, Model model) {
-        xCoordinate = x;
-        yCoordinate = y;
+    public CircularBumper(int xCoordinate, int yCoordinate, Model model) {
+        super(xCoordinate, yCoordinate, model);
+        radius = edgeLength/2;
+        addGizmo();
+    }
 
-        circle = new Circle(xCoordinate + radius, yCoordinate + radius, radius);
+    @Override
+    public void addGizmo() {
+        circle = new Circle(x + radius, y + radius, radius);
         model.addCircle(circle);
     }
 

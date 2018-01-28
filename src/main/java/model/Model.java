@@ -8,23 +8,22 @@ import physics.Vect;
 import java.util.ArrayList;
 
 public class Model {
+    private final int sceneDimension = 800;
+    private final int gridDimensions = 20;
+    private final int L = sceneDimension/gridDimensions;
+    private ArrayList<LineSegment> lines;
+    private boolean grid[][] = new boolean[gridDimensions][gridDimensions];
+
     private Ball ball;
     private Walls walls;
-
-    private final int areaSide = 800;
-    private final int L = areaSide/20;
-    private ArrayList<LineSegment> lines;
-
     private ArrayList<Circle> circles;
     private ArrayList<SquareBumper> squares;
     private ArrayList<TriangularBumper> triangles;
 
-
     public Model() {
         ball = new Ball(25, 25, 0, 0, L/2);
-        walls = new Walls(0, 0, areaSide, areaSide);
+        walls = new Walls(0, 0, sceneDimension, sceneDimension);
         lines = new ArrayList<>();
-
         circles = new ArrayList<>();
         squares = new ArrayList<>();
         triangles = new ArrayList<>();
@@ -79,7 +78,7 @@ public class Model {
             }
         }
 
-        // Time to collide with any vertical lines
+        // Time to collide with any other line segments
         for (LineSegment line : lines) {
             time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
             if (time < shortestTime) {
@@ -110,6 +109,10 @@ public class Model {
         */
 
         return new CollisionDetails(shortestTime, newVelo);
+    }
+
+    public int getL() {
+        return L;
     }
 
     public Ball getBall() {
@@ -152,28 +155,39 @@ public class Model {
         triangles.add(triangle);
     }
 
-    // TESTS: delete later
-    public void addSquareBumper(int Lx, int Ly) {
-        if(Lx >= 0 && Lx < 20 && Ly >= 0 && Ly < 20) {
-            SquareBumper square = new SquareBumper(L*Lx, L*Ly, this);
-        } else {
-            System.out.println("Can't palce it here. Provide values (0, 0) to (19, 19)");
+    public void createSquareBumper(int Lx, int Ly) {
+        if(checkBoundaries(Lx, Ly)) {
+            StandardGizmo square = new SquareBumper(Lx, Ly, this);
         }
     }
 
-    public void addCircleBumper(int Lx, int Ly) {
-        if(Lx >= 0 && Lx < 20 && Ly >= 0 && Ly < 20) {
-            CircularBumper circle = new CircularBumper(L*Lx, L*Ly, this);
-        } else {
-            System.out.println("Can't palce it here. Provide values (0, 0) to (19, 19)");
+    public void createCircleBumper(int Lx, int Ly) {
+        if(checkBoundaries(Lx, Ly)) {
+            StandardGizmo circle = new CircularBumper(Lx, Ly, this);
         }
     }
 
-    public void addTriangleBumper(int Lx, int Ly) {
-        if(Lx >= 0 && Lx < 20 && Ly >= 0 && Ly < 20) {
-            TriangularBumper triangle = new TriangularBumper(L*Lx, L*Ly, this);
-        } else {
-            System.out.println("Can't palce it here. Provide values (0, 0) to (19, 19)");
+    public void createTriangleBumper(int Lx, int Ly) {
+        if(checkBoundaries(Lx, Ly)) {
+            StandardGizmo triangle = new TriangularBumper(Lx, Ly, this);
         }
+    }
+
+    // TODO: check for the ball
+    public boolean checkBoundaries(int Lx, int Ly) {
+        // check if placed within the board
+        if(Lx >= 0 && Lx < 20 && Ly >= 0 && Ly < 20) {
+            // check for overlap
+            if(grid[Lx][Ly] == true) {
+                System.out.println("Cell is occupied");
+                return false;
+            } else {
+                grid[Lx][Ly] = true;
+                return true;
+            }
+        }
+
+        System.out.println("Gizmo should be placed between (0,0) and (19,19)");
+        return false;
     }
 }

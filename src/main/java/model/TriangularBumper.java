@@ -4,24 +4,21 @@ import physics.Circle;
 import physics.LineSegment;
 import physics.Vect;
 
-public class TriangularBumper {
-    private int xCoordinate; // X coordinates of upper left corner
-    private int yCoordinate; // Y coordinates of upper left corner
-
+public class TriangularBumper extends StandardGizmo {
     private Vect topCorner;
     private Vect leftCorner;
     private Vect rightCorner;
 
-    private final int edgeLength = 40;
-
-    public TriangularBumper(int x, int y, Model model) {
-        xCoordinate = x;
-        yCoordinate = y;
-
+    public TriangularBumper(int xCoordinate, int yCoordinate, Model model) {
+        super(xCoordinate, yCoordinate, model);
         topCorner = new Vect(x + edgeLength/2, y);
         leftCorner = new Vect(x, y + edgeLength);
         rightCorner = new Vect(x + edgeLength, y + edgeLength);
+        addGizmo();
+    }
 
+    @Override
+    public void addGizmo() {
         // Add circles at the ends of lines
         model.addCircle(new Circle(topCorner.x(), topCorner.y(), 0)); // top corner
         model.addCircle(new Circle(leftCorner.x(),leftCorner.y(), 0)); // left corner
@@ -47,5 +44,9 @@ public class TriangularBumper {
 
     public Vect getRightCorner() {
         return rightCorner;
+    }
+
+    public void rotate() {
+        /* TODO: transformation */
     }
 }

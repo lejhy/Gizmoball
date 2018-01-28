@@ -32,27 +32,7 @@ public class Gizmoball extends Application {
         // MODEL
         Model model = new Model();
         model.setBallSpeed(800, 800);
-
-        // place different gizmos
-        model.addCircleBumper(2, 4);
-        model.addSquareBumper(17, 8);
-        model.addTriangleBumper(10, 8);
-
-        model.addCircleBumper(16, 4);
-        model.addSquareBumper(11, 10);
-        model.addTriangleBumper(14, 13);
-
-        model.addCircleBumper(13, 7);
-        model.addSquareBumper(13, 9);
-        model.addTriangleBumper(14, 6);
-
-        model.addCircleBumper(5, 5);
-        model.addSquareBumper(12, 11);
-        model.addTriangleBumper(7, 17);
-
-        model.addCircleBumper(16, 16);
-        model.addSquareBumper(7, 1);
-        model.addTriangleBumper(1, 7);
+        test(model);
 
         // VIEW
         Canvas canvas = (Canvas) primaryStage.getScene().lookup("#canvas");
@@ -68,28 +48,36 @@ public class Gizmoball extends Application {
         primaryStage.show();
     }
 
-    // move to junit test class
-    public void putCircleBumpers(Model model) {
-        for(int i = 0; i < 20; i++) {
-            for(int j = 0; j < 20; j++) {
-                model.addCircleBumper(i, j);
-            }
-        }
-    }
+    public void test(Model model) {
+        // place different gizmos
+        model.createCircleBumper(2, 4);
+        model.createSquareBumper(17, 8);
+        model.createTriangleBumper(10, 8);
 
-    public void putSquareBumpers(Model model) {
-        for(int i = 0; i < 20; i++) {
-            for(int j = 0; j < 20; j++) {
-                model.addSquareBumper(i, j);
-            }
-        }
-    }
+        model.createCircleBumper(16, 4);
+        model.createSquareBumper(11, 10);
+        model.createTriangleBumper(14, 13);
 
-    public void putTriangleBumpers(Model model) {
+        model.createCircleBumper(13, 7);
+        model.createSquareBumper(13, 9);
+        model.createTriangleBumper(14, 6);
+
+        model.createCircleBumper(5, 5);
+        model.createSquareBumper(12, 11);
+        model.createTriangleBumper(7, 17);
+
+        model.createCircleBumper(16, 16);
+        model.createSquareBumper(7, 1);
+        model.createTriangleBumper(1, 7);
+
+        // cover all area in gizmos
+
+        /*
         for(int i = 0; i < 20; i++) {
             for(int j = 0; j < 20; j++) {
-                model.addTriangleBumper(i, j);
+                model.createCircleBumper(i, j);
             }
         }
+        */
     }
 }
