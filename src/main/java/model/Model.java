@@ -19,6 +19,7 @@ public class Model {
     private ArrayList<Circle> circles;
     private ArrayList<SquareBumper> squares;
     private ArrayList<TriangularBumper> triangles;
+    private ArrayList<LeftFlipper> leftFlippers;
 
     public Model() {
         ball = new Ball(25, 25, 0, 0, L/2);
@@ -27,6 +28,8 @@ public class Model {
         circles = new ArrayList<>();
         squares = new ArrayList<>();
         triangles = new ArrayList<>();
+
+        leftFlippers = new ArrayList<>();
     }
 
     public void moveBall() {
@@ -170,6 +173,26 @@ public class Model {
     public void createTriangleBumper(int Lx, int Ly) {
         if(checkBoundaries(Lx, Ly)) {
             StandardGizmo triangle = new TriangularBumper(Lx, Ly, this);
+        }
+    }
+
+    // TODO: refactor
+    public void createLeftFlipper(int Lx, int Ly) {
+        if(checkBoundaries(Lx, Ly)
+                && checkBoundaries(Lx + 1, Ly)
+                && checkBoundaries(Lx, Ly + 1)
+                && checkBoundaries(Lx + 1, Ly + 1)) {
+            StandardGizmo leftFlipper = new LeftFlipper(Lx, Ly, this);
+        }
+    }
+
+    // TODO: refactor
+    public void createRightFlipper(int Lx, int Ly) {
+        if(checkBoundaries(Lx, Ly)
+                && checkBoundaries(Lx + 1, Ly)
+                && checkBoundaries(Lx, Ly + 1)
+                && checkBoundaries(Lx + 1, Ly + 1)) {
+            StandardGizmo leftFlipper = new RightFlipper(Lx, Ly, this);
         }
     }
 

@@ -49,26 +49,30 @@ public class Gizmoball extends Application {
     }
 
     public void test(Model model) {
-        // place different gizmos
-        model.createCircleBumper(2, 4);
-        model.createSquareBumper(17, 8);
-        model.createTriangleBumper(10, 8);
-
-        model.createCircleBumper(16, 4);
-        model.createSquareBumper(11, 10);
-        model.createTriangleBumper(14, 13);
-
-        model.createCircleBumper(13, 7);
-        model.createSquareBumper(13, 9);
-        model.createTriangleBumper(14, 6);
-
-        model.createCircleBumper(5, 5);
-        model.createSquareBumper(12, 11);
-        model.createTriangleBumper(7, 17);
-
-        model.createCircleBumper(16, 16);
-        model.createSquareBumper(7, 1);
-        model.createTriangleBumper(1, 7);
+        model.createSquareBumper(0, 9);
+        model.createSquareBumper(1, 9);
+        model.createSquareBumper(2, 9);
+        model.createSquareBumper(17, 9);
+        model.createSquareBumper(18, 9);
+        model.createSquareBumper(19, 9);
+        model.createCircleBumper(5, 4);
+        model.createCircleBumper(8, 4);
+        model.createCircleBumper(11, 4);
+        model.createCircleBumper(14, 4);
+        model.createTriangleBumper(6, 7);
+        model.createTriangleBumper(6, 11);
+        model.createTriangleBumper(9, 7);
+        model.createTriangleBumper(9, 11);
+        model.createTriangleBumper(12, 7);
+        model.createTriangleBumper(12, 11);
+        model.createTriangleBumper(15, 7);
+        model.createTriangleBumper(15, 11);
+        model.createSquareBumper(5, 15);
+        model.createSquareBumper(6, 15);
+        model.createLeftFlipper(7, 15);
+        model.createSquareBumper(14, 15);
+        model.createSquareBumper(13, 15);
+        model.createRightFlipper(11, 15);
 
         // cover all area in gizmos
 

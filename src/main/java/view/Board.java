@@ -72,10 +72,28 @@ public class Board {
                 gc.fillPolygon(x, y, 3);
             }
         }
+
+        //paintGrid();
+
     }
 
     public void repaint() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         paintBoard();
+    }
+
+    private void paintGrid() {
+        int p1x = 0;
+        int p1y = 0;
+        int p2x = 0;
+        int p2y = 0;
+
+        for(int i = 0; i < 20; i++) {
+            gc.strokeLine(p1x + i*40, p1y, p2x + i*40, 800);
+        }
+
+        for(int i = 0; i < 20; i++) {
+            gc.strokeLine(p1x, p1y + i*40, 800, p2y + i*40);
+        }
     }
 }
