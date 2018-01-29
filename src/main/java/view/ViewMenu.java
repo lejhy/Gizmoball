@@ -1,4 +1,4 @@
-package main.java.view;
+package view;
 
 public interface ViewMenu {
     public boolean setBoard(Board board);

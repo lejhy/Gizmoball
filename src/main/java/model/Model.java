@@ -37,7 +37,7 @@ public class Model {
         circles = new ArrayList<>();
         squares = new ArrayList<>();
         triangles = new ArrayList<>();
-        fineInOut = new FileIO();
+        fileInOut = new FileIO();
     }
 
     public void moveBall() {

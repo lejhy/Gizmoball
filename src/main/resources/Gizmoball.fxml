@@ -1,159 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
-   <children>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0">
-         <children>
-            <Accordion prefHeight="800.0" prefWidth="200.0">
-              <panes>
-                  <TitledPane layoutX="10.0" layoutY="10.0" text="File">
-                     <content>
-                        <VBox prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Button fx:id="fileOpen" mnemonicParsing="false" onAction="#onOpenButtonClicked" prefHeight="39.0" prefWidth="180.0" text="Open">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button fx:id="fileSave" mnemonicParsing="false" onAction="#onSaveButtonClicked" prefHeight="39.0" prefWidth="180.0" text="Save">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button fx:id="fileClose" layoutX="24.0" layoutY="83.0" mnemonicParsing="false" onAction="#onCloseButtonClicked" prefHeight="39.0" prefWidth="180.0" text="Close">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button fx:id="fileQuit" layoutX="24.0" layoutY="142.0" mnemonicParsing="false" onAction="#onQuitButtonClicked" prefHeight="39.0" prefWidth="180.0" text="Quit">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </content>
-                  </TitledPane>
-                <TitledPane expanded="false" text="Simulation">
-                     <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Button fx:id="changeMode" mnemonicParsing="false" onAction="#onModeChange" prefHeight="39.0" prefWidth="180.0" text="Running Mode">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <ToggleButton fx:id="toggleRunStop" mnemonicParsing="false" onAction="#toggleRunStop" prefHeight="39.0" prefWidth="180.0" text="Run">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </ToggleButton>
-                              <Separator prefWidth="200.0">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Separator>
-                              <Button fx:id="tick" mnemonicParsing="false" onAction="#tick" prefHeight="39.0" prefWidth="180.0" text="Single Tick">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <ToggleButton fx:id="toggleAutoTick" mnemonicParsing="false" onAction="#toggleAutoTick" prefHeight="39.0" prefWidth="180.0" text="Toggle Auto-Tick">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </ToggleButton>
-                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="180.0" text="Speed: 0 FPS" textAlignment="CENTER" />
-                              <Slider fx:id="frameRate" majorTickUnit="20.0" max="60.0" minorTickCount="4" onMouseReleased="#changeFrameRate">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Slider>
-                           </children>
-                        </VBox>
-                     </content>
-                  </TitledPane>
-                <TitledPane expanded="false" text="Editing tools">
-                     <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <MenuButton mnemonicParsing="false" prefHeight="39.0" prefWidth="180.0" text="Add New Gizmo">
-                                 <items>
-                                  <MenuItem mnemonicParsing="false" text="Square" />
-                                  <MenuItem mnemonicParsing="false" text="Triangle" />
-                                    <MenuItem mnemonicParsing="false" text="Circle" />
-                                    <MenuItem mnemonicParsing="false" text="Left Flipper" />
-                                    <MenuItem mnemonicParsing="false" text="Right Flipper" />
-                                    <MenuItem mnemonicParsing="false" text="Ball" />
-                                 </items>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </MenuButton>
-                              <Separator prefWidth="200.0">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Separator>
-                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="180.0" text="Move">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="180.0" text="Rotate">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="180.0" text="Connect">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="180.0" text="Delete">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </content>
-                  </TitledPane>
-                  <TitledPane expanded="false" layoutX="10.0" layoutY="49.0" text="Settings">
-                     <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="180.0" text="Gravity: 10 L" textAlignment="CENTER" />
-                              <Slider fx:id="gravity" majorTickUnit="20.0" minorTickCount="4" onMouseReleased="#changeGravity" value="10.0">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Slider>
-                              <Separator prefWidth="200.0">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Separator>
-                              <Label alignment="CENTER" layoutX="24.0" layoutY="24.0" prefHeight="27.0" prefWidth="180.0" text="Friction (mu): 0.025" textAlignment="CENTER" />
-                              <Slider fx:id="friction1" blockIncrement="0.1" layoutX="24.0" layoutY="51.0" majorTickUnit="0.2" max="1.0" minorTickCount="4" onMouseReleased="#changeFricitonCoefficient1" value="0.025" />
-                              <Label alignment="CENTER" layoutX="24.0" layoutY="115.0" prefHeight="27.0" prefWidth="180.0" text="Friction (mu2): 0.025" textAlignment="CENTER" />
-                              <Slider fx:id="friction2" blockIncrement="0.1" layoutX="24.0" layoutY="142.0" majorTickUnit="0.2" max="1.0" minorTickCount="4" onMouseReleased="#changeFricitonCoefficient2" value="0.025" />
-                           </children>
-                        </VBox>
-                     </content>
-                  </TitledPane>
-              </panes>
-            </Accordion>
-            <Canvas fx:id="canvas" height="800.0" width="800.0" />
-         </children>
-      </HBox>
-   </children>
-</VBox>
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" type="BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <Canvas fx:id="canvas" height="800.0" width="800.0" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <Label fx:id="textOutput" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </Label>
+   </bottom>
+</fx:root>

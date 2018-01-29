@@ -1,4 +1,4 @@
-package main.java.view;
+package view;
 
 public class RunMenu implements ViewMenu {
     private Board board;
