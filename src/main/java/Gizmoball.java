@@ -74,6 +74,8 @@ public class Gizmoball extends Application {
         model.createSquareBumper(13, 15);
         model.createRightFlipper(11, 15);
 
+        model.createAbsorber();
+
         // cover all area in gizmos
 
         /*

@@ -5,7 +5,7 @@ import physics.LineSegment;
 import physics.Vect;
 
 public class LeftFlipper extends StandardGizmo {
-    private Vect stationaryCenter;
+    private Vect pivot;
     private Vect movingCenter;
     private Circle stationaryCircle;
     private Circle movingCircle;
@@ -13,16 +13,15 @@ public class LeftFlipper extends StandardGizmo {
     private LineSegment line2;
     private final int radius = edgeLength/4;
 
-
     public LeftFlipper(int xCoordinate, int yCoordinate, Model model) {
         super(xCoordinate, yCoordinate, model);
 
         // calculate circle centers
-        stationaryCenter = new Vect(x + radius, y + radius);
+        pivot = new Vect(x + radius, y + radius);
         movingCenter = new Vect(x + radius, y + 2*edgeLength - radius);
 
         // create circles
-        stationaryCircle = new Circle(stationaryCenter,radius);
+        stationaryCircle = new Circle(pivot,radius);
         movingCircle = new Circle(movingCenter, radius);
 
         // draw lines

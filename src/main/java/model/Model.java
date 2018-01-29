@@ -19,7 +19,10 @@ public class Model {
     private ArrayList<Circle> circles;
     private ArrayList<SquareBumper> squares;
     private ArrayList<TriangularBumper> triangles;
-    private ArrayList<LeftFlipper> leftFlippers;
+    // array of flippers
+    // array of absorbers
+    Absorber absorber;
+
 
     public Model() {
         ball = new Ball(25, 25, 0, 0, L/2);
@@ -28,8 +31,6 @@ public class Model {
         circles = new ArrayList<>();
         squares = new ArrayList<>();
         triangles = new ArrayList<>();
-
-        leftFlippers = new ArrayList<>();
     }
 
     public void moveBall() {
@@ -81,6 +82,16 @@ public class Model {
             }
         }
 
+        // Time to collide with the absorber
+        if(absorber != null) {
+            LineSegment abs = absorber.getLineSeg();
+            time = Geometry.timeUntilWallCollision(abs, ballCircle, ballVelocity);
+            if (time < shortestTime) { // collison with absorber happens, transfer the ball
+                shortestTime = time;
+                newVelo = Geometry.reflectWall(abs, ball.getVelo(), 0.0);
+            }
+        }
+
         // Time to collide with any other line segments
         for (LineSegment line : lines) {
             time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
@@ -98,18 +109,6 @@ public class Model {
                 newVelo = Geometry.reflectCircle(circle.getCenter(), ball.getCircle().getCenter(), ball.getVelo());
             }
         }
-
-        /*
-        // Time to collide with the absorber
-        if(absorber != null) {
-            LineSegment abs = absorber.getLineSeg();
-            time = Geometry.timeUntilWallCollision(abs, ballCircle, ballVelocity);
-            if (time < shortestTime) { // collison with absorber happens, transfer the ball
-                shortestTime = time;
-                newVelo = Geometry.reflectWall(abs, ball.getVelo(), 0.0);
-            }
-        }
-        */
 
         return new CollisionDetails(shortestTime, newVelo);
     }
@@ -212,5 +211,9 @@ public class Model {
 
         System.out.println("Gizmo should be placed between (0,0) and (19,19)");
         return false;
+    }
+
+    public void createAbsorber() {
+        absorber = new Absorber(this);
     }
 }
