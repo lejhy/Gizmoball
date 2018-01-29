@@ -23,6 +23,10 @@ public class Model {
     // array of absorbers
     Absorber absorber;
 
+    // friction coefficients
+    double mu1 = 0.025; // per second
+    double mu2 = 0.025; // per L
+
 
     public Model() {
         ball = new Ball(25, 25, 0, 0, L/2);
@@ -45,8 +49,10 @@ public class Model {
             } else {
                 ball = movelBallForTime(ball, tuc); // We've got a collision in tuc
                 ball.setVelo(cd.getVelo()); // Post collision velocity ...
-                //tickTime = tuc;
+                tickTime = tuc;
             }
+
+            applyForces(tickTime);
         }
     }
 
@@ -215,5 +221,21 @@ public class Model {
 
     public void createAbsorber() {
         absorber = new Absorber(this);
+    }
+
+    public void applyForces(double deltaT) {
+        ball.setVelo(new Vect(ball.getVelo().x(),ball.getVelo().y() + applyGravity(deltaT)));
+        applyFriction(deltaT);
+    }
+
+    public double applyGravity(double deltaT) {
+        return 25.0*deltaT*L;
+    }
+
+    public void applyFriction(double deltaT) {
+        double oldVelocity = ball.getVelo().y();
+        double newVelocity = oldVelocity * (1 - (mu1 * deltaT) - (mu2 * Math.abs(oldVelocity) * deltaT));
+
+        ball.setVelo(new Vect(ball.getVelo().x(), newVelocity));
     }
 }
