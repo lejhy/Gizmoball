@@ -27,6 +27,8 @@ public class Model {
     double mu1 = 0.025; // per second
     double mu2 = 0.025; // per L
 
+    private FileIO fileInOut;
+
 
     public Model() {
         ball = new Ball(25, 25, 0, 0, L/2);
@@ -35,6 +37,7 @@ public class Model {
         circles = new ArrayList<>();
         squares = new ArrayList<>();
         triangles = new ArrayList<>();
+        fineInOut = new FileIO();
     }
 
     public void moveBall() {
