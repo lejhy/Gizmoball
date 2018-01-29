@@ -1,58 +1,95 @@
-<?xml version="1.0"?>
-<project name="" company="" manager="" phase="" project-start="20180124T000000Z" mrproject-version="2" calendar="1">
-  <properties/>
-  <phases/>
-  <calendars>
-    <day-types>
-      <day-type id="0" name="Working" description="A default working day"/>
-      <day-type id="1" name="Nonworking" description="A default non working day"/>
-      <day-type id="2" name="Use base" description="Use day from base calendar"/>
-    </day-types>
-    <calendar id="1" name="Default">
-      <default-week mon="0" tue="0" wed="0" thu="0" fri="0" sat="1" sun="1"/>
-      <overridden-day-types>
-        <overridden-day-type id="0">
-          <interval start="0800" end="1200"/>
-          <interval start="1300" end="1700"/>
-        </overridden-day-type>
-      </overridden-day-types>
-      <days/>
-    </calendar>
-  </calendars>
-  <tasks>
-    <task id="1" name="Class Diagram" note="" work="158400" start="20180124T000000Z" end="20180131T120000Z" work-start="20180124T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-    <task id="2" name="Final design" note="" work="446400" start="20180131T120000Z" end="20180221T170000Z" work-start="20180131T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <predecessors>
-        <predecessor id="1" predecessor-id="1" type="FS"/>
-      </predecessors>
-    </task>
-    <task id="3" name="Validation Testing" note="" work="460800" start="20180130T170000Z" end="20180221T170000Z" work-start="20180131T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <predecessors>
-        <predecessor id="1" predecessor-id="5" type="FS"/>
-      </predecessors>
-    </task>
-    <task id="4" name="JUnit Testing" note="" work="604800" start="20180124T000000Z" end="20180221T170000Z" work-start="20180124T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-    <task id="5" name="Use Cases" note="" work="144000" start="20180124T000000Z" end="20180130T170000Z" work-start="20180124T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-    <task id="6" name="Updated Project Plan" note="" work="604800" start="20180124T000000Z" end="20180221T170000Z" work-start="20180124T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-    <task id="7" name="Absorber Prototype" note="" work="172800" start="20180205T170000Z" end="20180213T170000Z" work-start="20180206T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <predecessors>
-        <predecessor id="1" predecessor-id="10" type="FS"/>
-      </predecessors>
-    </task>
-    <task id="8" name="Collision Prototype" note="" work="144000" start="20180124T000000Z" end="20180130T170000Z" work-start="20180124T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-    <task id="9" name="Flipper Triggering Prototype" note="" work="164700" start="20180213T170000Z" end="20180221T144500Z" work-start="20180214T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <predecessors>
-        <predecessor id="1" predecessor-id="7" type="FS"/>
-      </predecessors>
-    </task>
-    <task id="10" name="Loading Prototyope" note="" work="115200" start="20180130T170000Z" end="20180205T170000Z" work-start="20180131T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <predecessors>
-        <predecessor id="1" predecessor-id="8" type="FS"/>
-      </predecessors>
-    </task>
-    <task id="11" name="Final Implementation" note="" work="1152000" start="20180124T000000Z" end="20180320T170000Z" work-start="20180124T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-  </tasks>
-  <resource-groups/>
-  <resources/>
-  <allocations/>
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2018-01-15" view-index="1" gantt-divider-location="539" resource-divider-location="300" version="2.8.5" locale="en_GB">
+    <description/>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="Name" width="247" order="0"/>
+        <field id="tpd4" name="Begin date" width="144" order="1"/>
+        <field id="tpd5" name="End date" width="144" order="2"/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="RevisedSpec" color="#8cb6ce" meeting="false" start="2018-01-15" duration="12" complete="0" expand="true"/>
+        <task id="1" name="UseCases" color="#8cb6ce" meeting="false" start="2018-01-15" duration="12" complete="0" expand="true"/>
+        <task id="2" name="ClassDiagram" color="#8cb6ce" meeting="false" start="2018-01-15" duration="12" complete="0" expand="true">
+            <depend id="7" type="2" difference="0" hardness="Strong"/>
+            <depend id="9" type="2" difference="0" hardness="Strong"/>
+            <depend id="10" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="10" name="UpdatedProjectPlan" color="#8cb6ce" meeting="false" start="2018-01-31" duration="15" complete="0" expand="true"/>
+        <task id="7" name="RevisedClassDiagram" color="#8cb6ce" meeting="false" start="2018-01-31" duration="15" complete="0" expand="true"/>
+        <task id="9" name="JUnitTesting" color="#8cb6ce" meeting="false" start="2018-01-31" duration="15" complete="0" expand="true"/>
+        <task id="3" name="GUIDesign" color="#8cb6ce" meeting="false" start="2018-01-15" duration="12" complete="0" expand="true"/>
+        <task id="4" name="PhysicsLoopDesc" color="#8cb6ce" meeting="false" start="2018-01-15" duration="12" complete="0" expand="true"/>
+        <task id="8" name="ValidationTesting" color="#8cb6ce" meeting="false" start="2018-01-15" duration="27" complete="0" expand="true"/>
+        <task id="5" name="TriggerDesc" color="#8cb6ce" meeting="false" start="2018-01-15" duration="12" complete="0" expand="true"/>
+        <task id="6" name="ProjectPlan" color="#8cb6ce" meeting="false" start="2018-01-15" duration="12" complete="0" expand="true"/>
+        <task id="11" name="AbsorberPrototype" color="#8cb6ce" meeting="false" start="2018-01-15" duration="27" complete="0" expand="true"/>
+        <task id="12" name="LoadingPrototype" color="#8cb6ce" meeting="false" start="2018-01-15" duration="27" complete="0" expand="true"/>
+        <task id="13" name="CollisionsPrototype" color="#8cb6ce" meeting="false" start="2018-01-15" duration="27" complete="0" expand="true"/>
+        <task id="14" name="FinalImplementation" color="#8cb6ce" meeting="false" start="2018-02-21" duration="13" complete="0" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="0" name="Robin" function="Default:0" contacts="" phone=""/>
+        <resource id="1" name="Gleb" function="Default:0" contacts="" phone=""/>
+        <resource id="2" name="Filip" function="Default:0" contacts="" phone=""/>
+        <resource id="3" name="Paul" function="Default:0" contacts="" phone=""/>
+        <resource id="4" name="James" function="Default:0" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="0" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="2" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="10" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="7" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="6" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="12" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="14" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="10" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="4" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="8" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="6" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="13" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="14" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="10" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="6" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="11" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="14" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="1" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="10" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="9" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="6" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="14" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="10" resource-id="4" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="5" resource-id="4" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="6" resource-id="4" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="14" resource-id="4" function="Default:0" responsible="false" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
 </project>
