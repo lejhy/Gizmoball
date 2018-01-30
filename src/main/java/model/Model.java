@@ -8,9 +8,7 @@ import physics.Vect;
 import java.util.ArrayList;
 
 public class Model {
-    private final int sceneDimension = 800;
     private final int gridDimensions = 20;
-    private final int L = sceneDimension/gridDimensions;
     private ArrayList<LineSegment> lines;
     private boolean grid[][] = new boolean[gridDimensions][gridDimensions];
 
@@ -31,8 +29,8 @@ public class Model {
 
 
     public Model() {
-        ball = new Ball(25, 25, 0, 0, L/2);
-        walls = new Walls(0, 0, sceneDimension, sceneDimension);
+        ball = new Ball(0.5, 0.5, 0, 0, 0.5);
+        walls = new Walls(0, 0, gridDimensions, gridDimensions);
         lines = new ArrayList<>();
         circles = new ArrayList<>();
         squares = new ArrayList<>();
@@ -50,6 +48,7 @@ public class Model {
             if (tuc > moveTime) {
                 ball = movelBallForTime(ball, moveTime); // No collision ...
             } else {
+                System.out.println("The time until collision is: " + String.format("%.3f", tuc) + "ms");
                 ball = movelBallForTime(ball, tuc); // We've got a collision in tuc
                 ball.setVelo(cd.getVelo()); // Post collision velocity ...
                 tickTime = tuc;
@@ -66,6 +65,13 @@ public class Model {
         double yVel = ball.getVelo().y();
         newX = ball.getExactX() + (xVel * time);
         newY = ball.getExactY() + (yVel * time);
+        System.out.println("The current ball position is x: "
+                + String.format("%.3f", ball.getExactX()) + " y: " + String.format("%.3f", ball.getExactY()) + "; "
+                + " the updated ball position is x: " + String.format("%.3f", newX)
+                + " y: " + String.format("%.3f", newY) + " the time is "
+                + String.format("%.3f", time) + "ms");
+
+        System.out.println("The velocity in x direction is " + String.format("%.3f", xVel) + " in y direction is " + String.format("%.3f", yVel));
         ball.setExactX(newX);
         ball.setExactY(newY);
         return ball;
@@ -122,13 +128,7 @@ public class Model {
         return new CollisionDetails(shortestTime, newVelo);
     }
 
-    public int getL() {
-        return L;
-    }
-
     public int getGridDimensions() {return gridDimensions; }
-
-    public int getSceneDimension() {return sceneDimension; }
 
     public Ball getBall() {
         return ball;
@@ -236,13 +236,10 @@ public class Model {
     }
 
     public double applyGravity(double deltaT) {
-        return 25.0*deltaT*L;
+        return 25.0*deltaT;
     }
 
     public void applyFriction(double deltaT) {
-        double oldVelocity = ball.getVelo().y();
-        double newVelocity = oldVelocity * (1 - (mu1 * deltaT) - (mu2 * Math.abs(oldVelocity) * deltaT));
-
-        ball.setVelo(new Vect(ball.getVelo().x(), newVelocity));
+        ball.setVelo(ball.getVelo().times(1 - (mu1 * deltaT) - (mu2 * Math.abs(ball.getVelo().length()) * deltaT)));
     }
 }

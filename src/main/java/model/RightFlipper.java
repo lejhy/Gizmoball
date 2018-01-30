@@ -11,7 +11,7 @@ public class RightFlipper extends StandardGizmo {
     private Circle movingCircle;
     private LineSegment line1;
     private LineSegment line2;
-    private final int radius = edgeLength/4;
+    private final double radius = edgeLength/4;
 
     public RightFlipper(int xCoordinate, int yCoordinate, Model model) {
         super(xCoordinate, yCoordinate, model);

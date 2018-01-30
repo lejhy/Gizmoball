@@ -4,7 +4,7 @@ import physics.Circle;
 
 public class CircularBumper extends StandardGizmo {
     private Circle circle;
-    private int radius;
+    private double radius;
 
     public CircularBumper(int xCoordinate, int yCoordinate, Model model) {
         super(xCoordinate, yCoordinate, model);

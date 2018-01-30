@@ -6,7 +6,7 @@ public class Absorber {
     private LineSegment line;
 
     public Absorber(Model model) {
-        line = new LineSegment(0, 760, 800, 760);
+        line = new LineSegment(0, model.getGridDimensions()-1, model.getGridDimensions(),  model.getGridDimensions()-1);
         model.addLine(line);
     }
 

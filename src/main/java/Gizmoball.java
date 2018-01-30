@@ -14,7 +14,7 @@ public class Gizmoball extends Application {
     public void start(Stage primaryStage) {
 
         Model model = new Model();
-        model.setBallSpeed(800, 800);
+        model.setBallSpeed(10, 10);
         test(model);
 
         Scene scene = new Scene(new GizmoballController(model));

@@ -55,7 +55,10 @@ public class RunMenuController {
     }
 
     @FXML
-    void onTickButtonClicked() { System.out.println("Move ball for the tick time"); }
+    void onTickButtonClicked() {
+        model.moveBall();
+        board.paintBoard();
+    }
 
     @FXML
     void onOpenButtonClicked()  {

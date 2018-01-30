@@ -24,10 +24,14 @@ public class Board {
     private Image triangleImg;
     private Image wallImg;
 
+    private int boardSize = 800;
+    private int LSize;
+
     public Board(Model model, Canvas canvas) {
         this.model = model;
         this.canvas = canvas;
         this.gc = canvas.getGraphicsContext2D();
+        this.LSize = boardSize/model.getGridDimensions();
 
         ballImg = new Image(getClass().getResource("/Ball.png").toString());
         squareImg = new Image(getClass().getResource("/Square.png").toString());
@@ -40,10 +44,9 @@ public class Board {
 
         // Draw Background
         int gridDimensions = model.getGridDimensions();
-        int L = model.getL();
         for (int i = 0; i < gridDimensions; i+= 6) {
             for (int j = 0; j < gridDimensions; j += 6) {
-                gc.drawImage(wallImg, i*L, j*L, L*6, L*6);
+                gc.drawImage(wallImg, i*LSize, j*LSize, LSize*6, LSize*6);
             }
         }
 
@@ -52,29 +55,29 @@ public class Board {
         if(ls.size() > 0) {
             for (LineSegment l : ls) {
                 gc.setFill(Color.BLACK);
-                gc.strokeLine(l.p1().x(), l.p1().y(), l.p2().x(), l.p2().y());
+                gc.strokeLine(l.p1().x()*LSize, l.p1().y()*LSize, l.p2().x()*LSize, l.p2().y()*LSize);
             }
         }
 
         // Draw circles
         for (Circle c : model.getCircles()) {
-            int x = (int) c.getCenter().x() - (int) c.getRadius();
-            int y = (int) c.getCenter().y() - (int) c.getRadius();
-            int width = (int) (2 * c.getRadius());
+            double x = c.getCenter().x() - c.getRadius();
+            double y = c.getCenter().y() - c.getRadius();
+            double width = (2 * c.getRadius());
             //gc.setFill(Color.RED);
             //gc.fillOval(x, y, width, width);
-            gc.drawImage(circleImg, x, y, width, width);
+            gc.drawImage(circleImg, x*LSize, y*LSize, width*LSize, width*LSize);
         }
 
         // Draw ballImg
         Ball b = model.getBall();
         if (b != null) {
-            int x = (int) (b.getExactX() - b.getRadius());
-            int y = (int) (b.getExactY() - b.getRadius());
-            int width = (int) (2 * b.getRadius());
+            double x = (b.getExactX() - b.getRadius());
+            double y = (b.getExactY() - b.getRadius());
+            double width = (2 * b.getRadius());
             //gc.setFill(b.getColour());
             //gc.fillOval(x, y, width, width);
-            gc.drawImage(ballImg, x, y, width, width);
+            gc.drawImage(ballImg, x*LSize, y*LSize, width*LSize, width*LSize);
         }
 
         // Color squares
@@ -83,7 +86,7 @@ public class Board {
             for (SquareBumper square : squares) {
                 //gc.setFill(Color.GREEN);
                 //gc.fillRect(squareImg.getxCoordinate(), squareImg.getyCoordinate(), squareImg.getEdgeLength(), squareImg.getEdgeLength());
-                gc.drawImage(squareImg, square.getxCoordinate(), square.getyCoordinate(), square.getEdgeLength(), square.getEdgeLength());
+                gc.drawImage(squareImg, square.getxCoordinate()*LSize, square.getyCoordinate()*LSize, square.getEdgeLength()*LSize, square.getEdgeLength()*LSize);
             }
         }
 
@@ -95,7 +98,7 @@ public class Board {
                 double y[] = {triangle.getTopCorner().y(), triangle.getLeftCorner().y(), triangle.getRightCorner().y()};
                 //gc.setFill(Color.YELLOW);
                 //gc.fillPolygon(x, y, 3);
-                gc.drawImage(triangleImg, triangle.getxCoordinate(), triangle.getyCoordinate(), triangle.getEdgeLength(), triangle.getEdgeLength());
+                gc.drawImage(triangleImg, triangle.getxCoordinate()*LSize, triangle.getyCoordinate()*LSize, triangle.getEdgeLength()*LSize, triangle.getEdgeLength()*LSize);
             }
         }
 
