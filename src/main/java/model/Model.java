@@ -126,6 +126,10 @@ public class Model {
         return L;
     }
 
+    public int getGridDimensions() {return gridDimensions; }
+
+    public int getSceneDimension() {return sceneDimension; }
+
     public Ball getBall() {
         return ball;
     }

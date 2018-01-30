@@ -32,7 +32,7 @@ public class RunMenuController {
             @Override
             public void handle(ActionEvent t) {
                 model.moveBall();
-                board.repaint();
+                board.paintBoard();
             }
         }));
 
