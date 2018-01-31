@@ -1,11 +1,14 @@
 package model;
 
+//import com.sun.org.apache.xpath.internal.operations.String;
 import physics.Circle;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
+import javax.sound.sampled.Line;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Model {
     private final int gridDimensions = 20;
@@ -19,6 +22,9 @@ public class Model {
     private ArrayList<TriangularBumper> triangles;
     // array of flippers
     // array of absorbers
+    private HashMap<Circle, StandardGizmo> gizmoCircles; //allows gizmo lookup based on circles
+    private HashMap<LineSegment, StandardGizmo> gizmoLines; //allows gizmo lookup based on lines
+
     Absorber absorber;
 
     // friction coefficients
@@ -35,6 +41,8 @@ public class Model {
         circles = new ArrayList<>();
         squares = new ArrayList<>();
         triangles = new ArrayList<>();
+        gizmoCircles = new HashMap<>();
+        gizmoLines = new HashMap<>();
         fileInOut = new FileIO();
     }
 
@@ -82,6 +90,7 @@ public class Model {
         Circle ballCircle = ball.getCircle(); // Create a physics.Circle from Ball
         Vect ballVelocity = ball.getVelo();
         Vect newVelo = new Vect(0, 0);
+        Object colidingGizmo = ""; //the gizmo to trigger
 
         // Now find shortest time to hit a vertical line or a wall line
         double shortestTime = Double.MAX_VALUE;
@@ -104,6 +113,7 @@ public class Model {
             if (time < shortestTime) { // collison with absorber happens, transfer the ball
                 shortestTime = time;
                 newVelo = Geometry.reflectWall(abs, ball.getVelo(), 0.0);
+                colidingGizmo = absorber;
             }
         }
 
@@ -113,6 +123,8 @@ public class Model {
             if (time < shortestTime) {
                 shortestTime = time;
                 newVelo = Geometry.reflectWall(line, ball.getVelo(), 1.0);
+                colidingGizmo = line;
+
             }
         }
 
@@ -122,6 +134,22 @@ public class Model {
             if (time < shortestTime) {
                 shortestTime = time;
                 newVelo = Geometry.reflectCircle(circle.getCenter(), ball.getCircle().getCenter(), ball.getVelo());
+                colidingGizmo = circle;
+
+            }
+        }
+        //have we collided yet?
+        if(!colidingGizmo.getClass().isInstance(new String()) && shortestTime < 0.05){
+            if(!colidingGizmo.getClass().isInstance(absorber)){
+                if(!colidingGizmo.getClass().isInstance(new Circle(0,0,0))){
+                   gizmoLines.get(colidingGizmo).trigger();
+                }
+                else{
+                    gizmoCircles.get(colidingGizmo).trigger();
+                }
+            }
+            else{
+                absorber.trigger();
             }
         }
 
@@ -142,11 +170,13 @@ public class Model {
         return lines;
     }
 
-    public void addLine(LineSegment line) {
+    public void addLine(LineSegment line, StandardGizmo g) {
+        gizmoLines.put(line, g);
         lines.add(line);
     }
 
-    public void addCircle(Circle c) {
+    public void addCircle(Circle c, StandardGizmo g) {
+        gizmoCircles.put(c, g);
         circles.add(c);
     }
 
@@ -227,7 +257,7 @@ public class Model {
     }
 
     public void createAbsorber() {
-        absorber = new Absorber(this);
+        absorber = new Absorber(0, 0, this);
     }
 
     public void applyForces(double deltaT) {

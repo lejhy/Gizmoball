@@ -15,7 +15,12 @@ public class CircularBumper extends StandardGizmo {
     @Override
     public void addGizmo() {
         circle = new Circle(x + radius, y + radius, radius);
-        model.addCircle(circle);
+        model.addCircle(circle, this);
+    }
+
+    @Override
+    public void trigger() {
+
     }
 
     public Circle getCircle() { return circle; }

@@ -33,9 +33,14 @@ public class RightFlipper extends StandardGizmo {
 
     @Override
     public void addGizmo() {
-        model.addCircle(stationaryCircle);
-        model.addCircle(movingCircle);
-        model.addLine(line1);
-        model.addLine(line2);
+        model.addCircle(stationaryCircle, this);
+        model.addCircle(movingCircle, this);
+        model.addLine(line1, this);
+        model.addLine(line2, this);
+    }
+
+    @Override
+    public void trigger() {
+
     }
 }

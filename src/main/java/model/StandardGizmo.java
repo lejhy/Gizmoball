@@ -42,5 +42,5 @@ public abstract class StandardGizmo  {
         gizmos.remove(gizmo);
     }
 
-    //public abstract void trigger();
+    public abstract void trigger();
 }
