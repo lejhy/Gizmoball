@@ -12,7 +12,7 @@
       <Canvas fx:id="canvas" height="800.0" width="800.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
-      <Label fx:id="textOutput" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Fancy messages for the use go here!" textAlignment="CENTER" BorderPane.alignment="CENTER">
+      <Label fx:id="textOutput" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Fancy messages for the user go here!" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="10.0" top="10.0" />
          </padding>
