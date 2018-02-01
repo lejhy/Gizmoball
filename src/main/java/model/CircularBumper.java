@@ -24,4 +24,10 @@ public class CircularBumper extends StandardGizmo {
     }
 
     public Circle getCircle() { return circle; }
+
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
+	}
 }

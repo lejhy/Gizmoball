@@ -30,7 +30,7 @@ public class Gizmoball extends Application {
         model.createSquareBumper(2, 9);
         model.createSquareBumper(17, 9);
         model.createSquareBumper(18, 9);
-        model.createSquareBumper(19, 9);
+      //  model.createSquareBumper(19, 9);
         model.createCircleBumper(5, 4);
         model.createCircleBumper(8, 4);
         model.createCircleBumper(11, 4);

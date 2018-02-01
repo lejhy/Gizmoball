@@ -63,7 +63,7 @@ public class TriangularBumper extends StandardGizmo {
         System.out.println("sorry");
         System.out.println("i couldnt help myself");
         System.out.println("go comment out line 66 in triangle class");
-        System.exit(0);
+        //System.exit(0);
     }
 
     public Vect getTopCorner() {
@@ -81,4 +81,10 @@ public class TriangularBumper extends StandardGizmo {
     public void rotate() {
         /* TODO: transformation */
     }
+
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
+	}
 }

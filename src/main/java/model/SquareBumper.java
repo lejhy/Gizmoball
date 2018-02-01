@@ -35,4 +35,10 @@ public class SquareBumper extends StandardGizmo {
     public void trigger() {
 
     }
+
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
+	}
 }

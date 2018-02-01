@@ -58,7 +58,16 @@ public class Model {
             } else {
                 System.out.println("The time until collision is: " + String.format("%.3f", tuc) + "ms");
                 ball = movelBallForTime(ball, tuc); // We've got a collision in tuc
+                
                 ball.setVelo(cd.getVelo()); // Post collision velocity ...
+               
+                if(!cd.getColiding().getClass().isInstance(new String()) 
+                		&& !cd.getColiding().getClass().isInstance(new Circle(0.0, 0.0, 0.0))
+                		&& !cd.getColiding().getClass().isInstance(new LineSegment(0.0, 0.0, 0.0, 0.0))){
+                	StandardGizmo cG = (StandardGizmo) cd.getColiding();
+                	cG.trigger();
+                }
+                
                 tickTime = tuc;
             }
 
@@ -139,21 +148,21 @@ public class Model {
             }
         }
         //have we collided yet?
-        if(!colidingGizmo.getClass().isInstance(new String()) && shortestTime < 0.05){
-            if(!colidingGizmo.getClass().isInstance(absorber)){
-                if(!colidingGizmo.getClass().isInstance(new Circle(0,0,0))){
-                   gizmoLines.get(colidingGizmo).trigger();
-                }
-                else{
-                    gizmoCircles.get(colidingGizmo).trigger();
-                }
-            }
-            else{
-                absorber.trigger();
-            }
-        }
+//        if(!colidingGizmo.getClass().isInstance(new String()) && shortestTime < 0.05){
+//            if(!colidingGizmo.getClass().isInstance(absorber)){
+//                if(!colidingGizmo.getClass().isInstance(new Circle(0,0,0))){
+//                   gizmoLines.get(colidingGizmo).trigger();
+//                }
+//                else{
+//                    gizmoCircles.get(colidingGizmo).trigger();
+//                }
+//            }
+//            else{
+//                absorber.trigger();
+//            }
+//        }
 
-        return new CollisionDetails(shortestTime, newVelo);
+        return new CollisionDetails(shortestTime, newVelo, colidingGizmo);
     }
 
     public int getGridDimensions() {return gridDimensions; }

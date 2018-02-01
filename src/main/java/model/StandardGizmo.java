@@ -43,4 +43,6 @@ public abstract class StandardGizmo  {
     }
 
     public abstract void trigger();
+    
+    public abstract void action();
 }

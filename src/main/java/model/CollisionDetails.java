@@ -5,10 +5,12 @@ import physics.Vect;
 public class CollisionDetails {
     private double tuc;
     private Vect velo;
+    private Object colide;
 
-    public CollisionDetails(double t, Vect v) {
+    public CollisionDetails(double t, Vect v, Object cG) {
         tuc = t;
         velo = v;
+        colide = cG;
     }
 
     public double getTuc() {
@@ -17,6 +19,10 @@ public class CollisionDetails {
 
     public Vect getVelo() {
         return velo;
+    }
+
+    public Object getColiding() {
+        return colide;
     }
 
 }
