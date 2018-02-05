@@ -1,12 +1,13 @@
 package model;
 
 //import com.sun.org.apache.xpath.internal.operations.String;
+
 import physics.Circle;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
-import javax.sound.sampled.Line;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,8 +23,7 @@ public class Model {
     private ArrayList<TriangularBumper> triangles;
     // array of flippers
     // array of absorbers
-    private HashMap<Circle, StandardGizmo> gizmoCircles; //allows gizmo lookup based on circles
-    private HashMap<LineSegment, StandardGizmo> gizmoLines; //allows gizmo lookup based on lines
+    private HashMap<Serializable, StandardGizmo> gizmoComponents; //allows gizmo lookup based on circles
 
     Absorber absorber;
 
@@ -41,8 +41,7 @@ public class Model {
         circles = new ArrayList<>();
         squares = new ArrayList<>();
         triangles = new ArrayList<>();
-        gizmoCircles = new HashMap<>();
-        gizmoLines = new HashMap<>();
+        gizmoComponents = new HashMap<>();
         fileInOut = new FileIO();
     }
 
@@ -61,10 +60,9 @@ public class Model {
                 
                 ball.setVelo(cd.getVelo()); // Post collision velocity ...
                
-                if(!cd.getColiding().getClass().isInstance(new String()) 
-                		&& !cd.getColiding().getClass().isInstance(new Circle(0.0, 0.0, 0.0))
-                		&& !cd.getColiding().getClass().isInstance(new LineSegment(0.0, 0.0, 0.0, 0.0))){
-                	StandardGizmo cG = (StandardGizmo) cd.getColiding();
+                if(cd.getColiding().getClass().isInstance(new Circle(0,0,0))
+                        || cd.getColiding().getClass().isInstance(new LineSegment(0, 0, 0, 0))){
+                	StandardGizmo cG = (StandardGizmo) gizmoComponents.get(cd.getColiding());
                 	cG.trigger();
                 }
                 
@@ -147,20 +145,6 @@ public class Model {
 
             }
         }
-        //have we collided yet?
-//        if(!colidingGizmo.getClass().isInstance(new String()) && shortestTime < 0.05){
-//            if(!colidingGizmo.getClass().isInstance(absorber)){
-//                if(!colidingGizmo.getClass().isInstance(new Circle(0,0,0))){
-//                   gizmoLines.get(colidingGizmo).trigger();
-//                }
-//                else{
-//                    gizmoCircles.get(colidingGizmo).trigger();
-//                }
-//            }
-//            else{
-//                absorber.trigger();
-//            }
-//        }
 
         return new CollisionDetails(shortestTime, newVelo, colidingGizmo);
     }
@@ -180,12 +164,12 @@ public class Model {
     }
 
     public void addLine(LineSegment line, StandardGizmo g) {
-        gizmoLines.put(line, g);
+        gizmoComponents.put(line, g);
         lines.add(line);
     }
 
     public void addCircle(Circle c, StandardGizmo g) {
-        gizmoCircles.put(c, g);
+        gizmoComponents.put(c, g);
         circles.add(c);
     }
 
@@ -243,7 +227,7 @@ public class Model {
                 && checkBoundaries(Lx + 1, Ly)
                 && checkBoundaries(Lx, Ly + 1)
                 && checkBoundaries(Lx + 1, Ly + 1)) {
-            StandardGizmo leftFlipper = new RightFlipper(Lx, Ly, this);
+            StandardGizmo rightFlipper = new RightFlipper(Lx, Ly, this);
         }
     }
 

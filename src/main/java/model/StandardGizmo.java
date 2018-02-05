@@ -42,7 +42,11 @@ public abstract class StandardGizmo  {
         gizmos.remove(gizmo);
     }
 
-    public abstract void trigger();
+    public void trigger() {
+        for(StandardGizmo sG : gizmos) {
+            sG.action();
+        }
+    };
     
     public abstract void action();
 }
