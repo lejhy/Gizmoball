@@ -25,7 +25,7 @@ public class Model {
     // array of absorbers
     private HashMap<Serializable, StandardGizmo> gizmoComponents; //allows gizmo lookup based on circles
 
-    Absorber absorber;
+    private Absorber absorber;
 
     // friction coefficients
     double mu1 = 0.025; // per second
@@ -62,8 +62,12 @@ public class Model {
                
                 if(cd.getColiding().getClass().isInstance(new Circle(0,0,0))
                         || cd.getColiding().getClass().isInstance(new LineSegment(0, 0, 0, 0))){
-                	StandardGizmo cG = (StandardGizmo) gizmoComponents.get(cd.getColiding());
+                	StandardGizmo cG = gizmoComponents.get(cd.getColiding());
+                	System.out.println("should have triggered: "+ cG.getClass());
                 	cG.trigger();
+                }
+                else{
+                    System.out.println("did not trigger: "+ cd.getColiding().getClass());
                 }
                 
                 tickTime = tuc;
@@ -120,7 +124,8 @@ public class Model {
             if (time < shortestTime) { // collison with absorber happens, transfer the ball
                 shortestTime = time;
                 newVelo = Geometry.reflectWall(abs, ball.getVelo(), 0.0);
-                colidingGizmo = absorber;
+                colidingGizmo = abs; //changed here as hasmap lookup gives us gizmo
+                //could consider doing lookup here for all gizmos
             }
         }
 
