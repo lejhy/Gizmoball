@@ -20,6 +20,7 @@ public class RunMenuController {
 
     private Model model;
     private Board board;
+    private double FPS = 60;
 
     final Timeline timeline = new Timeline(); // timer
 
@@ -28,10 +29,10 @@ public class RunMenuController {
         this.board = board;
 
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                model.moveBall();
+                model.moveBall(FPS);
                 board.paintBoard();
             }
         }));
@@ -56,7 +57,7 @@ public class RunMenuController {
 
     @FXML
     void onTickButtonClicked() {
-        model.moveBall();
+        model.moveBall(FPS);
         board.paintBoard();
     }
 

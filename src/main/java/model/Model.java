@@ -45,21 +45,21 @@ public class Model {
         fileInOut = new FileIO(this);
     }
 
-    public void moveBall() {
+    public void moveBall(double FPS) {
         lines = new ArrayList<>();
         circles = new ArrayList<>();
         for (StandardGizmo gizmo : gizmos) {
             lines.addAll(gizmo.getLines());
             circles.addAll(gizmo.getCircles());
         }
-        double moveTime = 0.05; // 0.05 = 20 times per second as per Gizmoball
-        double tickTime = moveTime;
+
+        double tickTime = 1/FPS;
 
         if (ball != null && !ball.stopped()) {
             CollisionDetails cd = timeUntilCollision();
             double tuc = cd.getTuc();
-            if (tuc > moveTime) {
-                ball = movelBallForTime(ball, moveTime); // No collision ...
+            if (tuc > tickTime) {
+                ball = movelBallForTime(ball, tickTime); // No collision ...
             } else {
                 System.out.println("The time until collision is: " + String.format("%.3f", tuc) + "ms");
                 ball = movelBallForTime(ball, tuc); // We've got a collision in tuc
