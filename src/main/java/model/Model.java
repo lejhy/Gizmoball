@@ -7,6 +7,7 @@ import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,12 +19,12 @@ public class Model {
 
     private Ball ball;
     private Walls walls;
-    private ArrayList<Circle> circles;
-    private ArrayList<SquareBumper> squares;
-    private ArrayList<TriangularBumper> triangles;
+    private static ArrayList<Circle> circles;
+    private static ArrayList<SquareBumper> squares;
+    private static ArrayList<TriangularBumper> triangles;
     // array of flippers
     // array of absorbers
-    private HashMap<Serializable, StandardGizmo> gizmoComponents; //allows gizmo lookup based on circles
+    private static HashMap<Serializable, StandardGizmo> gizmoComponents; //allows gizmo lookup based on circles
 
     private Absorber absorber;
 
@@ -42,7 +43,7 @@ public class Model {
         squares = new ArrayList<>();
         triangles = new ArrayList<>();
         gizmoComponents = new HashMap<>();
-        fileInOut = new FileIO();
+        fileInOut = new FileIO(this);
     }
 
     public void moveBall() {
@@ -269,5 +270,15 @@ public class Model {
 
     public void applyFriction(double deltaT) {
         ball.setVelo(ball.getVelo().times(1 - (mu1 * deltaT) - (mu2 * Math.abs(ball.getVelo().length()) * deltaT)));
+    }
+
+    public Model loadFromFile(String s) {
+
+        try {
+            return fileInOut.loadFromFile(s);
+        } catch(IOException e) {
+            System.out.println("File not found.");
+        }
+        return null;
     }
 }

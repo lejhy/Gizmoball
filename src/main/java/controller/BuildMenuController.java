@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 import model.Model;
 import view.Board;
 
-public class BuildMenuController {
+public class
+BuildMenuController {
     private Model model;
     private Board board;
 
@@ -38,7 +39,9 @@ public class BuildMenuController {
     // FILE ACTION LISTENERS
     @FXML
     public void onOpenButtonClicked() {
+
         System.out.println("Open button clicked");
+
     }
 
     @FXML

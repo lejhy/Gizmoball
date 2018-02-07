@@ -35,7 +35,7 @@ public class TriangularBumper extends StandardGizmo {
         // Add inclined lines
         model.addLine(new LineSegment(x + edgeLength/2, y, x, y + edgeLength), this); // connect left corner to peak
         model.addLine(new LineSegment(x + edgeLength/2, y, x + edgeLength, y + edgeLength), this); // connect right corner to peak
-
+        System.out.print("here triangle");
         model.addTriangle(this);
     }
 

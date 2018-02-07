@@ -4,6 +4,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Model;
 
+import java.io.IOException;
+
 public class Gizmoball extends Application {
 
     public static void main(String[] args) {
@@ -24,7 +26,7 @@ public class Gizmoball extends Application {
         primaryStage.show();
     }
 
-    public void test(Model model) {
+    public void test(Model model) {/*
         model.createSquareBumper(0, 9);
         model.createSquareBumper(1, 9);
         model.createSquareBumper(2, 9);
@@ -50,7 +52,9 @@ public class Gizmoball extends Application {
         model.createSquareBumper(13, 15);
         model.createRightFlipper(11, 15);
 
-        model.createAbsorber();
+        model.createAbsorber();*/
+
+        model = model.loadFromFile("src\\saveFile");
 
         // cover all area in gizmos
 

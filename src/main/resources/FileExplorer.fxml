@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FileExplorerController">
+    <children>
+        <Button fx:id="selectButton" layoutX="36.0" layoutY="36.0" mnemonicParsing="false" onAction="#selectAction" text="Select" />
+        <Button fx:id="loadButton" layoutX="36.0" layoutY="99.0" mnemonicParsing="false" onAction="#loadAction" prefHeight="39.0" prefWidth="72.0" text="Load" />
+        <Button fx:id="closeButton" layoutX="36.0" layoutY="164.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="39.0" prefWidth="72.0" text="Close" />
+        <ListView fx:id="listview" layoutX="121.0" layoutY="36.0" prefHeight="305.0" prefWidth="185.0" />
+    </children>
+</AnchorPane>

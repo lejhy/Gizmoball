@@ -26,7 +26,6 @@ public class SquareBumper extends StandardGizmo {
         // Add vertical lines
         model.addLine(new LineSegment(x, y, x, y+ edgeLength), this); // connect left corners
         model.addLine(new LineSegment(x + edgeLength, y, x + edgeLength, y + edgeLength), this); // connect right corners
-
         // Add square to fill with colour
         model.addSquare(this);
     }
@@ -41,4 +40,8 @@ public class SquareBumper extends StandardGizmo {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public String toString(){
+        return "Square S// " + this.getxCoordinate() + this.getyCoordinate();
+    }
 }
