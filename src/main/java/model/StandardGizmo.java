@@ -47,6 +47,10 @@ public abstract class StandardGizmo  {
             sG.action();
         }
     };
+
+    public void rotate() {
+        //DO NOTHING AS DEFAULT
+    }
     
     public abstract void action();
 }

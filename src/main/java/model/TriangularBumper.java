@@ -1,8 +1,11 @@
 package model;
 
+import physics.Angle;
 import physics.Circle;
 import physics.LineSegment;
 import physics.Vect;
+
+import java.awt.geom.Point2D;
 
 public class TriangularBumper extends StandardGizmo {
     private Vect topCorner;
@@ -30,11 +33,11 @@ public class TriangularBumper extends StandardGizmo {
         model.addCircle(new Circle(rightCorner.x(), rightCorner.y(), 0), this); // right corner
 
         // Add base line
-        model.addLine(new LineSegment(x, y + edgeLength, x + edgeLength, y + edgeLength), this);
+        model.addLine(new LineSegment(leftCorner, rightCorner), this);
 
         // Add inclined lines
-        model.addLine(new LineSegment(x + edgeLength/2, y, x, y + edgeLength), this); // connect left corner to peak
-        model.addLine(new LineSegment(x + edgeLength/2, y, x + edgeLength, y + edgeLength), this); // connect right corner to peak
+        model.addLine(new LineSegment(topCorner, leftCorner), this); // connect left corner to peak
+        model.addLine(new LineSegment(topCorner, rightCorner), this); // connect right corner to peak
         System.out.print("here triangle");
         model.addTriangle(this);
     }
@@ -51,8 +54,12 @@ public class TriangularBumper extends StandardGizmo {
         return rightCorner;
     }
 
+    @Override
     public void rotate() {
-        /* TODO: transformation */
+        Vect center = new Vect(x + edgeLength / 2, y + edgeLength / 2);
+        topCorner = topCorner.rotateBy(Angle.DEG_90, center);
+        leftCorner = leftCorner.rotateBy(Angle.DEG_90, center);
+        rightCorner = rightCorner.rotateBy(Angle.DEG_90, center);
     }
 
 	@Override
