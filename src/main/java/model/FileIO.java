@@ -39,32 +39,32 @@ public class FileIO {
             StandardGizmo gizmo;
             switch(tokens[0]) {
                 case "Triangle":
-                    gizmo = new TriangularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmo = new TriangularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "Square":
-                    gizmo = new SquareBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmo = new SquareBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "Circle":
-                    gizmo = new CircularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmo = new CircularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "LeftFlipper":
-                    gizmo = new LeftFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmo = new LeftFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "RightFlipper":
-                    gizmo = new RightFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmo = new RightFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "Absorber":
-                    gizmo = new Absorber(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), model);
+                    gizmo = new Absorber(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]));
                     gizmos.put(tokens[1], gizmo);
                     break;
 
@@ -82,6 +82,10 @@ public class FileIO {
                     gizmos.get(tokens[1]).rotate();
                     break;
             }
+        }
+
+        for(StandardGizmo gizmo : gizmos.values()) {
+            model.addGizmo(gizmo);
         }
 
         return model;

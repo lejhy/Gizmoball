@@ -1,29 +1,36 @@
 package model;
 
 import physics.Circle;
+import physics.LineSegment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CircularBumper extends StandardGizmo {
-    private Circle circle;
+
     private double radius;
 
-    public CircularBumper(int xCoordinate, int yCoordinate, Model model) {
-        super(xCoordinate, yCoordinate, model);
+    public CircularBumper(int xCoordinate, int yCoordinate) {
+        super(xCoordinate, yCoordinate, Type.CIRCLE);
         radius = edgeLength/2;
-        addGizmo();
     }
 
     @Override
-    public void addGizmo() {
-        circle = new Circle(x + radius, y + radius, radius);
-        model.addCircle(circle, this);
+    public List<LineSegment> getLines() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Circle> getCircles() {
+        List<Circle> circles = new ArrayList<>();
+        circles.add(new Circle(x + radius, y + radius, radius));
+        return circles;
     }
 
     @Override
     public void trigger() {
 
     }
-
-    public Circle getCircle() { return circle; }
 
 	@Override
 	public void action() {

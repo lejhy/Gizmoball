@@ -3,31 +3,40 @@ package model;
 import physics.Circle;
 import physics.LineSegment;
 
+import javax.sound.sampled.Line;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class SquareBumper extends StandardGizmo {
 
-    public SquareBumper(int xCoordinate, int yCoordinate, Model model) {
-        super(xCoordinate, yCoordinate, model);
-        addGizmo();
+    public SquareBumper(int xCoordinate, int yCoordinate) {
+        super(xCoordinate, yCoordinate, Type.SQUARE);
     }
 
     @Override
-    public void addGizmo() {
-        // Add circles at the ends of lines
-        model.addCircle(new Circle(x, y, 0), this); // top left corner
-        model.addCircle(new Circle(x + edgeLength, y, 0), this); // top right corner
-        model.addCircle(new Circle(x,y + edgeLength, 0), this); // bottom left corner
-        model.addCircle(new Circle(x + edgeLength, y + edgeLength, 0), this); // bottom right corner
+    public List<LineSegment> getLines() {
+        List<LineSegment> lines = new ArrayList<>();
 
         // Add horizontal lines
-        model.addLine(new LineSegment(x, y, x + edgeLength, y), this); // connect top corners
-        model.addLine(new LineSegment(x, y + edgeLength, x + edgeLength, y + edgeLength), this); // connect bottom corners
+        lines.add(new LineSegment(x, y, x + edgeLength, y)); // connect top corners
+        lines.add(new LineSegment(x, y + edgeLength, x + edgeLength, y + edgeLength)); // connect bottom corners
 
         // Add vertical lines
-        model.addLine(new LineSegment(x, y, x, y+ edgeLength), this); // connect left corners
-        model.addLine(new LineSegment(x + edgeLength, y, x + edgeLength, y + edgeLength), this); // connect right corners
-        // Add square to fill with colour
-        model.addSquare(this);
+        lines.add(new LineSegment(x, y, x, y+ edgeLength)); // connect left corners
+        lines.add(new LineSegment(x + edgeLength, y, x + edgeLength, y + edgeLength)); // connect right corners
+
+        return lines;
+    }
+
+    @Override
+    public List<Circle> getCircles() {
+        List<Circle> circles = new ArrayList<>();
+        circles.add(new Circle(x, y, 0)); // top left corner
+        circles.add(new Circle(x + edgeLength, y, 0)); // top right corner
+        circles.add(new Circle(x,y + edgeLength, 0)); // bottom left corner
+        circles.add(new Circle(x + edgeLength, y + edgeLength, 0)); // bottom right corner
+        return circles;
     }
 
     @Override

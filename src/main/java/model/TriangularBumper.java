@@ -5,40 +5,42 @@ import physics.Circle;
 import physics.LineSegment;
 import physics.Vect;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TriangularBumper extends StandardGizmo {
+
+
     private Vect corner0;
     private Vect corner1;
     private Vect corner2;
-    private Model model;
-    private int testX, testY;
 
-    public TriangularBumper(int xCoordinate, int yCoordinate, Model model) {
-        super(xCoordinate, yCoordinate, model);
-        this.testX = xCoordinate;
-        this.testY = yCoordinate;
-        this.model = model;
+    public TriangularBumper(int xCoordinate, int yCoordinate) {
+        super(xCoordinate, yCoordinate, Type.TRIANGLE);
         corner0 = new Vect(x, y);
         corner1 = new Vect(x + edgeLength, y);
         corner2 = new Vect(x, y + edgeLength);
-        addGizmo();
     }
 
     @Override
-    public void addGizmo() {
-        // Add circles at the ends of lines
-        model.addCircle(new Circle(corner0.x(), corner0.y(), 0), this); // top corner
-        model.addCircle(new Circle(corner1.x(), corner1.y(), 0), this); // left corner
-        model.addCircle(new Circle(corner2.x(), corner2.y(), 0), this); // right corner
-
-        // Add base line
-        model.addLine(new LineSegment(corner1, corner2), this);
-
-        // Add inclined lines
-        model.addLine(new LineSegment(corner0, corner1), this); // connect left corner to peak
-        model.addLine(new LineSegment(corner0, corner2), this); // connect right corner to peak
-        System.out.print("here triangle");
-        model.addTriangle(this);
+    public List<LineSegment> getLines() {
+        List<LineSegment> lines = new ArrayList<>();
+        lines.add(new LineSegment(corner1, corner2));
+        lines.add(new LineSegment(corner0, corner1));
+        lines.add(new LineSegment(corner0, corner2));
+        return lines;
     }
+
+    @Override
+    public List<Circle> getCircles() {
+        List<Circle> circles = new ArrayList<>();
+        circles.add(new Circle(corner0.x(), corner0.y(), 0)); // top corner
+        circles.add(new Circle(corner1.x(), corner1.y(), 0)); // left corner
+        circles.add(new Circle(corner2.x(), corner2.y(), 0)); // right corner
+        return circles;
+    }
+
+
 
     public Vect getCorner0() {
         return corner0;

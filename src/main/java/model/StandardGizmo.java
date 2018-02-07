@@ -5,24 +5,33 @@ import physics.Angle;
 import java.util.ArrayList;
 import java.util.List;
 
+import physics.Circle;
+import physics.LineSegment;
+
 public abstract class StandardGizmo  {
     protected double x; // X coordinates of upper left corner
     protected double y; // Y coordinates of upper left corner
     protected Angle rotation;
-    protected Model model; // reference to the model
     protected double edgeLength; // edgeLength
     protected List<StandardGizmo> gizmos;
+    protected Type type;
+    public enum Type {
+        SQUARE, CIRCLE, TRIANGLE, ABSORBER, LEFT_FLIPPER, RIGHT_FLIPPER, WALL
+    };
 
-    public StandardGizmo(int Lx, int Ly, Model model) {
-        this.model = model;
+
+    public StandardGizmo(int Lx, int Ly, Type type) {
         this.edgeLength = 1;
         x = Lx;
         y = Ly;
         rotation = Angle.ZERO;
+        this.type = type;
         gizmos = new ArrayList<>();
     }
 
-    public abstract void addGizmo();
+    public abstract List<LineSegment> getLines();
+
+    public abstract List<Circle> getCircles();
 
     public double getxCoordinate() {
         return x;
@@ -32,7 +41,13 @@ public abstract class StandardGizmo  {
         return y;
     }
 
+    public double getWidth() { return edgeLength; }
+
+    public double getHeight() {return edgeLength; }
+
     public Angle getRotation() { return rotation; }
+
+    public Type getType() { return type; }
 
     public double getEdgeLength() {
         return edgeLength;

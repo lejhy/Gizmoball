@@ -4,15 +4,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import model.Ball;
-import model.Model;
-import model.SquareBumper;
-import model.TriangularBumper;
+import model.*;
 import physics.Angle;
 import physics.Circle;
 import physics.LineSegment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     private Model model;
@@ -58,7 +56,7 @@ public class Board {
         }
 
         // Draw lines
-        ArrayList<LineSegment> ls = model.getLines();
+        List<LineSegment> ls = model.getLines();
         if(ls.size() > 0) {
             for (LineSegment l : ls) {
                 gc.setFill(Color.BLACK);
@@ -66,14 +64,51 @@ public class Board {
             }
         }
 
-        // Draw circles
-        for (Circle c : model.getCircles()) {
-            double x = c.getCenter().x() - c.getRadius();
-            double y = c.getCenter().y() - c.getRadius();
-            double width = (2 * c.getRadius());
-            //gc.setFill(Color.RED);
-            //gc.fillOval(x, y, width, width);
-            gc.drawImage(circleImg, x*LSize, y*LSize, width*LSize, width*LSize);
+        // Gizmos
+        List<StandardGizmo> gizmos = model.getGizmos();
+        for(StandardGizmo gizmo : gizmos) {
+            double xCoord = gizmo.getxCoordinate()*LSize;
+            double yCoord = gizmo.getyCoordinate()*LSize;
+            double width = gizmo.getWidth()*LSize;
+            double height = gizmo.getHeight()*LSize;
+            Image image = null;
+            switch (gizmo.getType()) {
+                case SQUARE:
+                    image = squareImg;
+                    break;
+                case CIRCLE:
+                    image = circleImg;
+                    break;
+                case TRIANGLE:
+                    Angle rotation = gizmo.getRotation();
+                    if (gizmo.equals(Angle.ZERO)) {
+                        image = triangleImg0;
+                    } else if (rotation.equals(Angle.DEG_90)) {
+                        image = triangleImg90;
+                    } else if (rotation.equals(Angle.DEG_180)) {
+                        image = triangleImg180;
+                    } else if (rotation.equals(Angle.DEG_270)) {
+                        image = triangleImg270;
+                    } else {
+                        image = triangleImg0;
+                    }
+                    break;
+                case LEFT_FLIPPER:
+
+                    break;
+                case RIGHT_FLIPPER:
+
+                    break;
+                case WALL:
+
+                    break;
+
+                case ABSORBER:
+
+                    break;
+                default:
+            }
+            gc.drawImage(image, xCoord, yCoord, width, height);
         }
 
         // Draw ballImg
@@ -85,41 +120,6 @@ public class Board {
             //gc.setFill(b.getColour());
             //gc.fillOval(x, y, width, width);
             gc.drawImage(ballImg, x*LSize, y*LSize, width*LSize, width*LSize);
-        }
-
-        // Color squares
-        ArrayList<SquareBumper> squares = model.getSquares();
-        if(squares.size() > 0) {
-            for (SquareBumper square : squares) {
-                //gc.setFill(Color.GREEN);
-                //gc.fillRect(squareImg.getxCoordinate(), squareImg.getyCoordinate(), squareImg.getEdgeLength(), squareImg.getEdgeLength());
-                gc.drawImage(squareImg, square.getxCoordinate()*LSize, square.getyCoordinate()*LSize, square.getEdgeLength()*LSize, square.getEdgeLength()*LSize);
-            }
-        }
-
-        // Color triangles
-        ArrayList<TriangularBumper> triangles = model.getTriangles();
-        if(triangles.size() > 0) {
-            for (TriangularBumper triangle : triangles) {
-                double x[] = {triangle.getCorner0().x(), triangle.getLeftCorner().x(), triangle.getCorner2().x()};
-                double y[] = {triangle.getCorner0().y(), triangle.getLeftCorner().y(), triangle.getCorner2().y()};
-                //gc.setFill(Color.YELLOW);
-                //gc.fillPolygon(x, y, 3);
-                Angle rotation = triangle.getRotation();
-                Image triangleImg;
-                if (rotation.equals(Angle.ZERO)) {
-                    triangleImg = triangleImg0;
-                } else if (rotation.equals(Angle.DEG_90)) {
-                    triangleImg = triangleImg90;
-                } else if (rotation.equals(Angle.DEG_180)) {
-                    triangleImg = triangleImg180;
-                } else if (rotation.equals(Angle.DEG_270)) {
-                    triangleImg = triangleImg270;
-                } else {
-                    triangleImg = triangleImg0;
-                }
-                gc.drawImage(triangleImg, triangle.getxCoordinate()*LSize, triangle.getyCoordinate()*LSize, triangle.getEdgeLength()*LSize, triangle.getEdgeLength()*LSize);
-            }
         }
 
         //paintGrid();

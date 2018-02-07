@@ -4,39 +4,35 @@ import physics.Circle;
 import physics.LineSegment;
 import physics.Vect;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LeftFlipper extends StandardGizmo {
-    private Vect pivot;
-    private Vect movingCenter;
-    private Circle stationaryCircle;
-    private Circle movingCircle;
-    private LineSegment line1;
-    private LineSegment line2;
     private final double radius = edgeLength/4;
 
-    public LeftFlipper(int xCoordinate, int yCoordinate, Model model) {
-        super(xCoordinate, yCoordinate, model);
-
-        // calculate circle centers
-        pivot = new Vect(x + radius, y + radius);
-        movingCenter = new Vect(x + radius, y + 2*edgeLength - radius);
-
-        // create circles
-        stationaryCircle = new Circle(pivot,radius);
-        movingCircle = new Circle(movingCenter, radius);
-
-        // draw lines
-        line1 = new LineSegment(x, y + radius, x, y + 2*edgeLength - radius);
-        line2 = new LineSegment(x + edgeLength/2, y + radius, x  + edgeLength/2, y + 2*edgeLength - radius);
-
-        addGizmo();
+    public LeftFlipper(int xCoordinate, int yCoordinate) {
+        super(xCoordinate, yCoordinate, Type.LEFT_FLIPPER);
     }
 
     @Override
-    public void addGizmo() {
-        model.addCircle(stationaryCircle, this);
-        model.addCircle(movingCircle, this);
-        model.addLine(line1, this);
-        model.addLine(line2, this);
+    public List<LineSegment> getLines() {
+        List<LineSegment> lines = new ArrayList<>();
+        lines.add(new LineSegment(x, y + radius, x, y + 2*edgeLength - radius));
+        lines.add(new LineSegment(x + edgeLength/2, y + radius, x  + edgeLength/2, y + 2*edgeLength - radius));
+        return lines;
+    }
+
+    @Override
+    public List<Circle> getCircles() {
+        List<Circle> circles = new ArrayList<>();
+
+        // calculate circle centers
+        Vect pivot = new Vect(x + radius, y + radius);
+        Vect movingCenter = new Vect(x + radius, y + 2*edgeLength - radius);
+
+        circles.add(new Circle(pivot,radius));
+        circles.add(new Circle(movingCenter, radius));
+        return circles;
     }
 
     @Override

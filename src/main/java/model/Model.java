@@ -11,17 +11,17 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Model {
     private final int gridDimensions = 20;
-    private ArrayList<LineSegment> lines;
     private boolean grid[][] = new boolean[gridDimensions][gridDimensions];
 
     private Ball ball;
     private Walls walls;
-    private static ArrayList<Circle> circles;
-    private static ArrayList<SquareBumper> squares;
-    private static ArrayList<TriangularBumper> triangles;
+    private List<LineSegment> lines;
+    private List<Circle> circles;
+    private static ArrayList<StandardGizmo> gizmos;
     // array of flippers
     // array of absorbers
     private static HashMap<Serializable, StandardGizmo> gizmoComponents; //allows gizmo lookup based on circles
@@ -40,13 +40,18 @@ public class Model {
         walls = new Walls(0, 0, gridDimensions, gridDimensions);
         lines = new ArrayList<>();
         circles = new ArrayList<>();
-        squares = new ArrayList<>();
-        triangles = new ArrayList<>();
+        gizmos = new ArrayList<>();
         gizmoComponents = new HashMap<>();
         fileInOut = new FileIO(this);
     }
 
     public void moveBall() {
+        lines = new ArrayList<>();
+        circles = new ArrayList<>();
+        for (StandardGizmo gizmo : gizmos) {
+            lines.addAll(gizmo.getLines());
+            circles.addAll(gizmo.getCircles());
+        }
         double moveTime = 0.05; // 0.05 = 20 times per second as per Gizmoball
         double tickTime = moveTime;
 
@@ -161,11 +166,17 @@ public class Model {
         return ball;
     }
 
+    public void addGizmo(StandardGizmo gizmo) {
+        gizmos.add(gizmo);
+    }
+
+    public List<StandardGizmo> getGizmos() { return gizmos; }
+
     public void setBallSpeed(int x, int y) {
         ball.setVelo(new Vect(x, y));
     }
 
-    public ArrayList<LineSegment> getLines() {
+    public List<LineSegment> getLines() {
         return lines;
     }
 
@@ -179,41 +190,21 @@ public class Model {
         circles.add(c);
     }
 
-    public ArrayList<Circle> getCircles() {
-        return circles;
-    }
-
-    public ArrayList<SquareBumper> getSquares() {
-        return squares;
-    }
-
-    public void addSquare(SquareBumper square) {
-        squares.add(square);
-    }
-
-    public ArrayList<TriangularBumper> getTriangles() {
-        return triangles;
-    }
-
-    public void addTriangle(TriangularBumper triangle) {
-        triangles.add(triangle);
-    }
-
     public void createSquareBumper(int Lx, int Ly) {
         if(checkBoundaries(Lx, Ly)) {
-            StandardGizmo square = new SquareBumper(Lx, Ly, this);
+            StandardGizmo square = new SquareBumper(Lx, Ly);
         }
     }
 
     public void createCircleBumper(int Lx, int Ly) {
         if(checkBoundaries(Lx, Ly)) {
-            StandardGizmo circle = new CircularBumper(Lx, Ly, this);
+            StandardGizmo circle = new CircularBumper(Lx, Ly);
         }
     }
 
     public void createTriangleBumper(int Lx, int Ly) {
         if(checkBoundaries(Lx, Ly)) {
-            StandardGizmo triangle = new TriangularBumper(Lx, Ly, this);
+            StandardGizmo triangle = new TriangularBumper(Lx, Ly);
         }
     }
 
@@ -223,7 +214,7 @@ public class Model {
                 && checkBoundaries(Lx + 1, Ly)
                 && checkBoundaries(Lx, Ly + 1)
                 && checkBoundaries(Lx + 1, Ly + 1)) {
-            StandardGizmo leftFlipper = new LeftFlipper(Lx, Ly, this);
+            StandardGizmo leftFlipper = new LeftFlipper(Lx, Ly);
         }
     }
 
@@ -233,7 +224,7 @@ public class Model {
                 && checkBoundaries(Lx + 1, Ly)
                 && checkBoundaries(Lx, Ly + 1)
                 && checkBoundaries(Lx + 1, Ly + 1)) {
-            StandardGizmo rightFlipper = new RightFlipper(Lx, Ly, this);
+            StandardGizmo rightFlipper = new RightFlipper(Lx, Ly);
         }
     }
 
@@ -256,7 +247,7 @@ public class Model {
     }
 
     public void createAbsorber() {
-        absorber = new Absorber(0, 0, 0, 0, this);
+        absorber = new Absorber(0, 0, 0, 0);
     }
 
     public void applyForces(double deltaT) {
