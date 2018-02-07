@@ -17,7 +17,8 @@ public class Gizmoball extends Application {
 
         Model model = new Model();
         model.setBallSpeed(10, 10);
-        test(model);
+        //test(model);
+        load(model);
 
         Scene scene = new Scene(new GizmoballController(model));
         primaryStage.setScene(scene);
@@ -56,8 +57,6 @@ public class Gizmoball extends Application {
 
         model.createAbsorber();
 
-        //model = model.loadFromFile("src\\saveFile");
-
         // cover all area in gizmos
 
         /*
@@ -67,5 +66,9 @@ public class Gizmoball extends Application {
             }
         }
         */
+    }
+
+    public void load(Model model) {
+        model = model.loadFromFile("src/saveFile");
     }
 }

@@ -6,9 +6,13 @@ import physics.Vect;
 public class Absorber extends StandardGizmo{
     private LineSegment line;
     private boolean containsBall = false;
+    private int x1;
+    private int y1;
 
-    public Absorber(int x, int y, Model model) {
-        super(x, y, model);
+    public Absorber(int x0, int y0, int x1, int y1, Model model) {
+        super(x0, y0, model);
+        this.x1 = x1;
+        this.y1 = y1;
         line = new LineSegment(0, model.getGridDimensions()-1, model.getGridDimensions(),  model.getGridDimensions()-1);
         model.addLine(line, this);
     }

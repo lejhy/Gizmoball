@@ -1,9 +1,7 @@
 package model;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class FileIO {
     private BufferedReader bR;
@@ -34,30 +32,40 @@ public class FileIO {
             line = bR.readLine();
         }
 
+        Map<String, StandardGizmo> gizmos = new HashMap<String, StandardGizmo>();
+
         for(String s : fileIn){
             String[] tokens = s.split(" ");
+            StandardGizmo gizmo;
             switch(tokens[0]) {
                 case "Triangle":
-                    TriangularBumper tb = new TriangularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmo = new TriangularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "Square":
-                    SquareBumper sb = new SquareBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmo = new SquareBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "Circle":
-                    CircularBumper cb = new CircularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmo = new CircularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "LeftFlipper":
-                    LeftFlipper lf = new LeftFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmo = new LeftFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "RightFlipper":
-                    RightFlipper rf = new RightFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmo = new RightFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), model);
+                    gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "Absorber":
+                    gizmo = new Absorber(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), model);
+                    gizmos.put(tokens[1], gizmo);
                     break;
 
                 case "ball":
@@ -71,6 +79,7 @@ public class FileIO {
                     break;
 
                 case "Rotate":
+                    gizmos.get(tokens[1]).rotate();
                     break;
             }
         }

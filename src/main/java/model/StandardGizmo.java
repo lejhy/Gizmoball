@@ -1,11 +1,14 @@
 package model;
 
+import physics.Angle;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class StandardGizmo  {
     protected double x; // X coordinates of upper left corner
     protected double y; // Y coordinates of upper left corner
+    protected Angle rotation;
     protected Model model; // reference to the model
     protected double edgeLength; // edgeLength
     protected List<StandardGizmo> gizmos;
@@ -15,6 +18,7 @@ public abstract class StandardGizmo  {
         this.edgeLength = 1;
         x = Lx;
         y = Ly;
+        rotation = Angle.ZERO;
         gizmos = new ArrayList<>();
     }
 
@@ -27,6 +31,8 @@ public abstract class StandardGizmo  {
     public double getyCoordinate() {
         return y;
     }
+
+    public Angle getRotation() { return rotation; }
 
     public double getEdgeLength() {
         return edgeLength;

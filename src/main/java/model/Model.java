@@ -256,7 +256,7 @@ public class Model {
     }
 
     public void createAbsorber() {
-        absorber = new Absorber(0, 0, this);
+        absorber = new Absorber(0, 0, 0, 0, this);
     }
 
     public void applyForces(double deltaT) {

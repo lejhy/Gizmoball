@@ -8,6 +8,7 @@ import model.Ball;
 import model.Model;
 import model.SquareBumper;
 import model.TriangularBumper;
+import physics.Angle;
 import physics.Circle;
 import physics.LineSegment;
 
@@ -21,7 +22,10 @@ public class Board {
     private Image ballImg;
     private Image squareImg;
     private Image circleImg;
-    private Image triangleImg;
+    private Image triangleImg0;
+    private Image triangleImg90;
+    private Image triangleImg180;
+    private Image triangleImg270;
     private Image wallImg;
 
     private int boardSize = 800;
@@ -36,7 +40,10 @@ public class Board {
         ballImg = new Image(getClass().getResource("/Ball.png").toString());
         squareImg = new Image(getClass().getResource("/Square.png").toString());
         circleImg = new Image(getClass().getResource("/Circle.png").toString());
-        triangleImg = new Image(getClass().getResource("/Triangle.png").toString());
+        triangleImg0 = new Image(getClass().getResource("/Triangle_0.png").toString());
+        triangleImg90 = new Image(getClass().getResource("/Triangle_90.png").toString());
+        triangleImg180 = new Image(getClass().getResource("/Triangle_180.png").toString());
+        triangleImg270 = new Image(getClass().getResource("/Triangle_270.png").toString());
         wallImg = new Image(getClass().getResource("/Wall.png").toString());
     }
 
@@ -94,10 +101,23 @@ public class Board {
         ArrayList<TriangularBumper> triangles = model.getTriangles();
         if(triangles.size() > 0) {
             for (TriangularBumper triangle : triangles) {
-                double x[] = {triangle.getTopCorner().x(), triangle.getLeftCorner().x(), triangle.getRightCorner().x()};
-                double y[] = {triangle.getTopCorner().y(), triangle.getLeftCorner().y(), triangle.getRightCorner().y()};
+                double x[] = {triangle.getCorner0().x(), triangle.getLeftCorner().x(), triangle.getCorner2().x()};
+                double y[] = {triangle.getCorner0().y(), triangle.getLeftCorner().y(), triangle.getCorner2().y()};
                 //gc.setFill(Color.YELLOW);
                 //gc.fillPolygon(x, y, 3);
+                Angle rotation = triangle.getRotation();
+                Image triangleImg;
+                if (rotation.equals(Angle.ZERO)) {
+                    triangleImg = triangleImg0;
+                } else if (rotation.equals(Angle.DEG_90)) {
+                    triangleImg = triangleImg90;
+                } else if (rotation.equals(Angle.DEG_180)) {
+                    triangleImg = triangleImg180;
+                } else if (rotation.equals(Angle.DEG_270)) {
+                    triangleImg = triangleImg270;
+                } else {
+                    triangleImg = triangleImg0;
+                }
                 gc.drawImage(triangleImg, triangle.getxCoordinate()*LSize, triangle.getyCoordinate()*LSize, triangle.getEdgeLength()*LSize, triangle.getEdgeLength()*LSize);
             }
         }
