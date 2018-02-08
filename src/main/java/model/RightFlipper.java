@@ -54,6 +54,6 @@ public class RightFlipper extends StandardGizmo {
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub
-		
+		System.out.println("RF Action");
 	}
 }

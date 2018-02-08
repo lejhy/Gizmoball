@@ -1,5 +1,7 @@
 package model;
 
+import javafx.scene.input.KeyCode;
+
 import java.io.*;
 import java.util.*;
 
@@ -74,9 +76,17 @@ public class FileIO {
                     break;
 
                 case "KeyConnect":
+                    if (tokens[3].equals("down")) {
+                        model.addKeyDown(Integer.parseInt(tokens[2]), gizmos.get(tokens[4]));
+                    } else if (tokens[3].equals("up")) {
+                        model.addKeyUp(Integer.parseInt(tokens[2]), gizmos.get(tokens[4]));
+                    } else {
+                        throw new RuntimeException("Corrupted Save File");
+                    }
                     break;
 
                 case "Connect":
+                    gizmos.get(tokens[1]).addGizmoTrigger(gizmos.get(tokens[2]));
                     break;
 
                 case "Rotate":

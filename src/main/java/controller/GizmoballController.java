@@ -40,7 +40,6 @@ public class GizmoballController extends BorderPane {
 
         setLeft(buildMenu);
         this.getStylesheets().add(getClass().getResource("/Gizmoball.css").toString());
-
     }
 
     private void loadRoot() {
@@ -65,6 +64,7 @@ public class GizmoballController extends BorderPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        runMenuController.init();
         runMenuController.addBuildModeListener(event -> setLeft(buildMenu));
     }
 
@@ -80,5 +80,4 @@ public class GizmoballController extends BorderPane {
         }
         buildMenuController.addRunningModeListener(event -> setLeft(runMenu));
     }
-
 }

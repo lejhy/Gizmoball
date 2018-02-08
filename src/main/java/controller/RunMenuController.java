@@ -6,14 +6,19 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Model;
 import view.Board;
 
 public class RunMenuController {
+
+    @FXML
+    Node root;
 
     @FXML
     Button buildMode;
@@ -29,14 +34,27 @@ public class RunMenuController {
         this.board = board;
 
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                model.moveBall(FPS);
-                board.paintBoard();
-            }
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), e->{
+            model.moveBall(FPS);
+            board.paintBoard();
         }));
+    }
 
+    public void init() {
+        propagateKeyEvents();
+    }
+
+    private void propagateKeyEvents() {
+        root.addEventFilter(KeyEvent.ANY, e->{
+            if (e.getEventType() == KeyEvent.KEY_PRESSED) {
+                model.handleKeyDown(e.getCode().getCode());
+            } else if (e.getEventType() == KeyEvent.KEY_RELEASED) {
+                model.handleKeyUp(e.getCode().getCode());
+            } else {
+                // ignore
+            }
+            e.consume();
+        });
     }
 
     public void addBuildModeListener(EventHandler handler) {

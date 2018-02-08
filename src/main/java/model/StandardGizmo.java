@@ -8,6 +8,8 @@ import java.util.List;
 import physics.Circle;
 import physics.LineSegment;
 
+import javax.sound.midi.SysexMessage;
+
 public abstract class StandardGizmo  {
     protected double x; // X coordinates of upper left corner
     protected double y; // Y coordinates of upper left corner
@@ -64,8 +66,8 @@ public abstract class StandardGizmo  {
     }
 
     public void trigger() {
-        for(StandardGizmo sG : gizmos) {
-            sG.action();
+        for(StandardGizmo gizmo : gizmos) {
+            gizmo.action();
         }
     };
 
@@ -73,5 +75,7 @@ public abstract class StandardGizmo  {
         //DO NOTHING AS DEFAULT
     }
     
-    public abstract void action();
+    public void action() {
+        System.out.println ("Standard gizmo triggered. x: " + x + " y: " + y);
+    }
 }

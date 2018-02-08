@@ -1,7 +1,7 @@
 package model;
 
-//import com.sun.org.apache.xpath.internal.operations.String;
-
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import physics.Circle;
 import physics.Geometry;
 import physics.LineSegment;
@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Model {
     private final int gridDimensions = 20;
@@ -22,9 +23,9 @@ public class Model {
     private List<LineSegment> lines;
     private List<Circle> circles;
     private static ArrayList<StandardGizmo> gizmos;
-    private static HashMap<Serializable, StandardGizmo> gizmoComponents; //allows gizmo lookup based on circles and lines
-
-    private Absorber absorber;
+    private static Map<Serializable, StandardGizmo> gizmoComponents; //allows gizmo lookup based on circles and lines
+    private static Map<Integer, List<StandardGizmo>> keyDownTriggers; //allows gizmos lookup based on key down events
+    private static Map<Integer, List<StandardGizmo>> keyUpTriggers; //allows gizmos lookup based on key up events
 
     // friction coefficients
     double mu1 = 0.025; // per second
@@ -40,6 +41,8 @@ public class Model {
         circles = new ArrayList<>();
         gizmos = new ArrayList<>();
         gizmoComponents = new HashMap<>();
+        keyUpTriggers = new HashMap<>();
+        keyDownTriggers = new HashMap<>();
         fileInOut = new FileIO(this);
     }
 
@@ -128,18 +131,6 @@ public class Model {
             }
         }
 
-        // Time to collide with the absorber
-        if(absorber != null) {
-            LineSegment abs = absorber.getLineSeg();
-            time = Geometry.timeUntilWallCollision(abs, ballCircle, ballVelocity);
-            if (time < shortestTime) { // collison with absorber happens, transfer the ball
-                shortestTime = time;
-                newVelo = Geometry.reflectWall(abs, ball.getVelo(), 0.0);
-                colidingGizmo = abs; //changed here as hasmap lookup gives us gizmo
-                //could consider doing lookup here for all gizmos
-            }
-        }
-
         // Time to collide with any other line segments
         for (LineSegment line : lines) {
             time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
@@ -193,70 +184,6 @@ public class Model {
         circles.add(c);
     }
 
-    public void createBall(double xPos, double yPos, double xVelo, double yVelo, double diameter) {
-        balls.add(new Ball(xPos, yPos, xVelo, yVelo, diameter));
-    }
-
-    public void createSquareBumper(int Lx, int Ly) {
-        if(checkBoundaries(Lx, Ly)) {
-            StandardGizmo square = new SquareBumper(Lx, Ly);
-        }
-    }
-
-    public void createCircleBumper(int Lx, int Ly) {
-        if(checkBoundaries(Lx, Ly)) {
-            StandardGizmo circle = new CircularBumper(Lx, Ly);
-        }
-    }
-
-    public void createTriangleBumper(int Lx, int Ly) {
-        if(checkBoundaries(Lx, Ly)) {
-            StandardGizmo triangle = new TriangularBumper(Lx, Ly);
-        }
-    }
-
-    // TODO: refactor
-    public void createLeftFlipper(int Lx, int Ly) {
-        if(checkBoundaries(Lx, Ly)
-                && checkBoundaries(Lx + 1, Ly)
-                && checkBoundaries(Lx, Ly + 1)
-                && checkBoundaries(Lx + 1, Ly + 1)) {
-            StandardGizmo leftFlipper = new LeftFlipper(Lx, Ly);
-        }
-    }
-
-    // TODO: refactor
-    public void createRightFlipper(int Lx, int Ly) {
-        if(checkBoundaries(Lx, Ly)
-                && checkBoundaries(Lx + 1, Ly)
-                && checkBoundaries(Lx, Ly + 1)
-                && checkBoundaries(Lx + 1, Ly + 1)) {
-            StandardGizmo rightFlipper = new RightFlipper(Lx, Ly);
-        }
-    }
-
-    // TODO: check for the ball
-    public boolean checkBoundaries(int Lx, int Ly) {
-        // check if placed within the board
-        if(Lx >= 0 && Lx < 20 && Ly >= 0 && Ly < 20) {
-            // check for overlap
-            if(grid[Lx][Ly] == true) {
-                System.out.println("Cell is occupied");
-                return false;
-            } else {
-                grid[Lx][Ly] = true;
-                return true;
-            }
-        }
-
-        System.out.println("Gizmo should be placed between (0,0) and (19,19)");
-        return false;
-    }
-
-    public void createAbsorber() {
-        absorber = new Absorber(0, 0, 0, 0);
-    }
-
     public void applyForces(Ball ball, double deltaT) {
         ball.setVelo(new Vect(ball.getVelo().x(),ball.getVelo().y() + getGravityForce(deltaT)));
         applyFriction(ball, deltaT);
@@ -278,5 +205,41 @@ public class Model {
             System.out.println("File not found.");
         }
         return null;
+    }
+
+    public void addKeyDown(Integer keyCode, StandardGizmo gizmo) {
+        addKey(keyCode, gizmo, keyDownTriggers);
+    }
+
+    public void addKeyUp(Integer keyCode, StandardGizmo gizmo) {
+        addKey(keyCode, gizmo, keyUpTriggers);
+    }
+
+    private void addKey(Integer keyCode, StandardGizmo gizmo, Map<Integer, List<StandardGizmo>> keyTriggers) {
+        List<StandardGizmo> gizmos = keyTriggers.get(keyCode);
+        if (gizmos != null) {
+            gizmos.add(gizmo);
+        } else {
+            gizmos = new ArrayList<>();
+            gizmos.add(gizmo);
+            keyTriggers.put(keyCode, gizmos);
+        }
+    }
+
+    public void handleKeyDown(Integer keyCode) {
+        handleKey(keyCode, keyDownTriggers);
+    }
+
+    public void handleKeyUp(Integer keyCode) {
+        handleKey(keyCode, keyUpTriggers);
+    }
+
+    private void handleKey(Integer keyCode, Map<Integer, List<StandardGizmo>> keyTriggers) {
+        List <StandardGizmo> gizmos = keyTriggers.get(keyCode);
+        if (gizmos != null) {
+            for (StandardGizmo gizmo : gizmos) {
+                gizmo.action();
+            }
+        }
     }
 }
