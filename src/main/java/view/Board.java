@@ -24,6 +24,8 @@ public class Board {
     private Image triangleImg90;
     private Image triangleImg180;
     private Image triangleImg270;
+    private List<Image> leftFlipperImg;
+    private List<Image> rightFlipperImg;
     private Image wallImg;
 
     private int boardSize = 800;
@@ -42,6 +44,12 @@ public class Board {
         triangleImg90 = new Image(getClass().getResource("/Triangle_90.png").toString());
         triangleImg180 = new Image(getClass().getResource("/Triangle_180.png").toString());
         triangleImg270 = new Image(getClass().getResource("/Triangle_270.png").toString());
+        leftFlipperImg = new ArrayList<>();
+        rightFlipperImg = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            leftFlipperImg.add(new Image(getClass().getResource("/LeftFlipper_" + String.format("%02d", i) + ".png").toString()));
+            rightFlipperImg.add(new Image(getClass().getResource("/RightFlipper_" + String.format("%02d", i) + ".png").toString()));
+        }
         wallImg = new Image(getClass().getResource("/Wall.png").toString());
     }
 
@@ -94,10 +102,12 @@ public class Board {
                     }
                     break;
                 case LEFT_FLIPPER:
-
+                    int leftFlipperImgNumber = (int) Math.round(gizmo.getRotation().sin() * 14);
+                    image = leftFlipperImg.get(leftFlipperImgNumber);
                     break;
                 case RIGHT_FLIPPER:
-
+                    int rightFlipperImgNumber = (int) Math.round(gizmo.getRotation().sin() * 14);
+                    image = rightFlipperImg.get(rightFlipperImgNumber);
                     break;
                 case WALL:
 

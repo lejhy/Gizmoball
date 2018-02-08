@@ -41,6 +41,16 @@ public class RightFlipper extends StandardGizmo {
 
     }
 
+    @Override
+    public double getWidth() {
+        return edgeLength*2;
+    }
+
+    @Override
+    public double getHeight() {
+        return edgeLength*2;
+    }
+
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub
