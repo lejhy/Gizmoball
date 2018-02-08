@@ -68,8 +68,9 @@ public class FileIO {
                     gizmos.put(tokens[1], gizmo);
                     break;
 
-                case "ball":
-                    Ball ball = new Ball(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), 0.5);
+                case "Ball":
+                    Ball ball = new Ball(Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]), Double.parseDouble(tokens[4]), Double.parseDouble(tokens[5]), 0.5);
+                    model.addBall(ball);
                     break;
 
                 case "KeyConnect":

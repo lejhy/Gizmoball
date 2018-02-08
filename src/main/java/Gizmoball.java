@@ -16,7 +16,6 @@ public class Gizmoball extends Application {
     public void start(Stage primaryStage) {
 
         Model model = new Model();
-        model.setBallSpeed(10, 10);
         //test(model);
         load(model);
 
@@ -28,6 +27,7 @@ public class Gizmoball extends Application {
     }
 
     public void test(Model model) {
+        model.createBall(1, 1, 10, 10, 0.5);
         model.createSquareBumper(0, 9);
         model.createSquareBumper(1, 9);
         model.createSquareBumper(2, 9);

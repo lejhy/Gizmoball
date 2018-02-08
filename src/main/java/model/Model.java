@@ -17,14 +17,12 @@ public class Model {
     private final int gridDimensions = 20;
     private boolean grid[][] = new boolean[gridDimensions][gridDimensions];
 
-    private Ball ball;
+    private List<Ball> balls;
     private Walls walls;
     private List<LineSegment> lines;
     private List<Circle> circles;
     private static ArrayList<StandardGizmo> gizmos;
-    // array of flippers
-    // array of absorbers
-    private static HashMap<Serializable, StandardGizmo> gizmoComponents; //allows gizmo lookup based on circles
+    private static HashMap<Serializable, StandardGizmo> gizmoComponents; //allows gizmo lookup based on circles and lines
 
     private Absorber absorber;
 
@@ -36,8 +34,8 @@ public class Model {
 
 
     public Model() {
-        ball = new Ball(0.5, 0.5, 0, 0, 0.5);
         walls = new Walls(0, 0, gridDimensions, gridDimensions);
+        balls = new ArrayList<>();
         lines = new ArrayList<>();
         circles = new ArrayList<>();
         gizmos = new ArrayList<>();
@@ -46,44 +44,39 @@ public class Model {
     }
 
     public void moveBall(double FPS) {
-        lines = new ArrayList<>();
-        circles = new ArrayList<>();
-        for (StandardGizmo gizmo : gizmos) {
-            lines.addAll(gizmo.getLines());
-            circles.addAll(gizmo.getCircles());
-        }
+        updateGeometry();
 
         double tickTime = 1/FPS;
+        for (Ball ball : balls) {
+            if (ball != null && !ball.stopped()) {
+                CollisionDetails cd = timeUntilCollision(ball);
+                double tuc = cd.getTuc();
+                if (tuc > tickTime) {
+                    movelBallForTime(ball, tickTime); // No collision ...
+                } else {
+                    System.out.println("The time until collision is: " + String.format("%.3f", tuc) + "ms");
+                    movelBallForTime(ball, tuc); // We've got a collision in tuc
 
-        if (ball != null && !ball.stopped()) {
-            CollisionDetails cd = timeUntilCollision();
-            double tuc = cd.getTuc();
-            if (tuc > tickTime) {
-                ball = movelBallForTime(ball, tickTime); // No collision ...
-            } else {
-                System.out.println("The time until collision is: " + String.format("%.3f", tuc) + "ms");
-                ball = movelBallForTime(ball, tuc); // We've got a collision in tuc
-                
-                ball.setVelo(cd.getVelo()); // Post collision velocity ...
-               
-                if(cd.getColiding().getClass().isInstance(new Circle(0,0,0))
-                        || cd.getColiding().getClass().isInstance(new LineSegment(0, 0, 0, 0))){
-                	StandardGizmo cG = gizmoComponents.get(cd.getColiding());
-                	System.out.println("should have triggered: "+ cG.getClass());
-                	cG.trigger();
+                    ball.setVelo(cd.getVelo()); // Post collision velocity ...
+
+                    if (cd.getColiding().getClass().isInstance(new Circle(0, 0, 0))
+                            || cd.getColiding().getClass().isInstance(new LineSegment(0, 0, 0, 0))) {
+                        StandardGizmo cG = gizmoComponents.get(cd.getColiding());
+                        System.out.println("should have triggered: " + cG.getClass());
+                        cG.trigger();
+                    } else {
+                        System.out.println("did not trigger: " + cd.getColiding().getClass());
+                    }
+
+                    tickTime = tuc;
                 }
-                else{
-                    System.out.println("did not trigger: "+ cd.getColiding().getClass());
-                }
-                
-                tickTime = tuc;
+
+                applyForces(ball, tickTime);
             }
-
-            applyForces(tickTime);
         }
     }
 
-    private Ball movelBallForTime(Ball ball, double time) {
+    private void movelBallForTime(Ball ball, double time) {
         double newX = 0.0;
         double newY = 0.0;
         double xVel = ball.getVelo().x();
@@ -99,11 +92,23 @@ public class Model {
         System.out.println("The velocity in x direction is " + String.format("%.3f", xVel) + " in y direction is " + String.format("%.3f", yVel));
         ball.setExactX(newX);
         ball.setExactY(newY);
-        return ball;
+    }
+
+    private void updateGeometry() {
+        lines = new ArrayList<>();
+        circles = new ArrayList<>();
+        for (StandardGizmo gizmo : gizmos) {
+            for (LineSegment line : gizmo.getLines()) {
+                addLine(line, gizmo);
+            }
+            for (Circle circle : gizmo.getCircles()) {
+                addCircle(circle, gizmo);
+            }
+        }
     }
 
     // Find Time Until Collision and also, if there is a collision, the new speed vector.
-    private CollisionDetails timeUntilCollision() {
+    private CollisionDetails timeUntilCollision(Ball ball) {
         Circle ballCircle = ball.getCircle(); // Create a physics.Circle from Ball
         Vect ballVelocity = ball.getVelo();
         Vect newVelo = new Vect(0, 0);
@@ -162,19 +167,17 @@ public class Model {
 
     public int getGridDimensions() {return gridDimensions; }
 
-    public Ball getBall() {
-        return ball;
+    public List<Ball> getBalls() {
+        return balls;
     }
+
+    public void addBall(Ball ball) { balls.add(ball); }
 
     public void addGizmo(StandardGizmo gizmo) {
         gizmos.add(gizmo);
     }
 
     public List<StandardGizmo> getGizmos() { return gizmos; }
-
-    public void setBallSpeed(int x, int y) {
-        ball.setVelo(new Vect(x, y));
-    }
 
     public List<LineSegment> getLines() {
         return lines;
@@ -188,6 +191,10 @@ public class Model {
     public void addCircle(Circle c, StandardGizmo g) {
         gizmoComponents.put(c, g);
         circles.add(c);
+    }
+
+    public void createBall(double xPos, double yPos, double xVelo, double yVelo, double diameter) {
+        balls.add(new Ball(xPos, yPos, xVelo, yVelo, diameter));
     }
 
     public void createSquareBumper(int Lx, int Ly) {
@@ -250,16 +257,16 @@ public class Model {
         absorber = new Absorber(0, 0, 0, 0);
     }
 
-    public void applyForces(double deltaT) {
-        ball.setVelo(new Vect(ball.getVelo().x(),ball.getVelo().y() + applyGravity(deltaT)));
-        applyFriction(deltaT);
+    public void applyForces(Ball ball, double deltaT) {
+        ball.setVelo(new Vect(ball.getVelo().x(),ball.getVelo().y() + getGravityForce(deltaT)));
+        applyFriction(ball, deltaT);
     }
 
-    public double applyGravity(double deltaT) {
+    public double getGravityForce(double deltaT) {
         return 25.0*deltaT;
     }
 
-    public void applyFriction(double deltaT) {
+    public void applyFriction(Ball ball, double deltaT) {
         ball.setVelo(ball.getVelo().times(1 - (mu1 * deltaT) - (mu2 * Math.abs(ball.getVelo().length()) * deltaT)));
     }
 

@@ -110,11 +110,10 @@ public class Board {
                     image = rightFlipperImg.get(rightFlipperImgNumber);
                     break;
                 case WALL:
-
+                    //TODO Could add a semi transparent image with ambient occlusion around the edges
                     break;
-
                 case ABSORBER:
-
+                    //TODO Image will probably be deformed for non-default absorber sizes... Possibly could be made out od LxL tiles?
                     break;
                 default:
             }
@@ -122,16 +121,16 @@ public class Board {
         }
 
         // Draw ballImg
-        Ball b = model.getBall();
-        if (b != null) {
-            double x = (b.getExactX() - b.getRadius());
-            double y = (b.getExactY() - b.getRadius());
-            double width = (2 * b.getRadius());
-            //gc.setFill(b.getColour());
-            //gc.fillOval(x, y, width, width);
-            gc.drawImage(ballImg, x*LSize, y*LSize, width*LSize, width*LSize);
+        for (Ball ball : model.getBalls()) {
+            if (ball != null) {
+                double x = (ball.getExactX() - ball.getRadius());
+                double y = (ball.getExactY() - ball.getRadius());
+                double width = (2 * ball.getRadius());
+                //gc.setFill(b.getColour());
+                //gc.fillOval(x, y, width, width);
+                gc.drawImage(ballImg, x * LSize, y * LSize, width * LSize, width * LSize);
+            }
         }
-
         //paintGrid();
 
     }
