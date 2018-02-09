@@ -1,14 +1,17 @@
 package view;
 
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import model.*;
 import physics.Angle;
 import physics.Circle;
 import physics.LineSegment;
 
+import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -167,5 +170,19 @@ public class Board {
         for(int i = 0; i < 20; i++) {
             gc.strokeLine(p1x, p1y + i*40, 800, p2y + i*40);
         }
+    }
+
+    public void addMouseEventHandler(EventHandler<MouseEvent> e) {
+        canvas.addEventHandler(MouseEvent.ANY, e);
+    }
+
+    public void removeMouseEventHandler(EventHandler<MouseEvent> e) {
+        if (e!=null) {
+            canvas.removeEventHandler(MouseEvent.ANY, e);
+        }
+    }
+
+    public double getLPos (double x) {
+        return x/LSize;
     }
 }

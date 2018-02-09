@@ -1,13 +1,16 @@
 package controller;
 
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Ball;
 import model.Model;
 import view.Board;
 
@@ -17,6 +20,7 @@ public class
 BuildMenuController {
     private Model model;
     private Board board;
+    private EventHandler<MouseEvent> currentBoardMouseEventHandler = null;
 
     @FXML
     private Button runMode;
@@ -69,6 +73,72 @@ BuildMenuController {
 
     @FXML
     public void onQuitButtonClicked() { Platform.exit(); }
+
+    // EDIT ACTION LISTENERS
+    @FXML
+    public void onAbsorberButtonClicked() {
+        swapBoardMouseEventHandler(new AbsorberMouseEventHandler(model, board));
+    }
+
+    @FXML
+    public void onBallButtonClicked() {
+        swapBoardMouseEventHandler(new BallMouseEventHandler(model, board));
+    }
+
+    @FXML
+    public void onCircleButtonClicked() {
+        swapBoardMouseEventHandler(new CircleMouseEventHandler(model, board));
+    }
+
+    @FXML
+    public void onLeftFlipperButtonClicked() { swapBoardMouseEventHandler(new LeftFlipperMouseEventHandler(model, board)); }
+
+    @FXML
+    public void onRightFlipperButtonClicked() { swapBoardMouseEventHandler(new RightFlipperMouseEventHandler(model, board)); }
+
+    @FXML
+    public void onSquareButtonClicked() {
+        swapBoardMouseEventHandler(new SquareMouseEventHandler(model, board));
+    }
+
+    @FXML
+    public void onTriangleButtonClicked() {
+        swapBoardMouseEventHandler(new TriangleMouseEventHandler(model, board));
+    }
+
+    @FXML
+    public void onMoveButtonClicked() {
+        swapBoardMouseEventHandler(new MoveMouseEventHandler(model, board));
+    }
+
+    @FXML
+    public void onRotateButtonClicked() {
+        swapBoardMouseEventHandler(new RotateMouseEventHandler(model, board));
+    }
+
+    @FXML
+    public void onConnectButtonClicked() {
+        swapBoardMouseEventHandler(new ConnectMouseEventHandler(model, board));
+    }
+
+    @FXML
+    public void onDisconnectButtonClicked() { swapBoardMouseEventHandler(new DisconnectMouseEventHandler(model, board)); }
+
+    @FXML
+    public void onDeleteButtonClicked() {
+        swapBoardMouseEventHandler(new DeleteMouseEventHandler(model, board));
+    }
+
+    @FXML
+    public void onClearBondButtonClicked() {
+        swapBoardMouseEventHandler(new ClearMouseEventHandler(model, board));
+    }
+
+    private void swapBoardMouseEventHandler (EventHandler<MouseEvent> event) {
+        board.removeMouseEventHandler(currentBoardMouseEventHandler);
+        board.addMouseEventHandler(event);
+        currentBoardMouseEventHandler = event;
+    }
 
     // SETTINGS ACTION LISTENERS
     @FXML

@@ -57,12 +57,14 @@ public class Model {
             if (!ball.stopped()) {
                 CollisionDetails collisionDetails = timeUntilCollision(ball);
                 double timeUntilCollision = collisionDetails.getTimeUntilCollision();
-                while (timeUntilCollision < tickTime) {
+                int i = 0; // TODO remove this quickfix and fix it
+                while (timeUntilCollision < tickTime && i < 100) { // TODO remove this quickfix and fix it
                     System.out.println("The time until collision is: " + String.format("%.3f", timeUntilCollision) + "ms");
                     moveBall(ball, timeUntilCollision, collisionDetails, true); // We've got a collision in timeUntilCollision
                     tickTime -= timeUntilCollision;
                     collisionDetails = timeUntilCollision(ball);
                     timeUntilCollision = collisionDetails.getTimeUntilCollision();
+                    i++; // TODO remove this quickfix and fix it
                 }
                 moveBall(ball, tickTime, collisionDetails, false); // No collision ...
             }
@@ -161,11 +163,11 @@ public class Model {
         return balls;
     }
 
-    void addBall(Ball ball) { balls.add(ball); }
+    public void addBall(Ball ball) { balls.add(ball); }
 
     public List<StandardGizmo> getGizmos() { return gizmos; }
 
-    void addGizmo(StandardGizmo gizmo) { gizmos.add(gizmo); }
+    public void addGizmo(StandardGizmo gizmo) { gizmos.add(gizmo); }
 
     public List<LineSegment> getLines() {
         return lines;
