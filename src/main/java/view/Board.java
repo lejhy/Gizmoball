@@ -124,11 +124,11 @@ public class Board {
                     }
                     break;
                 case LEFT_FLIPPER:
-                    int leftFlipperImgNumber = (int) Math.round(gizmo.getRotation().sin() * 14);
+                    int leftFlipperImgNumber = (int) Math.round(gizmo.getRotation().radians()*2/Math.PI * 14);
                     image = leftFlipperImg.get(leftFlipperImgNumber);
                     break;
                 case RIGHT_FLIPPER:
-                    int rightFlipperImgNumber = (int) Math.round(gizmo.getRotation().sin() * 14);
+                    int rightFlipperImgNumber = (int) Math.round(gizmo.getRotation().radians()*2/Math.PI * 14);
                     image = rightFlipperImg.get(rightFlipperImgNumber);
                     break;
                 case WALL:
