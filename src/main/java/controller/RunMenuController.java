@@ -8,9 +8,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import model.Model;
 import view.Board;
+
+import java.io.File;
 
 public class RunMenuController {
 
@@ -23,18 +26,24 @@ public class RunMenuController {
     private Model model;
     private Board board;
     private double FPS = 60;
+    private String filePath = "";
 
-    final Timeline timeline = new Timeline(); // timer
+    final Timeline physicsTimeline = new Timeline(); // timer
+    final Timeline renderTimeline = new Timeline(); // timer
 
     public RunMenuController(Model model, Board board) {
         this.model = model;
         this.board = board;
 
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), e->{
+        physicsTimeline.setCycleCount(Timeline.INDEFINITE);
+        physicsTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), e->{
             model.tick(FPS);
+        }));
+        renderTimeline.setCycleCount(Timeline.INDEFINITE);
+        renderTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), e->{
             board.paintBoard();
         }));
+        renderTimeline.play();
     }
 
     public void init() {
@@ -55,38 +64,59 @@ public class RunMenuController {
     }
 
     public void addBuildModeListener(EventHandler handler) {
-        buildMode.setOnAction(handler);
+        buildMode.setOnAction(e->{
+            onStopButtonClicked();
+            handler.handle(e);
+        });
     }
 
     // ACTION LISTENERS
 
     @FXML
     void onStartButtonClicked() {
-        timeline.play();
+        physicsTimeline.play();
     }
 
     @FXML
     void onStopButtonClicked() {
-        timeline.stop();
+        physicsTimeline.stop();
     }
 
     @FXML
     void onTickButtonClicked() {
+        onStopButtonClicked();
         model.tick(FPS);
         board.paintBoard();
     }
 
     @FXML
+    void onReloadButtonClicked()  {
+        onStopButtonClicked();
+        model.loadFromFile();
+    }
+
+    @FXML
     void onOpenButtonClicked()  {
-        System.out.println("Open button clicked");
+        onStopButtonClicked();
+        //opens file explorer dialog for java fx
+        FileChooser fc = new FileChooser();
+        //file object to give the selected file
+        File selectedFile = fc.showOpenDialog(null);
+        if(selectedFile != null) {
+            model.setFilePath(selectedFile.getAbsolutePath());
+            onReloadButtonClicked();
+        }
     }
 
     @FXML
     void onSaveButtonClicked()  {
+        onStopButtonClicked();
         System.out.println("Save button clicked");
     }
 
     @FXML
-    void onQuitButtonClicked() { Platform.exit(); }
-
+    void onQuitButtonClicked() {
+        onStopButtonClicked();
+        Platform.exit();
+    }
 }

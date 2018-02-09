@@ -6,9 +6,12 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Model;
 import view.Board;
+
+import java.io.File;
 
 public class
 BuildMenuController {
@@ -38,10 +41,20 @@ BuildMenuController {
 
     // FILE ACTION LISTENERS
     @FXML
-    public void onOpenButtonClicked() {
+    void onReloadButtonClicked()  {
+        model.loadFromFile();
+    }
 
-        System.out.println("Open button clicked");
-
+    @FXML
+    void onOpenButtonClicked()  {
+        //opens file explorer dialog for java fx
+        FileChooser fc = new FileChooser();
+        //file object to give the selected file
+        File selectedFile = fc.showOpenDialog(null);
+        if(selectedFile != null) {
+            model.setFilePath(selectedFile.getAbsolutePath());
+            onReloadButtonClicked();
+        }
     }
 
     @FXML

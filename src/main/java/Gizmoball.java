@@ -26,6 +26,7 @@ public class Gizmoball extends Application {
     }
 
     public void load(Model model) {
-        model = model.loadFromFile("src/saveFile");
+        model.setFilePath("src/saveFile");
+        model.loadFromFile();
     }
 }

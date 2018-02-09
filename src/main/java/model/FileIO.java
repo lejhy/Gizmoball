@@ -9,6 +9,7 @@ import java.io.*;
 import java.util.*;
 
 public class FileIO {
+    private String filePath = "";
     private BufferedReader bR;
     private BufferedWriter bW;
     private Scanner sC;
@@ -18,14 +19,18 @@ public class FileIO {
         model = m;
     }
 
-    public boolean saveToFile(String fileName){
+    public void setFilePath(String s) {
+        filePath = s;
+    }
+
+    public boolean saveToFile(){
         return false;
     }
 
-    public Model loadFromFile(String fileName) throws IOException {
+    public Model loadFromFile() throws IOException {
 
+        FileReader fr = new FileReader(filePath);
         List<String> fileIn = new ArrayList<>();
-        FileReader fr = new FileReader(fileName);
         bR = new BufferedReader(fr);
         String line = bR.readLine();
 
@@ -37,6 +42,7 @@ public class FileIO {
             line = bR.readLine();
         }
 
+        model.clear();
         Map<String, StandardGizmo> gizmos = new HashMap<String, StandardGizmo>();
 
         for(String s : fileIn){

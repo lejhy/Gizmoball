@@ -26,14 +26,19 @@ public class Model {
     private static Map<Integer, List<StandardGizmo>> keyUpTriggers; //allows gizmos lookup based on key up events
 
     // friction coefficients
-    double mu1 = 0.025; // per second
-    double mu2 = 0.025; // per L
+    private double mu1 = 0.025; // per second
+    private double mu2 = 0.025; // per L
 
     private FileIO fileInOut;
 
 
     public Model() {
         walls = new Walls(0, 0, gridDimensions, gridDimensions);
+        clear();
+        fileInOut = new FileIO(this);
+    }
+
+    public void clear() {
         balls = new ArrayList<>();
         lines = new ArrayList<>();
         circles = new ArrayList<>();
@@ -42,7 +47,6 @@ public class Model {
         lineToGizmo = new HashMap<>();
         keyUpTriggers = new HashMap<>();
         keyDownTriggers = new HashMap<>();
-        fileInOut = new FileIO(this);
     }
 
     public void tick(double FPS) {
@@ -157,11 +161,11 @@ public class Model {
         return balls;
     }
 
-    public void addBall(Ball ball) { balls.add(ball); }
-
-    public void addGizmo(StandardGizmo gizmo) { gizmos.add(gizmo); }
+    void addBall(Ball ball) { balls.add(ball); }
 
     public List<StandardGizmo> getGizmos() { return gizmos; }
+
+    void addGizmo(StandardGizmo gizmo) { gizmos.add(gizmo); }
 
     public List<LineSegment> getLines() {
         return lines;
@@ -177,34 +181,37 @@ public class Model {
         circles.add(c);
     }
 
-    public void applyForces(Ball ball, double deltaT) {
+    private void applyForces(Ball ball, double deltaT) {
         ball.setVelo(new Vect(ball.getVelo().x(),ball.getVelo().y() + getGravityForce(deltaT)));
         applyFriction(ball, deltaT);
     }
 
-    public double getGravityForce(double deltaT) {
+    private double getGravityForce(double deltaT) {
         return 25.0*deltaT;
     }
 
-    public void applyFriction(Ball ball, double deltaT) {
+    private void applyFriction(Ball ball, double deltaT) {
         ball.setVelo(ball.getVelo().times(1 - (mu1 * deltaT) - (mu2 * Math.abs(ball.getVelo().length()) * deltaT)));
     }
 
-    public Model loadFromFile(String s) {
+    public void loadFromFile() {
 
         try {
-            return fileInOut.loadFromFile(s);
+            fileInOut.loadFromFile();
         } catch(IOException e) {
             System.out.println("File not found.");
         }
-        return null;
     }
 
-    public void addKeyDown(Integer keyCode, StandardGizmo gizmo) {
+    public void setFilePath (String s) {
+        fileInOut.setFilePath(s);
+    }
+
+    void addKeyDown(Integer keyCode, StandardGizmo gizmo) {
         addKey(keyCode, gizmo, keyDownTriggers);
     }
 
-    public void addKeyUp(Integer keyCode, StandardGizmo gizmo) {
+    void addKeyUp(Integer keyCode, StandardGizmo gizmo) {
         addKey(keyCode, gizmo, keyUpTriggers);
     }
 
