@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class Model {
     private final int gridDimensions = 20;
-    private boolean grid[][] = new boolean[gridDimensions][gridDimensions];
+    private boolean grid[][];
 
     private List<Ball> balls;
     private Walls walls;
@@ -39,6 +39,7 @@ public class Model {
     }
 
     public void clear() {
+        grid = new boolean[gridDimensions][gridDimensions];
         balls = new ArrayList<>();
         lines = new ArrayList<>();
         circles = new ArrayList<>();
@@ -167,7 +168,26 @@ public class Model {
 
     public List<StandardGizmo> getGizmos() { return gizmos; }
 
-    public void addGizmo(StandardGizmo gizmo) { gizmos.add(gizmo); }
+    public boolean addGizmo(StandardGizmo gizmo) {
+        int xCoord = gizmo.getxCoordinate();
+        int ycoord = gizmo.getyCoordinate();
+        int width = gizmo.getWidth();
+        int height = gizmo.getHeight();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (grid[xCoord + i][ycoord + j] == true) { // Check that all tiles are free
+                    return false;
+                }
+            }
+        }
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                grid[xCoord + i][ycoord + j] = true; // Occupy all tiles
+            }
+        }
+        gizmos.add(gizmo);
+        return true;
+    }
 
     public List<LineSegment> getLines() {
         return lines;

@@ -11,10 +11,10 @@ import physics.LineSegment;
 import javax.sound.midi.SysexMessage;
 
 public abstract class StandardGizmo  {
-    protected double x; // X coordinates of upper left corner
-    protected double y; // Y coordinates of upper left corner
+    protected int x; // X coordinates of upper left corner
+    protected int y; // Y coordinates of upper left corner
     protected Angle rotation;
-    protected double edgeLength; // edgeLength
+    protected int edgeLength; // edgeLength
     protected List<StandardGizmo> gizmos;
     protected boolean triggered;
     protected Type type;
@@ -37,17 +37,17 @@ public abstract class StandardGizmo  {
 
     public List<Circle> getCircles() { return new ArrayList<>(); };
 
-    public double getxCoordinate() {
+    public int getxCoordinate() {
         return x;
     }
 
-    public double getyCoordinate() {
+    public int getyCoordinate() {
         return y;
     }
 
-    public double getWidth() { return edgeLength; }
+    public int getWidth() { return edgeLength; }
 
-    public double getHeight() {return edgeLength; }
+    public int getHeight() {return edgeLength; }
 
     public Angle getRotation() { return rotation; }
 

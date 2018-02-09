@@ -62,7 +62,7 @@ public class TriangularBumper extends StandardGizmo {
     @Override
     public void rotate(Angle angle) {
         if (angle.equals(Angle.DEG_90) || angle.equals(Angle.DEG_180) || angle.equals(Angle.DEG_270)) {
-            Vect center = new Vect(x + edgeLength / 2, y + edgeLength / 2);
+            Vect center = new Vect(x + edgeLength / 2.0, y + edgeLength / 2.0);
             corner0 = corner0.rotateBy(angle, center);
             corner1 = corner1.rotateBy(angle, center);
             corner2 = corner2.rotateBy(angle, center);

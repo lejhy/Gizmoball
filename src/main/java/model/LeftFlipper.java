@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeftFlipper extends StandardGizmo {
-    private final double radius = edgeLength/4;
+    private final double radius = edgeLength/4.0;
     private final double angularVelocity = Math.toRadians(1080);
 
     private Vect pivot;
@@ -23,7 +23,7 @@ public class LeftFlipper extends StandardGizmo {
     public List<LineSegment> getLines() {
         List<LineSegment> lines = new ArrayList<>();
         lines.add(new LineSegment(new Vect(x, y + radius).rotateBy(rotation, pivot), new Vect(x, y + 2*edgeLength - radius).rotateBy(rotation, pivot)));
-        lines.add(new LineSegment(new Vect(x + edgeLength/2, y + radius).rotateBy(rotation, pivot), new Vect(x  + edgeLength/2, y + 2*edgeLength - radius).rotateBy(rotation, pivot)));
+        lines.add(new LineSegment(new Vect(x + edgeLength/2.0, y + radius).rotateBy(rotation, pivot), new Vect(x  + edgeLength/2.0, y + 2*edgeLength - radius).rotateBy(rotation, pivot)));
         return lines;
     }
 
@@ -41,12 +41,10 @@ public class LeftFlipper extends StandardGizmo {
     }
 
     @Override
-    public double getWidth() {
-        return edgeLength*2;
-    }
+    public int getWidth() { return edgeLength*2; }
 
     @Override
-    public double getHeight() {
+    public int getHeight() {
         return edgeLength*2;
     }
 

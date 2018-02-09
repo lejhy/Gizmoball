@@ -15,15 +15,30 @@ public class Absorber extends StandardGizmo{
 
     public Absorber(int x0, int y0, int x1, int y1) {
         super(x0, y0, Type.ABSORBER);
+        if (x > x1) {
+            int temp = x;
+            x = x1;
+            x1 = temp;
+        }
+        if (y > y1) {
+            int temp = y;
+            y = y1;
+            y1 = temp;
+        }
         this.x1 = x1;
         this.y1 = y1;
         line = new LineSegment(x0, y0, x1, y0);
         balls = new ArrayList<>();
     }
-
     public LineSegment getLineSeg() {
         return line;
     }
+
+    @Override
+    public int getWidth() { return Math.abs(x - x1); }
+
+    @Override
+    public int getHeight() { return Math.abs(y - y1); }
 
     @Override
     public List<LineSegment> getLines() {
@@ -57,6 +72,4 @@ public class Absorber extends StandardGizmo{
         	balls.remove(ball);
     	}
     }
-
-
 }

@@ -12,7 +12,7 @@ public class CircularBumper extends StandardGizmo {
 
     public CircularBumper(int xCoordinate, int yCoordinate) {
         super(xCoordinate, yCoordinate, Type.CIRCLE);
-        radius = edgeLength/2;
+        radius = edgeLength/2.0;
     }
 
     @Override

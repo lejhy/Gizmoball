@@ -18,7 +18,7 @@ public class Ball {
         ypos = y;
         colour = Color.BLUE;
         velocity = new Vect(xv, yv);
-        radius = diameter/2;
+        radius = diameter/2.0;
         stopped = false;
     }
 

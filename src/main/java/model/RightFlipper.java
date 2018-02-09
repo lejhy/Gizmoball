@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RightFlipper extends StandardGizmo {
-    private final double radius = edgeLength/4;
+    private final double radius = edgeLength/4.0;
     private final double angularVelocity = Math.toRadians(1080);
 
     private Vect pivot;
@@ -24,7 +24,7 @@ public class RightFlipper extends StandardGizmo {
         List<LineSegment> lines = new ArrayList<>();
         // draw lines
         lines.add(new LineSegment(new Vect(x + 2*edgeLength, y + radius).rotateBy(rotation, pivot), new Vect(x + 2*edgeLength, y + 2*edgeLength - radius).rotateBy(rotation, pivot)));
-        lines.add(new LineSegment(new Vect(x + + 2*edgeLength - edgeLength/2, y + radius).rotateBy(rotation, pivot), new Vect(x  + 2*edgeLength - edgeLength/2, y + 2*edgeLength - radius).rotateBy(rotation, pivot)));
+        lines.add(new LineSegment(new Vect(x + + 2*edgeLength - edgeLength/2.0, y + radius).rotateBy(rotation, pivot), new Vect(x  + 2*edgeLength - edgeLength/2.0, y + 2*edgeLength - radius).rotateBy(rotation, pivot)));
         return lines;
     }
 
@@ -42,12 +42,12 @@ public class RightFlipper extends StandardGizmo {
     }
 
     @Override
-    public double getWidth() {
+    public int getWidth() {
         return edgeLength*2;
     }
 
     @Override
-    public double getHeight() {
+    public int getHeight() {
         return edgeLength*2;
     }
 
