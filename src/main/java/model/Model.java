@@ -97,7 +97,7 @@ public class Model {
         lines = new ArrayList<>();
         circles = new ArrayList<>();
         for (StandardGizmo gizmo : gizmos) {
-            gizmo.update(tickTime);
+            gizmo.update(tickTime); // TODO - these updates will need proper physics handling
             for (LineSegment line : gizmo.getLines()) {
                 addLine(line, gizmo);
             }
@@ -108,7 +108,7 @@ public class Model {
     }
 
     // Find Time Until Collision and also, if there is a collision, the new speed vector.
-    private CollisionDetails timeUntilCollision(Ball ball) {
+    private CollisionDetails timeUntilCollision(Ball ball) { // TODO - possibly take all these calculations to a separate class
         Circle ballCircle = ball.getCircle(); // Create a physics.Circle from Ball
         Vect ballVelocity = ball.getVelo();
         Vect newVelo = new Vect(0, 0);
