@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Absorber extends StandardGizmo{
-    private LineSegment line;
     private List<Ball> balls;
     private int x1;
     private int y1;
@@ -27,11 +26,19 @@ public class Absorber extends StandardGizmo{
         }
         this.x1 = x1;
         this.y1 = y1;
-        line = new LineSegment(x0, y0, x1, y0);
         balls = new ArrayList<>();
     }
-    public LineSegment getLineSeg() {
-        return line;
+
+    @Override
+    public void setxCoordinate(int x) {
+        this.x1 += x - this.x;
+        this.x = x;
+    }
+
+    @Override
+    public void setyCoordinate(int y) {
+        this.y1 += y - this.y;
+        this.y = y;
     }
 
     @Override
@@ -43,7 +50,7 @@ public class Absorber extends StandardGizmo{
     @Override
     public List<LineSegment> getLines() {
         List<LineSegment> lines = new ArrayList<>();
-        lines.add(line);
+        lines.add(new LineSegment(x, y, x1, y));
         return lines;
     }
 

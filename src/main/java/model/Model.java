@@ -233,6 +233,34 @@ public class Model {
         return false;
     }
 
+    public boolean moveGizmo(StandardGizmo gizmo, int x, int y) {
+        int xCoord = gizmo.getxCoordinate();
+        int ycoord = gizmo.getyCoordinate();
+        int width = gizmo.getWidth();
+        int height = gizmo.getHeight();
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (grid[x+i][y+j] == true) {
+                    return false; // Check that the gizmo can be moved
+                }
+            }
+        }
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                grid[xCoord+i][ycoord+j] = false; // Remove old coordinates
+            }
+        }
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                grid[x+i][y+j] = true; // Occupy new coordinates
+            }
+        }
+        gizmo.setxCoordinate(x);
+        gizmo.setyCoordinate(y);
+        return true;
+    }
+
     public List<LineSegment> getLines() {
         return lines;
     }

@@ -41,9 +41,13 @@ public abstract class StandardGizmo  {
         return x;
     }
 
+    public void setxCoordinate(int x) { this.x = x; }
+
     public int getyCoordinate() {
         return y;
     }
+
+    public void setyCoordinate(int y) { this.y = y; }
 
     public int getWidth() { return edgeLength; }
 

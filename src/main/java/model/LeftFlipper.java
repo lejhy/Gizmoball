@@ -12,16 +12,14 @@ public class LeftFlipper extends StandardGizmo {
     private final double radius = edgeLength/4.0;
     private final double angularVelocity = Math.toRadians(1080);
 
-    private Vect pivot;
-
     public LeftFlipper(int xCoordinate, int yCoordinate) {
         super(xCoordinate, yCoordinate, Type.LEFT_FLIPPER);
-        pivot = new Vect(x + radius, y + radius);
     }
 
     @Override
     public List<LineSegment> getLines() {
         List<LineSegment> lines = new ArrayList<>();
+        Vect pivot = new Vect(x + radius, y + radius);
         lines.add(new LineSegment(new Vect(x, y + radius).rotateBy(rotation, pivot), new Vect(x, y + 2*edgeLength - radius).rotateBy(rotation, pivot)));
         lines.add(new LineSegment(new Vect(x + edgeLength/2.0, y + radius).rotateBy(rotation, pivot), new Vect(x  + edgeLength/2.0, y + 2*edgeLength - radius).rotateBy(rotation, pivot)));
         return lines;
@@ -32,6 +30,7 @@ public class LeftFlipper extends StandardGizmo {
         List<Circle> circles = new ArrayList<>();
 
         // calculate circle centers
+        Vect pivot = new Vect(x + radius, y + radius);
         Vect movingCenter = new Vect(x + radius, y + 2*edgeLength - radius).rotateBy(rotation, pivot);
 
         // create circles
