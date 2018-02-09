@@ -189,6 +189,50 @@ public class Model {
         return true;
     }
 
+    public StandardGizmo getGizmo(int x, int y) {
+        if (grid[x][y] == true) {
+            for(StandardGizmo gizmo : gizmos) {
+                int xCoord = gizmo.getxCoordinate();
+                int ycoord = gizmo.getyCoordinate();
+                int width = gizmo.getWidth();
+                int height = gizmo.getHeight();
+                for (int i = 0; i < width; i++) {
+                    for (int j = 0; j < height; j++) {
+                        if (xCoord+i == x && ycoord+j == y) {
+                            return gizmo;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean removeGizmo(StandardGizmo gizmoToRemove) {
+        if (gizmos.remove(gizmoToRemove)) { // Remove from gizmos and check whether it actually existed
+            for (StandardGizmo gizmo : gizmos) {
+                gizmo.removeGizmoTrigger(gizmoToRemove); // Remove gizmo triggers
+            }
+            for (List<StandardGizmo> list : keyUpTriggers.values()) {
+                list.remove(gizmoToRemove); // Remove key up triggers
+            }
+            for (List<StandardGizmo> list : keyDownTriggers.values()) {
+                list.remove(gizmoToRemove); // Remove key down triggers
+            }
+            int xCoord = gizmoToRemove.getxCoordinate();
+            int ycoord = gizmoToRemove.getyCoordinate();
+            int width = gizmoToRemove.getWidth();
+            int height = gizmoToRemove.getHeight();
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    grid[xCoord+i][ycoord+j] = false; // Free the grid
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     public List<LineSegment> getLines() {
         return lines;
     }

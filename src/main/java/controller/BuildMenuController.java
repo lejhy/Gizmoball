@@ -131,7 +131,7 @@ BuildMenuController {
 
     @FXML
     public void onClearBondButtonClicked() {
-        swapBoardMouseEventHandler(new ClearMouseEventHandler(model, board));
+        model.clear();
     }
 
     private void swapBoardMouseEventHandler (EventHandler<MouseEvent> event) {

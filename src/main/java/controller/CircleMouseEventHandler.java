@@ -22,7 +22,6 @@ public class CircleMouseEventHandler implements EventHandler<MouseEvent> {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
             double x = board.getLPos(event.getX());
             double y = board.getLPos(event.getY());
-            System.out.println("coords: " + x + " " + y + " " +(int)x + " " + (int)y);
             model.addGizmo(new CircularBumper((int)x, (int)y));
         }
     }
