@@ -30,6 +30,12 @@ public class SquareBumper extends StandardGizmo {
     }
 
     @Override
+    public void trigger(Ball ball) {
+        super.trigger(ball);
+        action();
+    }
+
+    @Override
     public List<Circle> getCircles() {
         List<Circle> circles = new ArrayList<>();
         circles.add(new Circle(x, y, 0)); // top left corner
@@ -38,17 +44,6 @@ public class SquareBumper extends StandardGizmo {
         circles.add(new Circle(x + edgeLength, y + edgeLength, 0)); // bottom right corner
         return circles;
     }
-
-    @Override
-    public void trigger() {
-
-    }
-
-	@Override
-	public void action() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public String toString(){
         return "Square S// " + this.getxCoordinate() + this.getyCoordinate();

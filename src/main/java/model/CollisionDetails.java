@@ -5,15 +5,15 @@ import physics.Vect;
 public class CollisionDetails {
     private double tuc;
     private Vect velo;
-    private Object colide;
+    private StandardGizmo colide;
 
-    public CollisionDetails(double t, Vect v, Object cG) {
+    public CollisionDetails(double t, Vect v, StandardGizmo cG) {
         tuc = t;
         velo = v;
         colide = cG;
     }
 
-    public double getTuc() {
+    public double getTimeUntilCollision() {
         return tuc;
     }
 
@@ -21,7 +21,7 @@ public class CollisionDetails {
         return velo;
     }
 
-    public Object getColiding() {
+    public StandardGizmo getColiding() {
         return colide;
     }
 

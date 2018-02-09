@@ -3,14 +3,11 @@ package controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Model;
 import view.Board;
@@ -35,7 +32,7 @@ public class RunMenuController {
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), e->{
-            model.moveBall(FPS);
+            model.tick(FPS);
             board.paintBoard();
         }));
     }
@@ -75,7 +72,7 @@ public class RunMenuController {
 
     @FXML
     void onTickButtonClicked() {
-        model.moveBall(FPS);
+        model.tick(FPS);
         board.paintBoard();
     }
 

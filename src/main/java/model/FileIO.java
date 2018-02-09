@@ -1,6 +1,9 @@
 package model;
 
 import javafx.scene.input.KeyCode;
+import physics.Angle;
+import physics.Circle;
+import physics.LineSegment;
 
 import java.io.*;
 import java.util.*;
@@ -90,7 +93,7 @@ public class FileIO {
                     break;
 
                 case "Rotate":
-                    gizmos.get(tokens[1]).rotate();
+                    gizmos.get(tokens[1]).rotate(Angle.DEG_90);
                     break;
             }
         }

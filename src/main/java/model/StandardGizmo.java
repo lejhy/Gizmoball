@@ -16,6 +16,7 @@ public abstract class StandardGizmo  {
     protected Angle rotation;
     protected double edgeLength; // edgeLength
     protected List<StandardGizmo> gizmos;
+    protected boolean triggered;
     protected Type type;
     public enum Type {
         SQUARE, CIRCLE, TRIANGLE, ABSORBER, LEFT_FLIPPER, RIGHT_FLIPPER, WALL
@@ -24,6 +25,7 @@ public abstract class StandardGizmo  {
 
     public StandardGizmo(int Lx, int Ly, Type type) {
         this.edgeLength = 1;
+        triggered = false;
         x = Lx;
         y = Ly;
         rotation = Angle.ZERO;
@@ -31,9 +33,9 @@ public abstract class StandardGizmo  {
         gizmos = new ArrayList<>();
     }
 
-    public abstract List<LineSegment> getLines();
+    public List<LineSegment> getLines() { return new ArrayList<>(); };
 
-    public abstract List<Circle> getCircles();
+    public List<Circle> getCircles() { return new ArrayList<>(); };
 
     public double getxCoordinate() {
         return x;
@@ -51,6 +53,8 @@ public abstract class StandardGizmo  {
 
     public Type getType() { return type; }
 
+    public boolean isTriggered() { return triggered; }
+
     public double getEdgeLength() {
         return edgeLength;
     }
@@ -65,17 +69,25 @@ public abstract class StandardGizmo  {
         gizmos.remove(gizmo);
     }
 
-    public void trigger() {
+    public void trigger(Ball ball) {
         for(StandardGizmo gizmo : gizmos) {
             gizmo.action();
         }
     };
 
-    public void rotate() {
+    public void rotate(Angle angle) {
         //DO NOTHING AS DEFAULT
     }
     
     public void action() {
-        System.out.println ("Standard gizmo triggered. x: " + x + " y: " + y);
-    }
+        if (triggered) {
+            triggered = false;
+        } else {
+            triggered = true;
+        }
+    };
+
+    public void update(double deltaT) {
+        // do nothing as default
+    };
 }

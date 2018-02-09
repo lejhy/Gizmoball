@@ -10,7 +10,6 @@ import java.util.List;
 
 public class TriangularBumper extends StandardGizmo {
 
-
     private Vect corner0;
     private Vect corner1;
     private Vect corner2;
@@ -55,17 +54,19 @@ public class TriangularBumper extends StandardGizmo {
     }
 
     @Override
-    public void rotate() {
-        Vect center = new Vect(x + edgeLength / 2, y + edgeLength / 2);
-        corner0 = corner0.rotateBy(Angle.DEG_90, center);
-        corner1 = corner1.rotateBy(Angle.DEG_90, center);
-        corner2 = corner2.rotateBy(Angle.DEG_90, center);
-        rotation = rotation.plus(Angle.DEG_90);
+    public void trigger(Ball ball) {
+        super.trigger(ball);
+        action();
     }
 
-	@Override
-	public void action() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void rotate(Angle angle) {
+        if (angle.equals(Angle.DEG_90) || angle.equals(Angle.DEG_180) || angle.equals(Angle.DEG_270)) {
+            Vect center = new Vect(x + edgeLength / 2, y + edgeLength / 2);
+            corner0 = corner0.rotateBy(angle, center);
+            corner1 = corner1.rotateBy(angle, center);
+            corner2 = corner2.rotateBy(angle, center);
+            rotation = rotation.plus(angle);
+        }
+    }
 }

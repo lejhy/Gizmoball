@@ -19,11 +19,17 @@ public class Board {
 
     private Image ballImg;
     private Image squareImg;
+    private Image squareTriggeredImg;
     private Image circleImg;
+    private Image circleTriggeredImg;
     private Image triangleImg0;
+    private Image triangleTriggeredImg0;
     private Image triangleImg90;
+    private Image triangleTriggeredImg90;
     private Image triangleImg180;
+    private Image triangleTriggeredImg180;
     private Image triangleImg270;
+    private Image triangleTriggeredImg270;
     private List<Image> leftFlipperImg;
     private List<Image> rightFlipperImg;
     private Image wallImg;
@@ -39,11 +45,17 @@ public class Board {
 
         ballImg = new Image(getClass().getResource("/Ball.png").toString());
         squareImg = new Image(getClass().getResource("/Square.png").toString());
+        squareTriggeredImg = new Image(getClass().getResource("/Square_triggered.png").toString());
         circleImg = new Image(getClass().getResource("/Circle.png").toString());
+        circleTriggeredImg = new Image(getClass().getResource("/Circle_triggered.png").toString());
         triangleImg0 = new Image(getClass().getResource("/Triangle_0.png").toString());
+        triangleTriggeredImg0 = new Image(getClass().getResource("/Triangle_0_triggered.png").toString());
         triangleImg90 = new Image(getClass().getResource("/Triangle_90.png").toString());
+        triangleTriggeredImg90 = new Image(getClass().getResource("/Triangle_90_triggered.png").toString());
         triangleImg180 = new Image(getClass().getResource("/Triangle_180.png").toString());
+        triangleTriggeredImg180 = new Image(getClass().getResource("/Triangle_180_triggered.png").toString());
         triangleImg270 = new Image(getClass().getResource("/Triangle_270.png").toString());
+        triangleTriggeredImg270 = new Image(getClass().getResource("/Triangle_270_triggered.png").toString());
         leftFlipperImg = new ArrayList<>();
         rightFlipperImg = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
@@ -82,23 +94,30 @@ public class Board {
             Image image = null;
             switch (gizmo.getType()) {
                 case SQUARE:
-                    image = squareImg;
+                    if (gizmo.isTriggered()) image = squareTriggeredImg;
+                    else image = squareImg;
                     break;
                 case CIRCLE:
-                    image = circleImg;
+                    if (gizmo.isTriggered()) image = circleTriggeredImg;
+                    else image = circleImg;
                     break;
                 case TRIANGLE:
                     Angle rotation = gizmo.getRotation();
                     if (gizmo.equals(Angle.ZERO)) {
-                        image = triangleImg0;
+                        if (gizmo.isTriggered()) image = triangleTriggeredImg0;
+                        else image = triangleImg0;
                     } else if (rotation.equals(Angle.DEG_90)) {
-                        image = triangleImg90;
+                        if (gizmo.isTriggered()) image = triangleTriggeredImg90;
+                        else image = triangleImg90;
                     } else if (rotation.equals(Angle.DEG_180)) {
-                        image = triangleImg180;
+                        if (gizmo.isTriggered()) image = triangleTriggeredImg180;
+                        else image = triangleImg180;
                     } else if (rotation.equals(Angle.DEG_270)) {
-                        image = triangleImg270;
+                        if (gizmo.isTriggered()) image = triangleTriggeredImg270;
+                        else image = triangleImg270;
                     } else {
-                        image = triangleImg0;
+                        if (gizmo.isTriggered()) image = triangleTriggeredImg0;
+                        else image = triangleImg0;
                     }
                     break;
                 case LEFT_FLIPPER:
