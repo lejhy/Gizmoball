@@ -65,6 +65,7 @@ public class Absorber extends StandardGizmo{
         System.out.println("triggered absorber");
         ball.stop();
         balls.add(ball);
+        action();
     }
     
     @Override

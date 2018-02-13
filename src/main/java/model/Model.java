@@ -30,6 +30,7 @@ public class Model {
     private double mu2 = 0.025; // per L
 
     private FileIO fileInOut;
+    private double gravityMultiplier = 25.0;
 
 
     public Model() {
@@ -190,7 +191,7 @@ public class Model {
     }
 
     public StandardGizmo getGizmo(int x, int y) {
-        if (grid[x][y] == true) {
+        if (grid[x][y]) {
             for(StandardGizmo gizmo : gizmos) {
                 int xCoord = gizmo.getxCoordinate();
                 int ycoord = gizmo.getyCoordinate();
@@ -241,7 +242,7 @@ public class Model {
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (grid[x+i][y+j] == true) {
+                if (grid[x+i][y+j]) {
                     return false; // Check that the gizmo can be moved
                 }
             }
@@ -281,11 +282,24 @@ public class Model {
     }
 
     private double getGravityForce(double deltaT) {
-        return 25.0*deltaT;
+        return gravityMultiplier*deltaT;
+    }
+
+    public void setGravityForce(double mult) {
+        gravityMultiplier = mult;
     }
 
     private void applyFriction(Ball ball, double deltaT) {
         ball.setVelo(ball.getVelo().times(1 - (mu1 * deltaT) - (mu2 * Math.abs(ball.getVelo().length()) * deltaT)));
+    }
+
+    public void setFrictionMU(double mult, int delim){
+        if(delim == 1){
+            mu1 = mult;
+        }
+        if(delim == 2){
+            mu2 = mult;
+        }
     }
 
     public void loadFromFile() {
