@@ -71,4 +71,9 @@ public class LeftFlipper extends StandardGizmo {
     public Angle getRotation() {
         return Angle.ZERO.minus(rotation); //The flipper rotates anticlockwise
     }
+
+    @Override
+    public String toString(int i){
+        return "LeftFlipper LF" + i + " " + this.getxCoordinate() + " " + this.getyCoordinate();
+    }
 }

@@ -52,4 +52,8 @@ public class TriangularBumper extends StandardGizmo {
             rotation = rotation.plus(angle);
         }
     }
+
+    public String toString(int i){
+        return "Triangle T" + i + " " + this.getxCoordinate() + " " + this.getyCoordinate();
+    }
 }

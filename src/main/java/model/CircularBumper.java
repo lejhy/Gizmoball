@@ -32,4 +32,8 @@ public class CircularBumper extends StandardGizmo {
         circles.add(new Circle(x + radius, y + radius, radius));
         return circles;
     }
+
+    public String toString(int i){
+        return "Circle C" + i + " " + this.getxCoordinate() + " " + this.getyCoordinate();
+    }
 }

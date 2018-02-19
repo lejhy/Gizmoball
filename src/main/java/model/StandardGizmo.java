@@ -18,6 +18,9 @@ public abstract class StandardGizmo  {
     protected List<StandardGizmo> gizmos;
     protected boolean triggered;
     protected Type type;
+
+    public abstract String toString(int i);
+
     public enum Type {
         SQUARE, CIRCLE, TRIANGLE, ABSORBER, LEFT_FLIPPER, RIGHT_FLIPPER, WALL
     };

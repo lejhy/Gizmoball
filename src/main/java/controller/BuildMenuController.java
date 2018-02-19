@@ -73,7 +73,15 @@ BuildMenuController {
 
     @FXML
     public void onSaveButtonClicked() {
-        System.out.println("Save button clicked");
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("All Files", "*.*"));
+        File selectedFile = fc.showSaveDialog(null);
+        if(selectedFile != null) {
+            model.setFilePath(selectedFile.getAbsolutePath());
+            model.saveToFIle();
+        }
     }
 
     @FXML

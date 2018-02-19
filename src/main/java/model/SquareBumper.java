@@ -45,7 +45,8 @@ public class SquareBumper extends StandardGizmo {
         return circles;
     }
 
-	public String toString(){
-        return "Square S// " + this.getxCoordinate() + this.getyCoordinate();
+    @Override
+	public String toString(int i){
+        return "Square S" + i + " " + this.getxCoordinate() + " " + this.getyCoordinate();
     }
 }

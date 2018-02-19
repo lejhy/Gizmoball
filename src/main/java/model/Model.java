@@ -19,7 +19,7 @@ public class Model {
     private Walls walls;
     private List<LineSegment> lines;
     private List<Circle> circles;
-    private static ArrayList<StandardGizmo> gizmos;
+    public static ArrayList<StandardGizmo> gizmos;
     private static Map<Circle, StandardGizmo> circleToGizmo; //allows gizmo lookup based on circles and lines
     private static Map<LineSegment, StandardGizmo> lineToGizmo; //allows gizmo lookup based on circles and lines
     private static Map<Integer, List<StandardGizmo>> keyDownTriggers; //allows gizmos lookup based on key down events
@@ -309,6 +309,10 @@ public class Model {
         } catch(IOException e) {
             System.out.println("File not found.");
         }
+    }
+
+    public void saveToFIle() {
+        fileInOut.saveToFile();
     }
 
     public void setFilePath (String s) {

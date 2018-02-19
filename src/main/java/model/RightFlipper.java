@@ -75,4 +75,9 @@ public class RightFlipper extends StandardGizmo {
     public Angle getRotation() {
         return rotation;
     }
+
+    @Override
+    public String toString(int i){
+        return "RightFlipper RF" + i + " " + this.getxCoordinate() + " " + this.getyCoordinate();
+    }
 }

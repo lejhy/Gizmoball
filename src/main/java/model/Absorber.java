@@ -65,7 +65,7 @@ public class Absorber extends StandardGizmo{
         System.out.println("triggered absorber");
         ball.stop();
         balls.add(ball);
-        action();
+       // action();
     }
     
     @Override
@@ -79,5 +79,9 @@ public class Absorber extends StandardGizmo{
     		System.out.println("absorber action done");
         	balls.remove(ball);
     	}
+    }
+
+    public String toString(int i){
+        return "Absorber A" + i + " " + x + " " + y + " " + x1 + " " + y1;
     }
 }
