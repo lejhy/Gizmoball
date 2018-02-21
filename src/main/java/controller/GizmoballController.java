@@ -78,6 +78,7 @@ public class GizmoballController extends BorderPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        buildMenuController.init();
         buildMenuController.addRunningModeListener(event -> setLeft(runMenu));
     }
 }

@@ -4,10 +4,12 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -22,6 +24,9 @@ BuildMenuController {
     private Model model;
     private Board board;
     private EventHandler<MouseEvent> currentBoardMouseEventHandler = null;
+
+    @FXML
+    private Node buildRoot;
 
     @FXML
     private Button runMode;
@@ -51,6 +56,23 @@ BuildMenuController {
 
     public void addRunningModeListener(EventHandler handler) {
         runMode.setOnAction(handler);
+    }
+
+    public void init() {
+        propagateKeyEvents();
+    }
+
+    private void propagateKeyEvents() {
+        buildRoot.addEventFilter(KeyEvent.ANY, e->{
+            if (e.getEventType() == KeyEvent.KEY_PRESSED) {
+                System.out.println("down");
+            } else if (e.getEventType() == KeyEvent.KEY_RELEASED) {
+                System.out.println("up");
+            } else {
+                // ignore
+            }
+            e.consume();
+        });
     }
 
     // FILE ACTION LISTENERS

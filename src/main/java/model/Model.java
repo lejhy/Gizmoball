@@ -6,10 +6,7 @@ import physics.LineSegment;
 import physics.Vect;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Model {
     private final int gridDimensions = 20;
@@ -24,6 +21,7 @@ public class Model {
     private static Map<LineSegment, StandardGizmo> lineToGizmo; //allows gizmo lookup based on circles and lines
     private static Map<Integer, List<StandardGizmo>> keyDownTriggers; //allows gizmos lookup based on key down events
     private static Map<Integer, List<StandardGizmo>> keyUpTriggers; //allows gizmos lookup based on key up events
+    private static List<Integer> waitingForKeyUp; //list of key down events without corresponding key up events
 
     // friction coefficients
     private double mu1 = 0.025; // per second
@@ -49,6 +47,7 @@ public class Model {
         lineToGizmo = new HashMap<>();
         keyUpTriggers = new HashMap<>();
         keyDownTriggers = new HashMap<>();
+        waitingForKeyUp = new ArrayList<>();
     }
 
     public void tick(double FPS) {
@@ -339,10 +338,15 @@ public class Model {
     }
 
     public void handleKeyDown(Integer keyCode) {
-        handleKey(keyCode, keyDownTriggers);
+        if(waitingForKeyUp.contains(keyCode)) {
+            waitingForKeyUp.add(keyCode);
+            handleKey(keyCode, keyDownTriggers);
+        }
     }
 
     public void handleKeyUp(Integer keyCode) {
+        if(waitingForKeyUp.contains(keyCode))
+            waitingForKeyUp.remove(keyCode);
         handleKey(keyCode, keyUpTriggers);
     }
 
