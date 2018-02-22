@@ -1,19 +1,15 @@
 package controller;
 
-import javafx.event.Event;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.application.Platform;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import model.Ball;
 import model.Model;
 import view.Board;
 
@@ -25,6 +21,8 @@ BuildMenuController {
     private Board board;
     private EventHandler<MouseEvent> currentBoardMouseEventHandler = null;
     private Label textOutput;
+    private ConnectMouseEventHandler currentConnectHandler;
+    private DisconnectMouseEventHandler currentDisconnectHandler;
 
     @FXML
     private Node buildRoot;
@@ -67,9 +65,25 @@ BuildMenuController {
     private void propagateKeyEvents() {
         buildRoot.addEventFilter(KeyEvent.ANY, e->{
             if (e.getEventType() == KeyEvent.KEY_PRESSED) {
-                System.out.println("down");
+                if(textOutput.getText().contains("Disconnecting gizmo")){
+                    model.addKeyDown(e.getCode().impl_getCode(), currentDisconnectHandler.getGizmoToBeDisconnected());
+                    //there will be bugs
+                    //needs something like
+                    //currentDisconnectHandler = null;
+                    //would require pressing disconnect multiple times
+                    //accidentally adding key connects to the last gizmo connected is a problem
+                    //todo solve this
+                }
+                else if(textOutput.getText().contains("Connecting gizmo")){//semantic coupling, cant think of a better way tho
+                   model.addKeyDown(e.getCode().impl_getCode(), currentConnectHandler.getGizmoToBeConnected());
+                }
             } else if (e.getEventType() == KeyEvent.KEY_RELEASED) {
-                System.out.println("up");
+                if(textOutput.getText().contains("Disconnecting gizmo")){
+                    model.addKeyUp(e.getCode().impl_getCode(), currentDisconnectHandler.getGizmoToBeDisconnected());
+                }
+                else if(textOutput.getText().contains("Connecting gizmo")){//semantic coupling, cant think of a better way tho
+                    model.addKeyUp(e.getCode().impl_getCode(), currentConnectHandler.getGizmoToBeConnected());
+                }
             } else {
                 // ignore
             }
@@ -159,10 +173,10 @@ BuildMenuController {
     }
 
     @FXML
-    public void onConnectButtonClicked() { swapBoardMouseEventHandler(new ConnectMouseEventHandler(model, board, textOutput)); }
+    public void onConnectButtonClicked() { swapBoardMouseEventHandler(currentConnectHandler = new ConnectMouseEventHandler(model, board, textOutput)); }
 
     @FXML
-    public void onDisconnectButtonClicked() { swapBoardMouseEventHandler(new DisconnectMouseEventHandler(model, board)); }
+    public void onDisconnectButtonClicked() { swapBoardMouseEventHandler(currentDisconnectHandler = new DisconnectMouseEventHandler(model, board, textOutput)); }
 
     @FXML
     public void onDeleteButtonClicked() {
