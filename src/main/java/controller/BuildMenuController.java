@@ -24,6 +24,7 @@ BuildMenuController {
     private Model model;
     private Board board;
     private EventHandler<MouseEvent> currentBoardMouseEventHandler = null;
+    private Label textOutput;
 
     @FXML
     private Node buildRoot;
@@ -49,9 +50,10 @@ BuildMenuController {
     @FXML
     private Label friction2Label;
 
-    public BuildMenuController(Model model, Board board) {
+    public BuildMenuController(Model model, Board board, Label textOutput) {
         this.model = model;
         this.board = board;
+        this.textOutput = textOutput;
     }
 
     public void addRunningModeListener(EventHandler handler) {
@@ -157,7 +159,7 @@ BuildMenuController {
     }
 
     @FXML
-    public void onConnectButtonClicked() { swapBoardMouseEventHandler(new ConnectMouseEventHandler(model, board)); }
+    public void onConnectButtonClicked() { swapBoardMouseEventHandler(new ConnectMouseEventHandler(model, board, textOutput)); }
 
     @FXML
     public void onDisconnectButtonClicked() { swapBoardMouseEventHandler(new DisconnectMouseEventHandler(model, board)); }
@@ -173,6 +175,7 @@ BuildMenuController {
     }
 
     private void swapBoardMouseEventHandler (EventHandler<MouseEvent> event) {
+        textOutput.setText("Fancy messages for the user go here!");
         board.removeMouseEventHandler(currentBoardMouseEventHandler);
         board.addMouseEventHandler(event);
         currentBoardMouseEventHandler = event;
