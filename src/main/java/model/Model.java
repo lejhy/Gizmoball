@@ -318,11 +318,11 @@ public class Model {
         fileInOut.setFilePath(s);
     }
 
-    void addKeyDown(Integer keyCode, StandardGizmo gizmo) {
+    public void addKeyDown(Integer keyCode, StandardGizmo gizmo) {
         addKey(keyCode, gizmo, keyDownTriggers);
     }
 
-    void addKeyUp(Integer keyCode, StandardGizmo gizmo) {
+    public void addKeyUp(Integer keyCode, StandardGizmo gizmo) {
         addKey(keyCode, gizmo, keyUpTriggers);
     }
 
@@ -337,8 +337,23 @@ public class Model {
         }
     }
 
+    public void removeKeyUp(Integer keyCode, StandardGizmo gizmo){
+        removeKey(keyCode, gizmo, keyUpTriggers);
+    }
+
+    public void removeKeyDown(Integer keyCode, StandardGizmo gizmo){
+        removeKey(keyCode, gizmo, keyDownTriggers);
+    }
+
+    private void removeKey(Integer keyCode, StandardGizmo gizmo, Map<Integer, List<StandardGizmo>> keyTriggers){
+        List<StandardGizmo> gizmos = keyTriggers.get(keyCode);
+        if (gizmos != null) {
+            gizmos.remove(gizmo);
+        }
+    }
+
     public void handleKeyDown(Integer keyCode) {
-        if(waitingForKeyUp.contains(keyCode)) {
+        if(!waitingForKeyUp.contains(keyCode)) {
             waitingForKeyUp.add(keyCode);
             handleKey(keyCode, keyDownTriggers);
         }

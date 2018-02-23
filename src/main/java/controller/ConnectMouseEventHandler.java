@@ -2,12 +2,10 @@ package controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import model.Model;
 import model.StandardGizmo;
 import view.Board;
-
-import javafx.scene.input.MouseEvent;
 
 public class ConnectMouseEventHandler implements EventHandler<MouseEvent> {
 
@@ -15,6 +13,7 @@ public class ConnectMouseEventHandler implements EventHandler<MouseEvent> {
     private view.Board board;
     private StandardGizmo gizmoToBeConnected;
     private Label label;
+    private boolean gizmoSet = false;
 
     public ConnectMouseEventHandler(Model model, Board board, Label label) {
         this.model = model;
@@ -31,6 +30,7 @@ public class ConnectMouseEventHandler implements EventHandler<MouseEvent> {
                 double y = board.getLPos(event.getY());
                 gizmoToBeConnected = model.getGizmo((int)x, (int)y);
                 label.setText("Connecting gizmo: " + gizmoToBeConnected.getType() + " to gizmo: ");
+                gizmoSet = true;
             } else {
                 double x = board.getLPos(event.getX());
                 double y = board.getLPos(event.getY());
@@ -39,8 +39,17 @@ public class ConnectMouseEventHandler implements EventHandler<MouseEvent> {
                     gizmoToBeConnected.addGizmoTrigger(gizmo);
                     label.setText(label.getText() + gizmo.getType());
                     gizmoToBeConnected = null;
+                    gizmoSet = false;
                 }
             }
         }
+    }
+
+    public boolean isGizmoSet(){
+        return gizmoSet;
+    }
+
+    public StandardGizmo getGizmoToBeConnected() {
+        return gizmoToBeConnected;
     }
 }
