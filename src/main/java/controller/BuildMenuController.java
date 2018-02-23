@@ -66,7 +66,7 @@ BuildMenuController {
         buildRoot.addEventFilter(KeyEvent.ANY, e->{
             if (e.getEventType() == KeyEvent.KEY_PRESSED) {
                 if(textOutput.getText().contains("Disconnecting gizmo")){
-                    model.addKeyDown(e.getCode().impl_getCode(), currentDisconnectHandler.getGizmoToBeDisconnected());
+                    model.removeKeyDown(e.getCode().impl_getCode(), currentDisconnectHandler.getGizmoToBeDisconnected());
                     //there will be bugs
                     //needs something like
                     //currentDisconnectHandler = null;
@@ -79,7 +79,7 @@ BuildMenuController {
                 }
             } else if (e.getEventType() == KeyEvent.KEY_RELEASED) {
                 if(textOutput.getText().contains("Disconnecting gizmo")){
-                    model.addKeyUp(e.getCode().impl_getCode(), currentDisconnectHandler.getGizmoToBeDisconnected());
+                    model.removeKeyUp(e.getCode().impl_getCode(), currentDisconnectHandler.getGizmoToBeDisconnected());
                 }
                 else if(textOutput.getText().contains("Connecting gizmo")){//semantic coupling, cant think of a better way tho
                     model.addKeyUp(e.getCode().impl_getCode(), currentConnectHandler.getGizmoToBeConnected());
