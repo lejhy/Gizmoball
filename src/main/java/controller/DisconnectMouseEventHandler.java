@@ -2,16 +2,21 @@ package controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import model.Model;
 import model.StandardGizmo;
 import view.Board;
 
-public class DisconnectMouseEventHandler implements EventHandler<MouseEvent> {
+import java.security.Key;
+
+public class DisconnectMouseEventHandler implements EventHandler<MouseEvent>, KeyEventHandler {
 
     private Model model;
     private view.Board board;
     private StandardGizmo gizmoToBeDisconnected;
+    private int keyToBeRemoved;
     private Label label;
     private boolean gizmoSet = false;
 
@@ -20,6 +25,7 @@ public class DisconnectMouseEventHandler implements EventHandler<MouseEvent> {
         this.board = board;
         this.label = label;
         gizmoToBeDisconnected = null;
+        keyToBeRemoved = -1;
     }
 
     @Override
@@ -45,11 +51,29 @@ public class DisconnectMouseEventHandler implements EventHandler<MouseEvent> {
         }
     }
 
-    public boolean isGizmoSet(){
-        return gizmoSet;
+    @Override
+    public void handle(KeyEvent event) {
+        if (gizmoToBeDisconnected != null) {
+            if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+                if (keyToBeRemoved >= 0) {
+                    if (event.getCode() == KeyCode.DOWN) {
+                        model.removeKeyDown(keyToBeRemoved, gizmoToBeDisconnected);
+                        label.setText(label.getText() + "key DOWN: " + keyToBeRemoved);
+                        clear();
+                    } else if (event.getCode() == KeyCode.UP) {
+                        model.removeKeyUp(keyToBeRemoved, gizmoToBeDisconnected);
+                        label.setText(label.getText() + "key UP: " + keyToBeRemoved);
+                        clear();
+                    }
+                } else {
+                    keyToBeRemoved = event.getCode().getCode();
+                }
+            }
+        }
     }
 
-    public StandardGizmo getGizmoToBeDisconnected() {
-        return gizmoToBeDisconnected;
+    public void clear() {
+        gizmoToBeDisconnected = null;;
+        keyToBeRemoved = -1;
     }
 }

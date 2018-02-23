@@ -360,8 +360,7 @@ public class Model {
     }
 
     public void handleKeyUp(Integer keyCode) {
-        if(waitingForKeyUp.contains(keyCode))
-            waitingForKeyUp.remove(keyCode);
+        waitingForKeyUp.remove(keyCode);
         handleKey(keyCode, keyUpTriggers);
     }
 

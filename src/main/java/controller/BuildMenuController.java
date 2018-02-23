@@ -21,8 +21,6 @@ BuildMenuController {
     private Board board;
     private EventHandler<MouseEvent> currentBoardMouseEventHandler = null;
     private Label textOutput;
-    private ConnectMouseEventHandler currentConnectHandler;
-    private DisconnectMouseEventHandler currentDisconnectHandler;
 
     @FXML
     private Node buildRoot;
@@ -64,30 +62,11 @@ BuildMenuController {
 
     private void propagateKeyEvents() {
         buildRoot.addEventFilter(KeyEvent.ANY, e->{
-            if (e.getEventType() == KeyEvent.KEY_PRESSED) {
-                if(textOutput.getText().contains("Disconnecting gizmo")){
-                    model.removeKeyDown(e.getCode().impl_getCode(), currentDisconnectHandler.getGizmoToBeDisconnected());
-                    //there will be bugs
-                    //needs something like
-                    //currentDisconnectHandler = null;
-                    //would require pressing disconnect multiple times
-                    //accidentally adding key connects to the last gizmo connected is a problem
-                    //todo solve this
-                }
-                else if(textOutput.getText().contains("Connecting gizmo")){//semantic coupling, cant think of a better way tho
-                   model.addKeyDown(e.getCode().impl_getCode(), currentConnectHandler.getGizmoToBeConnected());
-                }
-            } else if (e.getEventType() == KeyEvent.KEY_RELEASED) {
-                if(textOutput.getText().contains("Disconnecting gizmo")){
-                    model.removeKeyUp(e.getCode().impl_getCode(), currentDisconnectHandler.getGizmoToBeDisconnected());
-                }
-                else if(textOutput.getText().contains("Connecting gizmo")){//semantic coupling, cant think of a better way tho
-                    model.addKeyUp(e.getCode().impl_getCode(), currentConnectHandler.getGizmoToBeConnected());
-                }
-            } else {
-                // ignore
+            if (currentBoardMouseEventHandler instanceof ConnectMouseEventHandler) {
+                ((ConnectMouseEventHandler) currentBoardMouseEventHandler).handle(e);
+            } else if (currentBoardMouseEventHandler instanceof DisconnectMouseEventHandler) {
+                ((DisconnectMouseEventHandler) currentBoardMouseEventHandler).handle(e);
             }
-            e.consume();
         });
     }
 
@@ -173,10 +152,10 @@ BuildMenuController {
     }
 
     @FXML
-    public void onConnectButtonClicked() { swapBoardMouseEventHandler(currentConnectHandler = new ConnectMouseEventHandler(model, board, textOutput)); }
+    public void onConnectButtonClicked() { swapBoardMouseEventHandler(new ConnectMouseEventHandler(model, board, textOutput)); }
 
     @FXML
-    public void onDisconnectButtonClicked() { swapBoardMouseEventHandler(currentDisconnectHandler = new DisconnectMouseEventHandler(model, board, textOutput)); }
+    public void onDisconnectButtonClicked() { swapBoardMouseEventHandler(new DisconnectMouseEventHandler(model, board, textOutput)); }
 
     @FXML
     public void onDeleteButtonClicked() {
