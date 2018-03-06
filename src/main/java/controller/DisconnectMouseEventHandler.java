@@ -14,16 +14,16 @@ import java.security.Key;
 public class DisconnectMouseEventHandler implements EventHandler<MouseEvent>, KeyEventHandler {
 
     private Model model;
-    private view.Board board;
+    private Board board;
     private StandardGizmo gizmoToBeDisconnected;
     private int keyToBeRemoved;
-    private Label label;
+    private Label textOutput;
     private boolean gizmoSet = false;
 
-    public DisconnectMouseEventHandler(Model model, Board board, Label label) {
+    public DisconnectMouseEventHandler(Model model, Board board, Label textOutput) {
         this.model = model;
         this.board = board;
-        this.label = label;
+        this.textOutput = textOutput;
         gizmoToBeDisconnected = null;
         keyToBeRemoved = -1;
     }
@@ -35,14 +35,14 @@ public class DisconnectMouseEventHandler implements EventHandler<MouseEvent>, Ke
                 double x = board.getLPos(event.getX());
                 double y = board.getLPos(event.getY());
                 gizmoToBeDisconnected = model.getGizmo((int)x, (int)y);
-                label.setText("Disconnecting gizmo: " + gizmoToBeDisconnected.getType() + " from gizmo: ");
+                textOutput.setText("Disconnecting gizmo: " + gizmoToBeDisconnected.getType() + " from gizmo: ");
                 gizmoSet = true;
             } else {
                 double x = board.getLPos(event.getX());
                 double y = board.getLPos(event.getY());
                 StandardGizmo gizmo = model.getGizmo((int)x, (int)y);
                 if (gizmo != null) {
-                    label.setText(label.getText() + gizmo.getType());
+                    textOutput.setText(textOutput.getText() + gizmo.getType());
                     gizmoToBeDisconnected.removeGizmoTrigger(gizmo);
                     gizmoToBeDisconnected = null;
                     gizmoSet = false;
@@ -58,11 +58,11 @@ public class DisconnectMouseEventHandler implements EventHandler<MouseEvent>, Ke
                 if (keyToBeRemoved >= 0) {
                     if (event.getCode() == KeyCode.DOWN) {
                         model.removeKeyDown(keyToBeRemoved, gizmoToBeDisconnected);
-                        label.setText(label.getText() + "key DOWN: " + keyToBeRemoved);
+                        textOutput.setText(textOutput.getText() + "key DOWN: " + keyToBeRemoved);
                         clear();
                     } else if (event.getCode() == KeyCode.UP) {
                         model.removeKeyUp(keyToBeRemoved, gizmoToBeDisconnected);
-                        label.setText(label.getText() + "key UP: " + keyToBeRemoved);
+                        textOutput.setText(textOutput.getText() + "key UP: " + keyToBeRemoved);
                         clear();
                     }
                 } else {

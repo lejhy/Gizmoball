@@ -112,43 +112,43 @@ BuildMenuController {
     // EDIT ACTION LISTENERS
     @FXML
     public void onAbsorberButtonClicked() {
-        swapBoardMouseEventHandler(new AbsorberMouseEventHandler(model, board));
+        swapBoardMouseEventHandler(new AbsorberMouseEventHandler(model, board, textOutput));
     }
 
     @FXML
     public void onBallButtonClicked() {
-        swapBoardMouseEventHandler(new BallMouseEventHandler(model, board));
+        swapBoardMouseEventHandler(new BallMouseEventHandler(model, board, textOutput));
     }
 
     @FXML
     public void onCircleButtonClicked() {
-        swapBoardMouseEventHandler(new CircleMouseEventHandler(model, board));
+        swapBoardMouseEventHandler(new CircleMouseEventHandler(model, board, textOutput));
     }
 
     @FXML
-    public void onLeftFlipperButtonClicked() { swapBoardMouseEventHandler(new LeftFlipperMouseEventHandler(model, board)); }
+    public void onLeftFlipperButtonClicked() { swapBoardMouseEventHandler(new LeftFlipperMouseEventHandler(model, board, textOutput)); }
 
     @FXML
-    public void onRightFlipperButtonClicked() { swapBoardMouseEventHandler(new RightFlipperMouseEventHandler(model, board)); }
+    public void onRightFlipperButtonClicked() { swapBoardMouseEventHandler(new RightFlipperMouseEventHandler(model, board, textOutput)); }
 
     @FXML
     public void onSquareButtonClicked() {
-        swapBoardMouseEventHandler(new SquareMouseEventHandler(model, board));
+        swapBoardMouseEventHandler(new SquareMouseEventHandler(model, board, textOutput));
     }
 
     @FXML
     public void onTriangleButtonClicked() {
-        swapBoardMouseEventHandler(new TriangleMouseEventHandler(model, board));
+        swapBoardMouseEventHandler(new TriangleMouseEventHandler(model, board, textOutput));
     }
 
     @FXML
     public void onMoveButtonClicked() {
-        swapBoardMouseEventHandler(new MoveMouseEventHandler(model, board));
+        swapBoardMouseEventHandler(new MoveMouseEventHandler(model, board, textOutput));
     }
 
     @FXML
     public void onRotateButtonClicked() {
-        swapBoardMouseEventHandler(new RotateMouseEventHandler(model, board));
+        swapBoardMouseEventHandler(new RotateMouseEventHandler(model, board, textOutput));
     }
 
     @FXML
@@ -159,7 +159,7 @@ BuildMenuController {
 
     @FXML
     public void onDeleteButtonClicked() {
-        swapBoardMouseEventHandler(new DeleteMouseEventHandler(model, board));
+        swapBoardMouseEventHandler(new DeleteMouseEventHandler(model, board, textOutput));
     }
 
     @FXML
