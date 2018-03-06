@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -23,17 +24,22 @@ public class RunMenuController {
     @FXML
     Button buildMode;
 
+
+
+
     private Model model;
     private Board board;
+    private Label textOutput;
     private double FPS = 60;
     private String filePath = "";
 
     final Timeline physicsTimeline = new Timeline(); // timer
     final Timeline renderTimeline = new Timeline(); // timer
 
-    public RunMenuController(Model model, Board board) {
+    public RunMenuController(Model model, Board board, Label textOutput) {
         this.model = model;
         this.board = board;
+        this.textOutput = textOutput;
 
         physicsTimeline.setCycleCount(Timeline.INDEFINITE);
         physicsTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), e->{
@@ -74,16 +80,19 @@ public class RunMenuController {
 
     @FXML
     void onStartButtonClicked() {
+        textOutput.setText("Game started!");
         physicsTimeline.play();
     }
 
     @FXML
     void onStopButtonClicked() {
+        textOutput.setText("Game stopped!");
         physicsTimeline.stop();
     }
 
     @FXML
     void onTickButtonClicked() {
+        textOutput.setText("Game ticked");
         onStopButtonClicked();
         model.tick(FPS);
         board.paintBoard();
@@ -91,6 +100,7 @@ public class RunMenuController {
 
     @FXML
     void onReloadButtonClicked()  {
+        textOutput.setText("Game reloaded");
         onStopButtonClicked();
         model.loadFromFile();
     }
@@ -105,17 +115,21 @@ public class RunMenuController {
         if(selectedFile != null) {
             model.setFilePath(selectedFile.getAbsolutePath());
             onReloadButtonClicked();
+            textOutput.setText("Loaded file: " + selectedFile.getName());
         }
+
     }
 
     @FXML
     void onSaveButtonClicked()  {
         onStopButtonClicked();
+        textOutput.setText("Game saved");
         System.out.println("Save button clicked");
     }
 
     @FXML
     void onQuitButtonClicked() {
+        textOutput.setText("Goodbye!");
         onStopButtonClicked();
         Platform.exit();
     }
