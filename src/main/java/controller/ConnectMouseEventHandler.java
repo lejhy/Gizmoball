@@ -9,7 +9,7 @@ import model.Model;
 import model.StandardGizmo;
 import view.Board;
 
-public class ConnectMouseEventHandler implements EventHandler<MouseEvent>, KeyEventHandler {
+public class ConnectMouseEventHandler extends BoardEventHandler {
 
     private Model model;
     private view.Board board;
@@ -66,7 +66,7 @@ public class ConnectMouseEventHandler implements EventHandler<MouseEvent>, KeyEv
                         System.out.println(event.getCode());
                     }
                 } else {
-                    keyToBeAssigned = event.getCode().impl_getCode();
+                    keyToBeAssigned = event.getCode().getCode();
                 }
             }
         }
