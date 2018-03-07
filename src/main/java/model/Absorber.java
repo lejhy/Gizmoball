@@ -64,6 +64,8 @@ public class Absorber extends StandardGizmo{
     public void trigger(Ball ball) {
         System.out.println("triggered absorber");
         ball.stop();
+        ball.setExactX(x1 - 0.25);
+        ball.setExactY(y + 0.25);
         balls.add(ball);
        // action();
     }
@@ -79,6 +81,11 @@ public class Absorber extends StandardGizmo{
     		System.out.println("absorber action done");
         	balls.remove(ball);
     	}
+    }
+
+    @Override
+    public boolean isTriggered() {
+        return !balls.isEmpty();
     }
 
     public String toString(int i){
