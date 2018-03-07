@@ -164,7 +164,23 @@ public class Model {
         return balls;
     }
 
-    public void addBall(Ball ball) { balls.add(ball); }
+    public boolean addBall(Ball ball) {
+
+        double bX = ball.getExactX() + ball.getRadius();
+        double bY = ball.getExactY() + ball.getRadius();
+
+        int ballX = (int) ball.getExactX();
+        int ballY = (int) ball.getExactY();
+        int ballRadius = (int) ball.getRadius();
+
+        if (grid[(int) bX][(int) bY] == true) { // Check that all tiles are free
+            return false;
+        } else {
+            balls.add(ball);
+            return true;
+        }
+
+    }
 
     public List<StandardGizmo> getGizmos() { return gizmos; }
 
@@ -239,16 +255,17 @@ public class Model {
         int width = gizmo.getWidth();
         int height = gizmo.getHeight();
 
+        // Remove original coordinates from grid
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                grid[xCoord+i][ycoord+j] = false; // Remove old coordinates
+            }
+        }
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (grid[x+i][y+j]) {
                     return false; // Check that the gizmo can be moved
                 }
-            }
-        }
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                grid[xCoord+i][ycoord+j] = false; // Remove old coordinates
             }
         }
         for (int i = 0; i < width; i++) {

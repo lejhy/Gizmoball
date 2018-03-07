@@ -11,7 +11,7 @@ import view.Board;
 
 import java.security.Key;
 
-public class DisconnectMouseEventHandler implements EventHandler<MouseEvent>, KeyEventHandler {
+public class DisconnectMouseEventHandler extends BoardEventHandler {
 
     private Model model;
     private Board board;
@@ -66,7 +66,7 @@ public class DisconnectMouseEventHandler implements EventHandler<MouseEvent>, Ke
                         clear();
                     }
                 } else {
-                    keyToBeRemoved = event.getCode().impl_getCode();
+                    keyToBeRemoved = event.getCode().getCode();
                 }
             }
         }
