@@ -4,44 +4,65 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
-import model.Absorber;
-import model.Ball;
-import model.Model;
-import model.SquareBumper;
+import model.*;
 import view.Board;
 
-public class AbsorberMouseEventHandler implements EventHandler<MouseEvent> {
+public class AbsorberMouseEventHandler extends AddGizmoMouseEventHandler {
 
-    private Model model;
-    private Board board;
-    private Label textOutput;
-    private double xStart;
-    private double yStart;
     private boolean isDragging;
 
     public AbsorberMouseEventHandler (Model model, Board board, Label textOutput) {
-        this.model = model;
-        this.board = board;
-        this.textOutput = textOutput;
-        xStart = -1;
-        yStart = -1;
+        super (model, board, textOutput);
         isDragging = false;
     }
 
     @Override
     public void handle(MouseEvent event) {
-        if (event.getEventType() == MouseEvent.DRAG_DETECTED) {
-            xStart = board.getLPos(event.getX());
-            yStart = board.getLPos(event.getY());
+        double x = board.getLPos(event.getX());
+        double y = board.getLPos(event.getY());
+        if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+            createGizmo((int)x, (int)y);
+        } else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {
+            if (currentGizmo != null) {
+                model.moveGizmo(currentGizmo, (int) x, (int) y);
+            } else {
+                createGizmo((int) x, (int) y);
+            }
+        } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
             isDragging = true;
-            System.out.println("start: " + event.getX() + " " +event.getY());
-            textOutput.setText("Adding Absorber from ("+(int)xStart+", "+(int)yStart+")");
-        } else if (isDragging && event.getEventType() == MouseEvent.MOUSE_RELEASED) {
-            double xFinish = board.getLPos(event.getX());
-            double yFinish = board.getLPos(event.getY());
-            model.addGizmo(new Absorber((int)xStart, (int)yStart, (int)xFinish, (int)yFinish));
-            System.out.println("finish: " + event.getX() + " " +event.getY());
-            textOutput.setText(textOutput.getText()+" to ("+(int)xFinish+", "+(int)yFinish+")");
+            int newX = getAbsorber().getxCoordinate();
+            int newY = getAbsorber().getyCoordinate();
+            int newX1 = (int)Math.ceil(x);
+            int newY1 = (int)Math.ceil(y);
+            System.out.println("x: "+newX+"y: "+newY+"x1: "+newX1+"y1: "+newY1);
+            StandardGizmo gizmo = new Absorber(newX, newY, newX1, newY1);
+            model.removeGizmo(currentGizmo);
+            if (model.addGizmo(gizmo)) {
+                System.out.println("first");
+                currentGizmo = gizmo;
+            } else {
+                System.out.println("second");
+                model.addGizmo(currentGizmo);
+            }
+        } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
+            isDragging = false;
+            currentGizmo = null;
+        } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
+            if (!isDragging) {
+                destroyGizmo();
+            }
         }
+    }
+
+    @Override
+    public void createGizmo(int x, int y) {
+        StandardGizmo gizmo = new Absorber(x, y, x+1, y+1);
+        if (model.addGizmo(gizmo)) {
+            currentGizmo = gizmo;
+        }
+    }
+
+    private Absorber getAbsorber() {
+        return (Absorber) currentGizmo;
     }
 }

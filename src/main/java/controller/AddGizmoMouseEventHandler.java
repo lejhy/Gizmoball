@@ -10,8 +10,8 @@ import view.Board;
 public abstract class AddGizmoMouseEventHandler extends BoardEventHandler {
 
     protected Model model;
-    private Board board;
-    private Label textOutput;
+    protected Board board;
+    protected Label textOutput;
     protected StandardGizmo currentGizmo;
 
     public AddGizmoMouseEventHandler(Model model, Board board, Label textOutput) {
@@ -45,7 +45,7 @@ public abstract class AddGizmoMouseEventHandler extends BoardEventHandler {
         destroyGizmo();
     }
 
-    private void destroyGizmo() {
+    protected void destroyGizmo() {
         if (currentGizmo != null) {
             model.removeGizmo(currentGizmo);
             currentGizmo = null;

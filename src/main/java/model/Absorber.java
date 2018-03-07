@@ -14,15 +14,11 @@ public class Absorber extends StandardGizmo{
 
     public Absorber(int x0, int y0, int x1, int y1) {
         super(x0, y0, Type.ABSORBER);
-        if (x > x1) {
-            int temp = x;
-            x = x1;
-            x1 = temp;
+        if (x >= x1) {
+            x1 = x+1;
         }
-        if (y > y1) {
-            int temp = y;
-            y = y1;
-            y1 = temp;
+        if (y >= y1) {
+            y1 = y+1;
         }
         this.x1 = x1;
         this.y1 = y1;
@@ -43,6 +39,22 @@ public class Absorber extends StandardGizmo{
 
     @Override
     public int getWidth() { return Math.abs(x - x1); }
+
+    public boolean setWidth(int width) {
+        if (width < 1) {
+            return false;
+        }
+        this.x1 = x + width;
+        return true;
+    }
+
+    public boolean setHeight(int height) {
+        if (height < 1) {
+            return false;
+        }
+        this.y1 = y + height;
+        return true;
+    }
 
     @Override
     public int getHeight() { return Math.abs(y - y1); }
