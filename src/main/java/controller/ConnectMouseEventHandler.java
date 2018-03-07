@@ -9,7 +9,7 @@ import model.Model;
 import model.StandardGizmo;
 import view.Board;
 
-public class ConnectMouseEventHandler implements EventHandler<MouseEvent>, KeyEventHandler {
+public class ConnectMouseEventHandler extends BoardEventHandler {
 
     private Model model;
     private view.Board board;
