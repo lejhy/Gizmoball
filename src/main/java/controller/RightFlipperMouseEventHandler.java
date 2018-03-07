@@ -25,8 +25,10 @@ public class RightFlipperMouseEventHandler implements EventHandler<MouseEvent> {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
             double x = board.getLPos(event.getX());
             double y = board.getLPos(event.getY());
-            model.addGizmo(new RightFlipper((int)x, (int)y));
-            textOutput.setText("Adding rightFlipper to ("+x+", "+y+")");
+            if(model.addGizmo(new RightFlipper((int)x, (int)y)))
+                textOutput.setText("Adding triangle to ("+x+", "+y+")");
+            else
+                textOutput.setText("There is already a Gizmo at square ("+x+", "+y+")");
         }
     }
 }
