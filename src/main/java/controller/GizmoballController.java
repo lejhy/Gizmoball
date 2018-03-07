@@ -55,7 +55,7 @@ public class GizmoballController extends BorderPane {
     }
 
     private void loadRunMenu(Model model, Board board) {
-        runMenuController = new RunMenuController(model, board);
+        runMenuController = new RunMenuController(model, board, textOutput);
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/RunMenu.fxml"));
         loader.setController(runMenuController);

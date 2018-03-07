@@ -66,7 +66,7 @@ public class DisconnectMouseEventHandler implements EventHandler<MouseEvent>, Ke
                         clear();
                     }
                 } else {
-                    keyToBeRemoved = event.getCode().getCode();
+                    keyToBeRemoved = event.getCode().impl_getCode();
                 }
             }
         }
