@@ -36,6 +36,7 @@ public class Board {
     private List<Image> leftFlipperImg;
     private List<Image> rightFlipperImg;
     private Image wallImg;
+    private Image absorberImg;
 
     private int boardSize = 800;
     private int LSize;
@@ -66,6 +67,7 @@ public class Board {
             rightFlipperImg.add(new Image(getClass().getResource("/RightFlipper_" + String.format("%02d", i) + ".png").toString()));
         }
         wallImg = new Image(getClass().getResource("/Wall.png").toString());
+        absorberImg = new Image(getClass().getResource("/Absorber.png").toString());
     }
 
     public void paintBoard() {
@@ -135,7 +137,20 @@ public class Board {
                     //TODO Could add a semi transparent image with ambient occlusion around the edges
                     break;
                 case ABSORBER:
-                    //TODO Image will probably be deformed for non-default absorber sizes... Possibly could be made out od LxL tiles?
+                    image = absorberImg;
+                    int absorberHeight = gizmo.getHeight();
+                    int absorberWidth = gizmo.getWidth();
+                    for (int i = 0; i < absorberWidth; i++) {
+                        for (int j = 0; j < absorberHeight; j++) {
+                            int xOffset = i * LSize;
+                            int yOffset = j * LSize;
+                            gc.drawImage(image, xCoord + xOffset, yCoord + yOffset, LSize, LSize);
+                        }
+                    }
+                    width = LSize;
+                    height = LSize;
+                    xCoord = (gizmo.getxCoordinate() + gizmo.getWidth() - 1) * LSize;
+                    yCoord = gizmo.getyCoordinate() * LSize;
                     break;
                 default:
             }
