@@ -35,9 +35,10 @@ public class MoveMouseEventHandler implements EventHandler<MouseEvent> {
             double yCurrent = board.getLPos(event.getY());
             model.moveGizmo(draggedGizmo, (int)xCurrent, (int)yCurrent);
             System.out.println("finish: " + event.getX() + " " +event.getY());
-            textOutput.setText(textOutput.getText()+" to ("+xCurrent+", "+yCurrent+")");
+           // textOutput.setText(textOutput.getText().substring(0, textOutput.getText().length()-12)+" to ("+(int)xCurrent+", "+(int)yCurrent+")");
         } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
             draggedGizmo = null;
+
         }
     }
 }

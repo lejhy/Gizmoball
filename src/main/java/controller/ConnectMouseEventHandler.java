@@ -64,7 +64,7 @@ public class ConnectMouseEventHandler implements EventHandler<MouseEvent>, KeyEv
                         clear();
                     }
                 } else {
-                    keyToBeAssigned = event.getCode().getCode();
+                    keyToBeAssigned = event.getCode().impl_getCode();
                 }
             }
         }
