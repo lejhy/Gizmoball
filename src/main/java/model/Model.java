@@ -164,7 +164,23 @@ public class Model {
         return balls;
     }
 
-    public void addBall(Ball ball) { balls.add(ball); }
+    public boolean addBall(Ball ball) {
+
+        double bX = ball.getExactX() + ball.getRadius();
+        double bY = ball.getExactY() + ball.getRadius();
+
+        int ballX = (int) ball.getExactX();
+        int ballY = (int) ball.getExactY();
+        int ballRadius = (int) ball.getRadius();
+
+        if (grid[(int) bX][(int) bY] == true) { // Check that all tiles are free
+            return false;
+        } else {
+            balls.add(ball);
+            return true;
+        }
+
+    }
 
     public List<StandardGizmo> getGizmos() { return gizmos; }
 
