@@ -242,6 +242,7 @@ public class Model {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (grid[x+i][y+j]) {
+                    System.out.println("x: "+x+"y: "+y);
                     return false; // Check that the gizmo can be moved
                 }
             }

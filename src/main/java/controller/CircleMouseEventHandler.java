@@ -1,32 +1,24 @@
 package controller;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import model.Ball;
 import model.CircularBumper;
 import model.Model;
+import model.StandardGizmo;
 import view.Board;
 
-public class CircleMouseEventHandler implements EventHandler<MouseEvent> {
+import java.security.Key;
 
-    private Model model;
-    private Board board;
-    private Label textOutput;
+public class CircleMouseEventHandler extends AddGizmoMouseEventHandler {
 
     public CircleMouseEventHandler(Model model, Board board, Label textOutput) {
-        this.model = model;
-        this.board = board;
-        this.textOutput = textOutput;
+        super(model, board, textOutput);
     }
 
-    @Override
-    public void handle(MouseEvent event) {
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            double x = board.getLPos(event.getX());
-            double y = board.getLPos(event.getY());
-            model.addGizmo(new CircularBumper((int)x, (int)y));
-            textOutput.setText("Adding circle to ("+x+", "+y+")");
+   @Override
+    protected void createGizmo(int x, int y) {
+        StandardGizmo gizmo = new CircularBumper(x, y);
+        if (model.addGizmo(gizmo)) {
+            currentGizmo = gizmo;
         }
     }
 }
