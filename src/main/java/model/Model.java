@@ -189,6 +189,11 @@ public class Model {
         int ycoord = gizmo.getyCoordinate();
         int width = gizmo.getWidth();
         int height = gizmo.getHeight();
+
+        if (xCoord < 0 || ycoord < 0 || xCoord+width > grid.length || ycoord+height > grid[0].length) {
+            return false; //Check for out of bounds
+        }
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (grid[xCoord + i][ycoord + j] == true) { // Check that all tiles are free
@@ -254,6 +259,10 @@ public class Model {
         int ycoord = gizmo.getyCoordinate();
         int width = gizmo.getWidth();
         int height = gizmo.getHeight();
+
+        if (x < 0 || y < 0 || x+width > grid.length || y+height > grid[0].length) {
+            return false; //Check for out of bounds
+        }
 
         // Remove original coordinates from grid
         for (int i = 0; i < width; i++) {

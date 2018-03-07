@@ -29,9 +29,9 @@ public abstract class AddGizmoMouseEventHandler extends BoardEventHandler {
             createGizmo((int)x, (int)y);
         } else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {
             if (currentGizmo != null) {
-                model.moveGizmo(currentGizmo, (int)x, (int)y);
+                model.moveGizmo(currentGizmo, (int) x, (int) y);
             } else {
-                createGizmo((int)x, (int)y);
+                createGizmo((int) x, (int) y);
             }
         } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
             currentGizmo = null;
