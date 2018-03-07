@@ -239,12 +239,9 @@ public class Model {
         int width = gizmo.getWidth();
         int height = gizmo.getHeight();
 
-		for (int i = 0; i < width; i++) {
+        // Remove original coordinates from grid
+        for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (grid[x+i][y+j]) {
-                    System.out.println("x: "+x+"y: "+y);
-                    return false; // Check that the gizmo can be moved
-                }
                 grid[xCoord+i][ycoord+j] = false; // Remove old coordinates
             }
         }
