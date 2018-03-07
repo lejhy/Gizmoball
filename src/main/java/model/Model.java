@@ -239,17 +239,20 @@ public class Model {
         int width = gizmo.getWidth();
         int height = gizmo.getHeight();
 
-        for (int i = 0; i < width; i++) {
+		for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (grid[x+i][y+j]) {
                     System.out.println("x: "+x+"y: "+y);
                     return false; // Check that the gizmo can be moved
                 }
+                grid[xCoord+i][ycoord+j] = false; // Remove old coordinates
             }
         }
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                grid[xCoord+i][ycoord+j] = false; // Remove old coordinates
+                if (grid[x+i][y+j]) {
+                    return false; // Check that the gizmo can be moved
+                }
             }
         }
         for (int i = 0; i < width; i++) {

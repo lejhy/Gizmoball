@@ -62,6 +62,8 @@ public class ConnectMouseEventHandler implements EventHandler<MouseEvent>, KeyEv
                         model.addKeyUp(keyToBeAssigned, gizmoToBeConnected);
                         label.setText(label.getText() + "key UP: " + keyToBeAssigned);
                         clear();
+                    } else{
+                        System.out.println(event.getCode());
                     }
                 } else {
                     keyToBeAssigned = event.getCode().impl_getCode();

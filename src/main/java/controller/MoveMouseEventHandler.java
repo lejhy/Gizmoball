@@ -14,6 +14,8 @@ public class MoveMouseEventHandler implements EventHandler<MouseEvent> {
     private view.Board board;
     private Label textOutput;
     private StandardGizmo draggedGizmo;
+    private int oldX = 0;
+    private int oldY = 0;
 
     public MoveMouseEventHandler(Model model, Board board, Label textOutput) {
         this.model = model;
@@ -29,13 +31,25 @@ public class MoveMouseEventHandler implements EventHandler<MouseEvent> {
             double yStart = board.getLPos(event.getY());
             draggedGizmo = model.getGizmo((int)xStart, (int)yStart);
             System.out.println("start: " + event.getX() + " " +event.getY());
-            textOutput.setText("Moving Gizmo: "+draggedGizmo.getType()+" from ("+xStart+", "+yStart+")");
+            textOutput.setText("Moving Gizmo: "+draggedGizmo.getType()+" from ("+(int)xStart+", "+(int)yStart+")");
         } else if (draggedGizmo != null && event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
             double xCurrent = board.getLPos(event.getX());
             double yCurrent = board.getLPos(event.getY());
             model.moveGizmo(draggedGizmo, (int)xCurrent, (int)yCurrent);
+            int offset = 0;
             System.out.println("finish: " + event.getX() + " " +event.getY());
-           // textOutput.setText(textOutput.getText().substring(0, textOutput.getText().length()-12)+" to ("+(int)xCurrent+", "+(int)yCurrent+")");
+            if(oldX >= 10){
+                offset++;
+            }
+            if(oldY >= 10){
+                offset++;
+            }
+            if(textOutput.getText().contains("to"))
+                textOutput.setText(textOutput.getText().substring(0, (textOutput.getText().length()-10)-offset)+" to ("+(int)xCurrent+", "+(int)yCurrent+")");
+            else
+                textOutput.setText(textOutput.getText()+" to ("+(int)xCurrent+", "+(int)yCurrent+")");
+            oldX = (int)xCurrent;
+            oldY = (int)yCurrent;
         } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
             draggedGizmo = null;
 
