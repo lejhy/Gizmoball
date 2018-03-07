@@ -25,9 +25,9 @@ public class LeftFlipperMouseEventHandler implements EventHandler<MouseEvent> {
             double x = board.getLPos(event.getX());
             double y = board.getLPos(event.getY());
             if(model.addGizmo(new LeftFlipper((int)x, (int)y)))
-                textOutput.setText("Adding triangle to ("+x+", "+y+")");
+                textOutput.setText("Adding triangle to ("+(int)x+", "+(int)y+")");
             else
-                textOutput.setText("There is already a Gizmo at square ("+x+", "+y+")");
+                textOutput.setText("There is already a Gizmo at square ("+(int)x+", "+(int)y+")");
         }
     }
 }

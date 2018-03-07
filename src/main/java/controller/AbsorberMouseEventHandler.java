@@ -35,13 +35,13 @@ public class AbsorberMouseEventHandler implements EventHandler<MouseEvent> {
             yStart = board.getLPos(event.getY());
             isDragging = true;
             System.out.println("start: " + event.getX() + " " +event.getY());
-            textOutput.setText("Adding Absorber from ("+xStart+", "+yStart+")");
+            textOutput.setText("Adding Absorber from ("+(int)xStart+", "+(int)yStart+")");
         } else if (isDragging && event.getEventType() == MouseEvent.MOUSE_RELEASED) {
             double xFinish = board.getLPos(event.getX());
             double yFinish = board.getLPos(event.getY());
             model.addGizmo(new Absorber((int)xStart, (int)yStart, (int)xFinish, (int)yFinish));
             System.out.println("finish: " + event.getX() + " " +event.getY());
-            textOutput.setText(textOutput.getText()+" to ("+xFinish+", "+yFinish+")");
+            textOutput.setText(textOutput.getText()+" to ("+(int)xFinish+", "+(int)yFinish+")");
         }
     }
 }

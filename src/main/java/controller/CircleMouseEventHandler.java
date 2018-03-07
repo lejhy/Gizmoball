@@ -26,7 +26,7 @@ public class CircleMouseEventHandler implements EventHandler<MouseEvent> {
             double x = board.getLPos(event.getX());
             double y = board.getLPos(event.getY());
             if(model.addGizmo(new CircularBumper((int)x, (int)y)))
-                textOutput.setText("Adding triangle to ("+x+", "+y+")");
+                textOutput.setText("Adding triangle to ("+(int)x+", "+(int)y+")");
             else
                 textOutput.setText("There is already a Gizmo at square ("+x+", "+y+")");
         }

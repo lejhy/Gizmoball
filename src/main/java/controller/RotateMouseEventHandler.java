@@ -38,7 +38,7 @@ public class RotateMouseEventHandler implements EventHandler<MouseEvent> {
                     gizmo.rotate(Angle.DEG_270);
                     angle = "270 degrees";
                 }
-                textOutput.setText("Rotating Gizmo: "+gizmo.getType() + " at ("+x+", "+y+") by: " + angle);
+                textOutput.setText("Rotating Gizmo: "+gizmo.getType() + " at ("+(int)x+", "+(int)y+") by: " + angle);
             }
         }
     }

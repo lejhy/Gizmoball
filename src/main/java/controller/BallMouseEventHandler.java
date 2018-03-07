@@ -24,8 +24,8 @@ public class BallMouseEventHandler implements EventHandler<MouseEvent> {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
             double x = board.getLPos(event.getX());
             double y = board.getLPos(event.getY());
-            //if(model.addBall(new Ball(x, y, 0, 0, 0.5)))
-                textOutput.setText("Adding ball to ("+x+", "+y+")");
+           // if(model.addBall(new Ball(x, y, 0, 0, 0.5)))
+                textOutput.setText("Adding ball to ("+(int)x+", "+(int)y+")");
            // else
              //   textOutput.setText("Cannot add ball ontop of Gizmo");
 
