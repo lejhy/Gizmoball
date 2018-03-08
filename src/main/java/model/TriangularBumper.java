@@ -14,7 +14,6 @@ public class TriangularBumper extends StandardGizmo {
         super(xCoordinate, yCoordinate, Type.TRIANGLE);
     }
 
-    @Override
     public List<LineSegment> getLines() {
         List<LineSegment> lines = new ArrayList<>();
         Vect center = new Vect(x + edgeLength / 2.0, y + edgeLength / 2.0);
@@ -27,7 +26,6 @@ public class TriangularBumper extends StandardGizmo {
         return lines;
     }
 
-    @Override
     public List<Circle> getCircles() {
         List<Circle> circles = new ArrayList<>();
         Vect center = new Vect(x + edgeLength / 2.0, y + edgeLength / 2.0);
@@ -38,6 +36,14 @@ public class TriangularBumper extends StandardGizmo {
         circles.add(new Circle(corner1.rotateBy(rotation, center).x(), corner1.rotateBy(rotation, center).y(), 0)); // left corner
         circles.add(new Circle(corner2.rotateBy(rotation, center).x(), corner2.rotateBy(rotation, center).y(), 0)); // right corner
         return circles;
+    }
+
+    @Override
+    public Collider getCollider() {
+        List<LineSegment> lines = getLines();
+        List<Circle> circles = getCircles();
+        Vect center = new Vect(x + edgeLength/2, y + edgeLength/2);
+        return new Collider(lines, circles, center, 0, Vect.ZERO);
     }
 
     @Override

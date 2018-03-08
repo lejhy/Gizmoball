@@ -9,8 +9,9 @@ import physics.Circle;
 import physics.LineSegment;
 
 import javax.sound.midi.SysexMessage;
+import javax.sound.sampled.Line;
 
-public abstract class StandardGizmo  {
+public abstract class StandardGizmo implements Collideable {
     protected int x; // X coordinates of upper left corner
     protected int y; // Y coordinates of upper left corner
     protected Angle rotation;
@@ -36,10 +37,6 @@ public abstract class StandardGizmo  {
         gizmos = new ArrayList<>();
     }
 
-    public List<LineSegment> getLines() { return new ArrayList<>(); };
-
-    public List<Circle> getCircles() { return new ArrayList<>(); };
-
     public int getxCoordinate() {
         return x;
     }
@@ -62,9 +59,13 @@ public abstract class StandardGizmo  {
 
     public boolean isTriggered() { return triggered; }
 
+    public boolean isRotating() { return false; }
+
     public double getEdgeLength() {
         return edgeLength;
     }
+
+    public abstract Collider getCollider();
 
     public void addGizmoTrigger(StandardGizmo gizmo) {
         if(!gizmo.equals(this)) {

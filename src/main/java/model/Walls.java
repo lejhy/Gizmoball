@@ -1,10 +1,13 @@
 package model;
 
+import physics.Circle;
 import physics.LineSegment;
+import physics.Vect;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Walls {
+public class Walls implements Collideable{
     private int xpos1;
     private int ypos1;
     private int ypos2;
@@ -28,6 +31,14 @@ public class Walls {
         ls.add(l3);
         ls.add(l4);
         return ls;
+    }
+
+    @Override
+    public Collider getCollider() {
+        List<LineSegment> lines = getLineSegments();
+        List<Circle> circles = new ArrayList<>();
+        Vect center = new Vect((xpos1 + xpos2)/2, (ypos1 + ypos2)/2);
+        return new Collider(lines, circles, center, 0, Vect.ZERO);
     }
 
 }
