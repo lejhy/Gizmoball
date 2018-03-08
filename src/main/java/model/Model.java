@@ -155,6 +155,18 @@ public class Model {
             }
         }
 
+        //Time to collide with balls
+        for (Ball ballToCollide : balls) {
+            if (ballToCollide != ball) {
+                time = Geometry.timeUntilBallBallCollision(ballCircle, ballVelocity, ballToCollide.getCircle(), ballToCollide.getVelo());
+                if (time < shortestTime) {
+                    shortestTime = time;
+                    newVelo = Geometry.reflectBalls(ballCircle.getCenter(), 1, ballVelocity, ballToCollide.getCircle().getCenter(), 1, ballToCollide.getVelo()).v1;
+                    colidingGizmo = null;
+                }
+            }
+        }
+
         return new CollisionDetails(shortestTime, newVelo, colidingGizmo);
     }
 
