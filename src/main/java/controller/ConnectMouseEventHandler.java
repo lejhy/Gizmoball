@@ -9,14 +9,18 @@ import model.Model;
 import model.StandardGizmo;
 import view.Board;
 
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
+
 public class ConnectMouseEventHandler extends BoardEventHandler {
 
     private Model model;
     private view.Board board;
     private StandardGizmo gizmoToBeConnected;
     private Integer keyToBeAssigned;
+    private String keyToBeAssignedChar;
     private Label label;
     private boolean gizmoSet = false;
+    private String oldText = "";
 
     public ConnectMouseEventHandler(Model model, Board board, Label label) {
         this.model = model;
@@ -56,21 +60,25 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
                 if (keyToBeAssigned >= 0) {
                     if (event.getCode() == KeyCode.DOWN) {
                         model.addKeyDown(keyToBeAssigned, gizmoToBeConnected);
-                        label.setText(label.getText() + "key DOWN: " + keyToBeAssigned);
+                        label.setText(oldText + "key DOWN: " + keyToBeAssignedChar);
                         clear();
                     } else if (event.getCode() == KeyCode.UP) {
                         model.addKeyUp(keyToBeAssigned, gizmoToBeConnected);
-                        label.setText(label.getText() + "key UP: " + keyToBeAssigned);
+                        label.setText(oldText + "key UP: " + keyToBeAssignedChar);
                         clear();
                     } else{
-                        System.out.println(event.getCode());
+                        System.out.println(event.isShortcutDown());
                     }
                 } else {
                     keyToBeAssigned = event.getCode().getCode();
+                    keyToBeAssignedChar = event.getCode().getName();
+                    oldText = label.getText();
+                    label.setText("Press up arrow key for key release, down arrow key for key press");
                 }
             }
         }
     }
+
 
     public void clear() {
         gizmoToBeConnected = null;;

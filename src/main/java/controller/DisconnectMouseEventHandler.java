@@ -17,8 +17,10 @@ public class DisconnectMouseEventHandler extends BoardEventHandler {
     private Board board;
     private StandardGizmo gizmoToBeDisconnected;
     private int keyToBeRemoved;
+    private String keyToBeRemovedChar;
     private Label textOutput;
     private boolean gizmoSet = false;
+    private String oldText = "";
 
     public DisconnectMouseEventHandler(Model model, Board board, Label textOutput) {
         this.model = model;
@@ -58,15 +60,18 @@ public class DisconnectMouseEventHandler extends BoardEventHandler {
                 if (keyToBeRemoved >= 0) {
                     if (event.getCode() == KeyCode.DOWN) {
                         model.removeKeyDown(keyToBeRemoved, gizmoToBeDisconnected);
-                        textOutput.setText(textOutput.getText() + "key DOWN: " + keyToBeRemoved);
+                        textOutput.setText(textOutput.getText() + "key DOWN: " + keyToBeRemovedChar);
                         clear();
                     } else if (event.getCode() == KeyCode.UP) {
                         model.removeKeyUp(keyToBeRemoved, gizmoToBeDisconnected);
-                        textOutput.setText(textOutput.getText() + "key UP: " + keyToBeRemoved);
+                        textOutput.setText(textOutput.getText() + "key UP: " + keyToBeRemovedChar);
                         clear();
                     }
                 } else {
                     keyToBeRemoved = event.getCode().getCode();
+                    keyToBeRemovedChar = event.getCode().getName();
+                    oldText = textOutput.getText();
+                    textOutput.setText("Press up arrow key for key release, down arrow key for key press");
                 }
             }
         }
