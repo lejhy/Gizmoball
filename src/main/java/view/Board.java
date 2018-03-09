@@ -80,6 +80,15 @@ public class Board {
             }
         }
 
+        // Draw lines
+        List<LineSegment> ls = model.getLines();
+        if(ls.size() > 0) {
+            for (LineSegment l : ls) {
+                gc.setFill(Color.BLACK);
+                gc.strokeLine(l.p1().x()*LSize, l.p1().y()*LSize, l.p2().x()*LSize, l.p2().y()*LSize);
+            }
+        }
+
         // Gizmos
         List<StandardGizmo> gizmos = model.getGizmos();
         for(StandardGizmo gizmo : gizmos) {

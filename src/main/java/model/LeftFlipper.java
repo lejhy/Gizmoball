@@ -11,13 +11,12 @@ import java.util.List;
 public class LeftFlipper extends StandardGizmo {
     private final double radius = edgeLength/4.0;
     private final double angularVelocity = Math.toRadians(1080);
-    private boolean isRotating;
 
     public LeftFlipper(int xCoordinate, int yCoordinate) {
         super(xCoordinate, yCoordinate, Type.LEFT_FLIPPER);
-        isRotating = false;
     }
 
+    @Override
     public List<LineSegment> getLines() {
         List<LineSegment> lines = new ArrayList<>();
         Vect pivot = new Vect(x + radius, y + radius);
@@ -26,6 +25,7 @@ public class LeftFlipper extends StandardGizmo {
         return lines;
     }
 
+    @Override
     public List<Circle> getCircles() {
         List<Circle> circles = new ArrayList<>();
 
@@ -37,15 +37,6 @@ public class LeftFlipper extends StandardGizmo {
         circles.add(new Circle(pivot,radius));
         circles.add(new Circle(movingCenter, radius));
         return circles;
-    }
-
-    @Override
-    public Collider getCollider() {
-        List<LineSegment> lines = getLines();
-        List<Circle> circles = getCircles();
-        Vect center = new Vect(x + radius, y + radius);
-        double angVelocity = isRotating() ? angularVelocity : 0;
-        return new Collider(lines, circles, center, -angVelocity, Vect.ZERO);
     }
 
     @Override
@@ -67,19 +58,11 @@ public class LeftFlipper extends StandardGizmo {
         }
     }
 
-    @Override
-    public boolean isRotating() {
-        return isRotating;
-    }
-
     public void rotate(Angle angle) {
         rotation = rotation.plus(angle);
-        isRotating = true;
         if (rotation.sin() > 0) {
-            isRotating = false;
             rotation = Angle.ZERO;
         } else if (rotation.cos() < 0) {
-            isRotating = false;
             rotation = Angle.DEG_270;
         }
     }

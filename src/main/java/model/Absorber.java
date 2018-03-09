@@ -26,14 +26,6 @@ public class Absorber extends StandardGizmo{
     }
 
     @Override
-    public Collider getCollider() {
-        List<LineSegment> lines = getLines();
-        List<Circle> circles = getCircles();
-        Vect center = new Vect((x + x1)/2, (y + y1)/2);
-        return new Collider(lines, circles, center, 0, Vect.ZERO);
-    }
-
-    @Override
     public void setxCoordinate(int x) {
         this.x1 += x - this.x;
         this.x = x;
@@ -67,12 +59,14 @@ public class Absorber extends StandardGizmo{
     @Override
     public int getHeight() { return Math.abs(y - y1); }
 
+    @Override
     public List<LineSegment> getLines() {
         List<LineSegment> lines = new ArrayList<>();
         lines.add(new LineSegment(x, y, x1, y));
         return lines;
     }
 
+    @Override
     public List<Circle> getCircles() {
         List<Circle> circles = new ArrayList<>();
         return circles;

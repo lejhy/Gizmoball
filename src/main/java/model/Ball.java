@@ -2,14 +2,10 @@ package model;
 
 import javafx.scene.paint.Color;
 import physics.Circle;
-import physics.LineSegment;
 import physics.Vect;
 import javafx.scene.paint.Paint;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Ball implements Collideable {
+public class Ball {
     private Vect velocity;
     private double radius;
     private double xpos;
@@ -24,15 +20,6 @@ public class Ball implements Collideable {
         velocity = new Vect(xv, yv);
         radius = diameter/2.0;
         stopped = false;
-    }
-
-    @Override
-    public Collider getCollider() {
-        List<LineSegment> lines = new ArrayList<>();
-        List<Circle> circles = new ArrayList<>();
-        circles.add(getCircle());
-        Vect center = getCircle().getCenter();
-        return new Collider(lines, circles, center, 0, velocity);
     }
 
     public Vect getVelo() {

@@ -6,7 +6,6 @@ import physics.LineSegment;
 import physics.Vect;
 
 import java.io.IOException;
-import java.rmi.StubNotFoundException;
 import java.util.*;
 
 public class Model {
@@ -15,7 +14,11 @@ public class Model {
 
     private List<Ball> balls;
     private Walls walls;
+    private List<LineSegment> lines;
+    private List<Circle> circles;
     public static ArrayList<StandardGizmo> gizmos;
+    private static Map<Circle, StandardGizmo> circleToGizmo; //allows gizmo lookup based on circles and lines
+    private static Map<LineSegment, StandardGizmo> lineToGizmo; //allows gizmo lookup based on circles and lines
     private static Map<Integer, List<StandardGizmo>> keyDownTriggers; //allows gizmos lookup based on key down events
     private static Map<Integer, List<StandardGizmo>> keyUpTriggers; //allows gizmos lookup based on key up events
     private static List<Integer> waitingForKeyUp; //list of key down events without corresponding key up events
@@ -37,7 +40,11 @@ public class Model {
     public void clear() {
         grid = new boolean[gridDimensions][gridDimensions];
         balls = new ArrayList<>();
+        lines = new ArrayList<>();
+        circles = new ArrayList<>();
         gizmos = new ArrayList<>();
+        circleToGizmo = new HashMap<>();
+        lineToGizmo = new HashMap<>();
         keyUpTriggers = new HashMap<>();
         keyDownTriggers = new HashMap<>();
         waitingForKeyUp = new ArrayList<>();
@@ -94,15 +101,22 @@ public class Model {
     }
 
     private void updateGeometry(double tickTime) {
+        lines = new ArrayList<>();
+        circles = new ArrayList<>();
         for (StandardGizmo gizmo : gizmos) {
             gizmo.update(tickTime); // TODO - these updates will need proper physics handling
+            for (LineSegment line : gizmo.getLines()) {
+                addLine(line, gizmo);
+            }
+            for (Circle circle : gizmo.getCircles()) {
+                addCircle(circle, gizmo);
+            }
         }
     }
 
     // Find Time Until Collision and also, if there is a collision, the new speed vector.
     private CollisionDetails timeUntilCollision(Ball ball) { // TODO - possibly take all these calculations to a separate class
         Circle ballCircle = ball.getCircle(); // Create a physics.Circle from Ball
-        Vect ballCenter = ballCircle.getCenter();
         Vect ballVelocity = ball.getVelo();
         Vect newVelo = new Vect(0, 0);
         StandardGizmo colidingGizmo = null; //the gizmo to trigger
@@ -121,43 +135,23 @@ public class Model {
             }
         }
 
-        // Time to collide with any other gizmo
-        for (StandardGizmo gizmo : gizmos) {
-            Collider collider = gizmo.getCollider();
-            if (collider.getAngVelocity() == 0) {
-                for (LineSegment line : collider.getLines()) {
-                    time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
-                    if (time < shortestTime) {
-                        shortestTime = time;
-                        newVelo = Geometry.reflectWall(line, ballVelocity, 1.0);
-                        colidingGizmo = gizmo;
-                    }
-                }
-                for (Circle circle : collider.getCircles()) {
-                    time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
-                    if (time < shortestTime) {
-                        shortestTime = time;
-                        newVelo = Geometry.reflectCircle(circle.getCenter(), ballCenter, ballVelocity, 1.0);
-                        colidingGizmo = gizmo;
-                    }
-                }
-            } else {
-                for (LineSegment line : collider.getLines()) {
-                    time = Geometry.timeUntilRotatingWallCollision(line, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity);
-                    if (time < shortestTime) {
-                        shortestTime = time;
-                        newVelo = Geometry.reflectRotatingWall(line, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0.95);
-                        colidingGizmo = gizmo;
-                    }
-                }
-                for (Circle circle : collider.getCircles()) {
-                    time = Geometry.timeUntilRotatingCircleCollision(circle, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity);
-                    if (time < shortestTime) {
-                        shortestTime = time;
-                        newVelo = Geometry.reflectRotatingCircle(circle, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0.95);
-                        colidingGizmo = gizmo;
-                    }
-                }
+        // Time to collide with any other line segments
+        for (LineSegment line : lines) {
+            time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+            if (time < shortestTime) {
+                shortestTime = time;
+                newVelo = Geometry.reflectWall(line, ball.getVelo(), 1.0);
+                colidingGizmo = lineToGizmo.get(line);
+            }
+        }
+
+        // Time to collide with circles
+        for (Circle circle : circles) {
+            time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
+            if (time < shortestTime) {
+                shortestTime = time;
+                newVelo = Geometry.reflectCircle(circle.getCenter(), ball.getCircle().getCenter(), ball.getVelo());
+                colidingGizmo = circleToGizmo.get(circle);
             }
         }
 
@@ -303,6 +297,20 @@ public class Model {
         gizmo.setxCoordinate(x);
         gizmo.setyCoordinate(y);
         return true;
+    }
+
+    public List<LineSegment> getLines() {
+        return lines;
+    }
+
+    private void addLine(LineSegment line, StandardGizmo g) {
+        lineToGizmo.put(line, g);
+        lines.add(line);
+    }
+
+    private void addCircle(Circle c, StandardGizmo g) {
+        circleToGizmo.put(c, g);
+        circles.add(c);
     }
 
     private void applyForces(Ball ball, double deltaT) {

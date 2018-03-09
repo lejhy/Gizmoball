@@ -2,7 +2,6 @@ package model;
 
 import physics.Circle;
 import physics.LineSegment;
-import physics.Vect;
 
 import javax.sound.sampled.Line;
 import java.util.ArrayList;
@@ -15,7 +14,8 @@ public class SquareBumper extends StandardGizmo {
         super(xCoordinate, yCoordinate, Type.SQUARE);
     }
 
-    private List<LineSegment> getLines() {
+    @Override
+    public List<LineSegment> getLines() {
         List<LineSegment> lines = new ArrayList<>();
 
         // Add horizontal lines
@@ -30,20 +30,13 @@ public class SquareBumper extends StandardGizmo {
     }
 
     @Override
-    public Collider getCollider() {
-        List<LineSegment> lines = getLines();
-        List<Circle> circles = getCircles();
-        Vect center = new Vect(x + edgeLength/2, y + edgeLength/2);
-        return new Collider(lines, circles, center, 0, Vect.ZERO);
-    }
-
-    @Override
     public void trigger(Ball ball) {
         super.trigger(ball);
         action();
     }
 
-    private List<Circle> getCircles() {
+    @Override
+    public List<Circle> getCircles() {
         List<Circle> circles = new ArrayList<>();
         circles.add(new Circle(x, y, 0)); // top left corner
         circles.add(new Circle(x + edgeLength, y, 0)); // top right corner
