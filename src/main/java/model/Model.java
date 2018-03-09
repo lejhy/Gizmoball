@@ -45,7 +45,6 @@ public class Model {
 
     public void tick(double FPS) {
         double tickTime = 1/FPS;
-        updateGeometry(tickTime);
 
         for (Ball ball : balls) {
             if (!ball.stopped()) {
@@ -63,6 +62,7 @@ public class Model {
                 moveBall(ball, tickTime, collisionDetails, false); // No collision ...
             }
         }
+        updateGeometry(tickTime);
     }
 
     private void moveBall(Ball ball, double time, CollisionDetails collisionDetails, boolean isCollision) {
