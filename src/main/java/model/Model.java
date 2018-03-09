@@ -146,7 +146,7 @@ public class Model {
                     time = Geometry.timeUntilRotatingWallCollision(line, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity);
                     if (time < shortestTime) {
                         shortestTime = time;
-                        newVelo = Geometry.reflectRotatingWall(line, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0.95);
+                        newVelo = Geometry.reflectRotatingWall(line, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0);
                         colidingGizmo = gizmo;
                     }
                 }
@@ -154,7 +154,7 @@ public class Model {
                     time = Geometry.timeUntilRotatingCircleCollision(circle, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity);
                     if (time < shortestTime) {
                         shortestTime = time;
-                        newVelo = Geometry.reflectRotatingCircle(circle, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0.95);
+                        newVelo = Geometry.reflectRotatingCircle(circle, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0);
                         colidingGizmo = gizmo;
                     }
                 }
