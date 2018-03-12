@@ -170,7 +170,6 @@ BuildMenuController {
     }
 
     private void swapBoardMouseEventHandler (EventHandler<MouseEvent> event) {
-        textOutput.setText("Fancy messages for the user go here!");
         board.removeMouseEventHandler(currentBoardMouseEventHandler);
         board.addMouseEventHandler(event);
         currentBoardMouseEventHandler = event;

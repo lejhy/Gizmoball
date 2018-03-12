@@ -18,16 +18,16 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
     private StandardGizmo gizmoToBeConnected;
     private Integer keyToBeAssigned;
     private String keyToBeAssignedChar;
-    private Label label;
+    private Label textOutput;
     private boolean gizmoSet = false;
-    private String oldText = "";
 
-    public ConnectMouseEventHandler(Model model, Board board, Label label) {
+    public ConnectMouseEventHandler(Model model, Board board, Label textOutput) {
         this.model = model;
         this.board = board;
-        this.label = label;
+        this.textOutput = textOutput;
         gizmoToBeConnected = null;
         keyToBeAssigned = -1;
+        textOutput.setText("Click on a gizmo you want to connect...");
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
                 double x = board.getLPos(event.getX());
                 double y = board.getLPos(event.getY());
                 gizmoToBeConnected = model.getGizmo((int)x, (int)y);
-                label.setText("Connecting gizmo: " + gizmoToBeConnected.getType() + " to ");
+                textOutput.setText("Connecting gizmo: " + gizmoToBeConnected.getType() + ", press a key or click on another gizmo that you want to connect to");
                 gizmoSet = true;
             } else {
                 double x = board.getLPos(event.getX());
@@ -45,7 +45,7 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
                 StandardGizmo gizmo = model.getGizmo((int)x, (int)y);
                 if (gizmo != null) {
                     gizmoToBeConnected.addGizmoTrigger(gizmo);
-                    label.setText(label.getText() + "gizmo: " + gizmo.getType());
+                    textOutput.setText("Connection to gizmo: " + gizmo.getType());
                     gizmoToBeConnected = null;
                     gizmoSet = false;
                 }
@@ -59,12 +59,18 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
             if (event.getEventType() == KeyEvent.KEY_PRESSED) {
                 if (keyToBeAssigned >= 0) {
                     if (event.getCode() == KeyCode.DOWN) {
-                        model.addKeyDown(keyToBeAssigned, gizmoToBeConnected);
-                        label.setText(oldText + "key DOWN: " + keyToBeAssignedChar);
+                        if (model.addKeyDown(keyToBeAssigned, gizmoToBeConnected)) {
+                            textOutput.setText("Successfully connected: " + "key DOWN: " + keyToBeAssigned);
+                        } else {
+                            textOutput.setText("Connection already existed: " + "key DOWN: " + keyToBeAssigned);
+                        }
                         clear();
                     } else if (event.getCode() == KeyCode.UP) {
-                        model.addKeyUp(keyToBeAssigned, gizmoToBeConnected);
-                        label.setText(oldText + "key UP: " + keyToBeAssignedChar);
+                        if (model.addKeyUp(keyToBeAssigned, gizmoToBeConnected)) {
+                            textOutput.setText("Successfully connected: " + "key UP: " + keyToBeAssigned);
+                        } else {
+                            textOutput.setText("Connection already existed: " + "key UP: " + keyToBeAssigned);
+                        }
                         clear();
                     } else{
                         System.out.println(event.isShortcutDown());
@@ -72,8 +78,7 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
                 } else {
                     keyToBeAssigned = event.getCode().getCode();
                     keyToBeAssignedChar = event.getCode().getName();
-                    oldText = label.getText();
-                    label.setText("Press up arrow key for key release, down arrow key for key press");
+                    textOutput.setText("Press UP_ARROW key to connect key release, DOWN_ARROW key to connect key press");
                 }
             }
         }
