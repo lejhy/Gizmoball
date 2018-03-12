@@ -76,7 +76,7 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
                         System.out.println(event.isShortcutDown());
                     }
                 } else {
-                    keyToBeAssigned = event.getCode().getCode();
+                    keyToBeAssigned = event.getCode().impl_getCode();
                     keyToBeAssignedChar = event.getCode().getName();
                     textOutput.setText("Press UP_ARROW key to connect key release, DOWN_ARROW key to connect key press");
                 }

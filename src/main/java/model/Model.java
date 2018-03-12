@@ -182,6 +182,16 @@ public class Model {
         return balls;
     }
 
+    public Ball getBall(double x, double y){
+        Vect click = new Vect(x, y);
+        for(Ball b : balls){
+            if(b.getCircle().getCenter().distanceSquared(click) <= Math.pow(b.getCircle().getRadius(), 2)){
+                return b;
+            }
+        }
+        return null;
+    }
+
     public boolean addBall(Ball ball) {
 
         double bX = ball.getExactX() + ball.getRadius();
@@ -198,6 +208,10 @@ public class Model {
             return true;
         }
 
+    }
+
+    public boolean removeBall(Ball ball){
+        return balls.remove(ball);
     }
 
     public List<StandardGizmo> getGizmos() { return gizmos; }

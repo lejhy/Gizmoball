@@ -2,6 +2,7 @@ package controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import model.Ball;
 import model.CircularBumper;
 import model.Model;
 import model.StandardGizmo;
@@ -27,8 +28,15 @@ public class DeleteMouseEventHandler implements EventHandler<MouseEvent> {
             double x = board.getLPos(event.getX());
             double y = board.getLPos(event.getY());
             StandardGizmo gizmo = model.getGizmo((int)x, (int)y);
-            if (gizmo != null) model.removeGizmo(gizmo);
-            textOutput.setText("Deleting Gizmo: "+gizmo.getType()+" at ("+x+", "+y+")");
+            Ball ball = model.getBall(x, y);
+            if (model.removeBall(ball)) {
+                textOutput.setText("Deleting ball at ("+x+", "+y+")");
+            }else if(model.removeGizmo(gizmo)){
+                textOutput.setText("Deleting Gizmo: "+gizmo.getType()+" at ("+x+", "+y+")");
+            }else{
+                textOutput.setText("No Gizmo selected");
+            }
+
         }
     }
 }
