@@ -64,8 +64,10 @@ BuildMenuController {
         buildRoot.addEventFilter(KeyEvent.ANY, e->{
             if (currentBoardMouseEventHandler instanceof ConnectMouseEventHandler) {
                 ((ConnectMouseEventHandler) currentBoardMouseEventHandler).handle(e);
+                e.consume();
             } else if (currentBoardMouseEventHandler instanceof DisconnectMouseEventHandler) {
                 ((DisconnectMouseEventHandler) currentBoardMouseEventHandler).handle(e);
+                e.consume();
             }
         });
     }
