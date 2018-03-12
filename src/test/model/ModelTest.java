@@ -69,7 +69,6 @@ public class ModelTest {
         double velocityAfterGravity = 25*deltaT;
         double velocityAfterFriciton = velocityAfterGravity*(1 - (0.025 * deltaT) - (0.025 * Math.abs(velocityAfterGravity) * deltaT));
 
-        System.out.println(model.getBalls().get(0).getVelo().y());
         assertEquals(0.0, model.getBalls().get(0).getVelo().x(), 0.001); //  velocity in x direction unchanged
         assertEquals(velocityAfterFriciton, model.getBalls().get(0).getVelo().y(), 0.001); // velocity in y direction after forces
     }
