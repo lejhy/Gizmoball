@@ -20,6 +20,7 @@ public class RotateMouseEventHandler implements EventHandler<MouseEvent> {
         this.model = model;
         this.board = board;
         this.textOutput = textOutput;
+        textOutput.setText("Click on a gizmo you want to rotate...");
     }
 
     @Override
