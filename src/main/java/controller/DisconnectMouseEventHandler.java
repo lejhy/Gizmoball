@@ -68,7 +68,7 @@ public class DisconnectMouseEventHandler extends BoardEventHandler {
                         clear();
                     }
                 } else {
-                    keyToBeRemoved = event.getCode().getCode();
+                    keyToBeRemoved = event.getCode().impl_getCode();
                     keyToBeRemovedChar = event.getCode().getName();
                     oldText = textOutput.getText();
                     textOutput.setText("Press up arrow key for key release, down arrow key for key press");

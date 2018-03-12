@@ -70,7 +70,7 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
                         System.out.println(event.isShortcutDown());
                     }
                 } else {
-                    keyToBeAssigned = event.getCode().getCode();
+                    keyToBeAssigned = event.getCode().impl_getCode();
                     keyToBeAssignedChar = event.getCode().getName();
                     oldText = label.getText();
                     label.setText("Press up arrow key for key release, down arrow key for key press");
