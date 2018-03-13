@@ -117,13 +117,14 @@ public class ModelTest {
     @Test
     public void testGetGizmoWithinGrid() {
         assertNotNull(model.getGizmo(0, 2));
-        assertTrue((model.getGizmo(0, 2) instanceof StandardGizmo));
+        assertTrue((model.getGizmo(0, 2) != null));
         assertNull(model.getGizmo(0, 0));
     }
 
     @Test
     public void testGetGizmoOutideGrid() {
         assertNull(model.getGizmo(-1, -1));
+        System.out.println(model.getGizmo(-1, -1));
         assertNull(model.getGizmo(21, 21));
     }
 
@@ -173,16 +174,30 @@ public class ModelTest {
 
     @Test
     public void moveGizmo() {
+        StandardGizmo gizmo = model.getGizmo(0, 2);
+        model.moveGizmo(gizmo, 2, 2);
+        assertTrue(model.getGizmo(2, 2) != null);
     }
 
     @Test
     public void setGravityForce() {
-
+        double gravF = model.getGravityForce(1);
+        model.setGravityForce(0.0);
+        assertTrue(model.getGravityForce(1) == 0.0);
+        assertNotEquals(model.getGravityForce(1), gravF);
     }
 
     @Test
     public void setFrictionMU() {
-
+        double mu1 = model.getFrictionMU(1);
+        double mu2 = model.getFrictionMU(2);
+        model.setFrictionMU(0.9001, 1);
+        model.setFrictionMU(0.9002, 2);
+        assertTrue(model.getFrictionMU(1) == 0.9001);
+        assertTrue(model.getFrictionMU(2) == 0.9002);
+        assertNotEquals(model.getFrictionMU(1), mu1);
+        assertNotEquals(model.getFrictionMU(2), mu2);
+        assertNotEquals(model.getFrictionMU(1), model.getFrictionMU(2));
     }
 
     @Rule
@@ -199,11 +214,35 @@ public class ModelTest {
     // Note: save to file handles exception
     @Test
     public void saveToFIle() {
-
     }
 
     @Test
     public void setFilePath() {
+    }
+
+    @Test
+    public void testTrigger(){
+        StandardGizmo gizmo = model.getGizmo(0, 2);
+
+        assertFalse(gizmo.isTriggered());
+
+        gizmo.trigger(new Ball(0, 5, 0, 0, 0.5));
+        assertTrue(gizmo.isTriggered());
+    }
+
+    @Test
+    public void testGizmoTrigger(){
+        StandardGizmo gizmo = model.getGizmo(0, 2);
+        StandardGizmo gizmo1 = new SquareBumper(0, 0);
+        model.addGizmo(gizmo1);
+        gizmo.addGizmoTrigger(gizmo1);
+
+        gizmo.trigger(new Ball(0, 5, 0, 0, 0.5));
+
+        assertTrue(gizmo1.isTriggered());
+
+        assertFalse(gizmo.addGizmoTrigger(gizmo));
+        assertFalse(gizmo.removeGizmoTrigger(gizmo));
     }
 
     @After

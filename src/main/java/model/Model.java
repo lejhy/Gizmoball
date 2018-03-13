@@ -243,16 +243,18 @@ public class Model {
     }
 
     public StandardGizmo getGizmo(int x, int y) {
-        if (grid[x][y]) {
-            for(StandardGizmo gizmo : gizmos) {
-                int xCoord = gizmo.getxCoordinate();
-                int ycoord = gizmo.getyCoordinate();
-                int width = gizmo.getWidth();
-                int height = gizmo.getHeight();
-                for (int i = 0; i < width; i++) {
-                    for (int j = 0; j < height; j++) {
-                        if (xCoord+i == x && ycoord+j == y) {
-                            return gizmo;
+        if(x >= 0 && x <= 20 && y >= 0 && y <= 20) {
+            if (grid[x][y]) {
+                for (StandardGizmo gizmo : gizmos) {
+                    int xCoord = gizmo.getxCoordinate();
+                    int ycoord = gizmo.getyCoordinate();
+                    int width = gizmo.getWidth();
+                    int height = gizmo.getHeight();
+                    for (int i = 0; i < width; i++) {
+                        for (int j = 0; j < height; j++) {
+                            if (xCoord + i == x && ycoord + j == y) {
+                                return gizmo;
+                            }
                         }
                     }
                 }
@@ -324,7 +326,7 @@ public class Model {
         applyFriction(ball, deltaT);
     }
 
-    private double getGravityForce(double deltaT) {
+    public double getGravityForce(double deltaT) {
         return gravityMultiplier*deltaT;
     }
 
@@ -345,6 +347,16 @@ public class Model {
         }
     }
 
+    public double getFrictionMU(int delim){
+        if(delim == 1){
+            return mu1;
+        }
+        if(delim == 2){
+            return mu2;
+        }
+        return 0.0;
+    }
+
     public void loadFromFile() {
 
         try {
@@ -354,7 +366,7 @@ public class Model {
         }
     }
 
-    public void saveToFIle() {
+    public void saveToFile() {
         fileInOut.saveToFile();
     }
 

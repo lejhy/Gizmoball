@@ -67,14 +67,16 @@ public abstract class StandardGizmo implements Collideable {
 
     public abstract Collider getCollider();
 
-    public void addGizmoTrigger(StandardGizmo gizmo) {
+    public boolean addGizmoTrigger(StandardGizmo gizmo) {
         if(!gizmo.equals(this)) {
             gizmos.add(gizmo);
+            return true;
         }
+        return false;
     }
 
-    public void removeGizmoTrigger(StandardGizmo gizmo) {
-        gizmos.remove(gizmo);
+    public boolean removeGizmoTrigger(StandardGizmo gizmo) {
+        return gizmos.remove(gizmo);
     }
 
     public void trigger(Ball ball) {

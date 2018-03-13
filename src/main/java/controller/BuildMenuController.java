@@ -99,7 +99,7 @@ BuildMenuController {
         File selectedFile = fc.showSaveDialog(null);
         if(selectedFile != null) {
             model.setFilePath(selectedFile.getAbsolutePath());
-            model.saveToFIle();
+            model.saveToFile();
         }
     }
 
