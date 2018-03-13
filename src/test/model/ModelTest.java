@@ -165,6 +165,12 @@ public class ModelTest {
     }
 
     @Test
+    public void testRemoveNonexistingGizmo(){
+        StandardGizmo gizmo = new SquareBumper(0, 0);
+        assertFalse(model.removeGizmo(gizmo));
+    }
+
+    @Test
     public void testAddAfterRemoveExistingGizmo() {
         StandardGizmo gizmo = model.getGizmo(0, 2);
         model.removeGizmo(gizmo);
@@ -173,10 +179,34 @@ public class ModelTest {
     }
 
     @Test
-    public void moveGizmo() {
+    public void testMoveGizmoInsideGrid() {
         StandardGizmo gizmo = model.getGizmo(0, 2);
         model.moveGizmo(gizmo, 2, 2);
         assertTrue(model.getGizmo(2, 2) != null);
+    }
+
+    @Test
+    public void testMoveGizmoOutsideGrid() {
+        StandardGizmo gizmo = model.getGizmo(0, 2);
+        assertFalse(model.moveGizmo(gizmo, -1, -1));
+    }
+
+    @Test
+    public void testMoveNonexisitingGizmo() {
+        StandardGizmo gizmo = new SquareBumper(0, 0);
+        assertFalse(model.moveGizmo(gizmo, 2, 2));
+    }
+
+    @Test
+    public void testMoveGizmoToExisting() {
+        StandardGizmo gizmo = model.getGizmo(0, 2);
+        assertFalse(model.moveGizmo(gizmo, 1, 2));
+    }
+
+    @Test
+    public void testMoveGizmoToBall() {
+        StandardGizmo gizmo = model.getGizmo(0, 2);
+        assertFalse(model.moveGizmo(gizmo, 1, 11));
     }
 
     @Test
@@ -218,6 +248,7 @@ public class ModelTest {
 
     @Test
     public void setFilePath() {
+
     }
 
     @Test

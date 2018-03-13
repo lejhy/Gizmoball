@@ -298,17 +298,28 @@ public class Model {
             return false; //Check for out of bounds
         }
 
-        // Remove original coordinates from grid
+        for(Ball b : balls){
+            if((int)b.getExactX() == x && (int)b.getExactX() == y )
+                return false;
+        }
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                grid[xCoord+i][ycoord+j] = false; // Remove old coordinates
+                if (grid[x+i][y+j]) {
+                    return false; // Check that the gizmo can be moved - Should this not be done first?
+                }
             }
         }
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (grid[x+i][y+j]) {
-                    return false; // Check that the gizmo can be moved
+                    return false; // Check that the gizmo can be moved - Should this not be done first?
                 }
+            }
+        }
+        // Remove original coordinates from grid
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                grid[xCoord+i][ycoord+j] = false; // Remove old coordinates
             }
         }
         for (int i = 0; i < width; i++) {
