@@ -75,8 +75,4 @@ public class Ball implements Collideable {
         return stopped;
     }
 
-    public Paint getColour() {
-        return colour;
-    }
-
 }

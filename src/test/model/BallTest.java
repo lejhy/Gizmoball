@@ -9,8 +9,8 @@ import static org.junit.Assert.*;
 public class BallTest {
     Ball ball;
     Model model;
-    double FPS;
-    double deltaT;
+    final double FPS = 60;
+    final double deltaT = 1/FPS;
     double diameter;
     double initialPosX;
     double initialPosY;
@@ -18,17 +18,16 @@ public class BallTest {
     @Before
     public void setUp() throws Exception {
         model = new Model();
-        model.clear();
-
-        FPS = 60;
-        deltaT = 1/FPS;
-
         initialPosX = 1.0;
         initialPosY = 11.0;
         diameter = 0.5;
-
         ball = new Ball(initialPosX, initialPosY , 0, 0, diameter);
         model.addBall(ball);
+    }
+
+    @Test
+    public void testIntance() {
+        assertNotNull("Ball instantiated", ball);
     }
 
     @Test
@@ -136,6 +135,18 @@ public class BallTest {
         assertEquals(2, ball.getExactY(), 0.001);
     }
 
+    @Test
+    public void testStart() {
+        ball.start();
+        assertFalse(ball.stopped());
+    }
+
+    @Test
+    public void testStop() {
+        ball.stop();
+        assertTrue(ball.stopped());
+    }
+
 //    @Test
 //    public void tesSetExactXOutOfBoundaries() {
 //        // implement
@@ -146,25 +157,6 @@ public class BallTest {
 //        // implement
 //    }
 //
-//    @Test
-//    public void start() {
-//
-//    }
-//
-//    @Test
-//    public void stop() {
-//    }
-//
-//
-//
-//    @Test
-//    public void stopped() {
-//    }
-//
-//    @Test
-//    public void getColour() {
-//    }
-
 
     public Vect applyForcesFormula(int loopCount, double velX, double velY) {
         Vect velocity = null;
