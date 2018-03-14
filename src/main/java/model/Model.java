@@ -408,6 +408,10 @@ public class Model {
         }
     }
 
+    public Map<Integer, Set<StandardGizmo>> getKeyDownTriggers() {return keyDownTriggers; }
+
+    public Map<Integer, Set<StandardGizmo>> getKeyUpTriggers() {return keyUpTriggers; }
+
     public boolean removeKeyUp(Integer keyCode, StandardGizmo gizmo){
         return removeKey(keyCode, gizmo, keyUpTriggers);
     }

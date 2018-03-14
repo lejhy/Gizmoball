@@ -75,4 +75,8 @@ public class Ball implements Collideable {
         return stopped;
     }
 
+    @Override
+    public String toString() {
+        return "Ball B "+xpos+" "+ypos+" "+velocity.x()+" "+velocity.y();
+    }
 }

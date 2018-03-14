@@ -37,6 +37,8 @@ public abstract class StandardGizmo implements Collideable {
         gizmos = new ArrayList<>();
     }
 
+    public List<StandardGizmo> getTriggers() { return gizmos; }
+
     public int getxCoordinate() {
         return x;
     }

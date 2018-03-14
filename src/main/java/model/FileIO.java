@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import physics.Angle;
 import physics.Circle;
 import physics.LineSegment;
@@ -26,15 +27,55 @@ public class FileIO {
     }
 
     public void saveToFile(){
-        int i = 0;
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(filePath), "utf-8"))) {
-            for(int j = 0; j < model.gizmos.size(); j++) {
-                StandardGizmo gizmo = model.gizmos.get(j);
-                System.out.println(gizmo.toString(i));
-                writer.write(gizmo.toString(i));
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"))) {
+            Map<StandardGizmo, String> gizmos = new HashMap<>();
+            // Gizmos
+            int id = 0;
+            for(StandardGizmo gizmo : model.getGizmos()) {
+                String output = gizmo.toString(id);
+                String identifier = output.split(" ")[1];
+                writer.write(output);
                 writer.write("\n");
-                i++;
+                gizmos.put(gizmo, identifier);
+                Angle rotation = new Angle(gizmo.getRotation().radians());
+                while (rotation.compareTo(Angle.ZERO) > 0) {
+                    writer.write("Rotate "+identifier);
+                    writer.write("\n");
+                    rotation = rotation.minus(Angle.DEG_90);
+                }
+                id++;
+            }
+            // Gizmo connects
+            for(StandardGizmo gizmo : model.getGizmos()) {
+                String identifier = gizmos.get(gizmo);
+                for (StandardGizmo trigger : gizmo.getTriggers()) {
+                    writer.write("Connect "+identifier+" "+gizmos.get(trigger));
+                    writer.write("\n");
+                }
+            }
+            // Key down connects
+            Map<Integer, Set<StandardGizmo>> keyDowns = model.getKeyDownTriggers();
+            for(Integer key : keyDowns.keySet()) {
+                Set<StandardGizmo> currentKeyGizmos = keyDowns.get(key);
+                for (StandardGizmo gizmo : currentKeyGizmos) {
+                    writer.write("KeyConnect key "+key+" down "+gizmos.get(gizmo));
+                    writer.write("\n");
+                }
+            }
+            // Key up connects
+            Map<Integer, Set<StandardGizmo>> keyUps = model.getKeyUpTriggers();
+            for(Integer key : keyUps.keySet()) {
+                Set<StandardGizmo> currentKeyGizmos = keyUps.get(key);
+                for (StandardGizmo gizmo : currentKeyGizmos) {
+                    writer.write("KeyConnect key "+key+" up "+gizmos.get(gizmo));
+                    writer.write("\n");
+                }
+            }
+            // Balls
+            // Gizmos
+            for(Ball ball : model.getBalls()) {
+                writer.write(ball.toString());
+                writer.write("\n");
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -72,7 +113,6 @@ public class FileIO {
                         break;
                     gizmo = new TriangularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     gizmos.put(tokens[1], gizmo);
-                    System.out.println("Gizmo: " + gizmos.get("T"));
                     break;
 
                 case "Square":
@@ -128,7 +168,6 @@ public class FileIO {
                     break;
 
                 case "Rotate":
-                    System.out.println(gizmos.get("T"));
                     gizmos.get(tokens[1]).rotate(Angle.DEG_90);
                     break;
 
