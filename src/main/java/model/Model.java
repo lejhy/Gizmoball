@@ -209,6 +209,11 @@ public class Model {
         int ballY = (int) ball.getExactY();
         int ballRadius = (int) ball.getRadius();
 
+        for(Ball b : balls){
+            if(ballX == b.getExactX() && ballY == b.getExactY())
+                return false;
+        }
+
         if (grid[(int) bX][(int) bY] == true) { // Check that all tiles are free
             return false;
         } else {
@@ -305,6 +310,8 @@ public class Model {
         if (x < 0 || y < 0 || x+width > grid.length || y+height > grid[0].length) {
             return false; //Check for out of bounds
         }
+
+
 
        // Remove original coordinates from grid
         for (int i = 0; i < width; i++) {
