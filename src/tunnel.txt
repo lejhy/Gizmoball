@@ -1,0 +1,96 @@
+Triangle T0 0 0
+Triangle T1 1 0
+Rotate T1
+Triangle T2 1 2
+Rotate T2
+Rotate T2
+Rotate T2
+Triangle T3 2 2
+Rotate T3
+Rotate T3
+Triangle T4 2 0
+Triangle T5 3 0
+Rotate T5
+Triangle T6 4 0
+Triangle T7 5 0
+Rotate T7
+Triangle T8 6 0
+Triangle T9 7 0
+Rotate T9
+Triangle T10 8 0
+Triangle T11 9 0
+Rotate T11
+Triangle T12 10 0
+Triangle T13 11 0
+Rotate T13
+Triangle T14 12 0
+Triangle T15 13 0
+Rotate T15
+Triangle T16 15 0
+Rotate T16
+Triangle T17 14 0
+Triangle T18 16 0
+Triangle T19 17 0
+Rotate T19
+Triangle T20 18 0
+Triangle T21 19 0
+Rotate T21
+Triangle T22 3 2
+Rotate T22
+Rotate T22
+Rotate T22
+Triangle T23 5 2
+Rotate T23
+Rotate T23
+Rotate T23
+Triangle T24 4 2
+Rotate T24
+Rotate T24
+Triangle T25 6 2
+Rotate T25
+Rotate T25
+Triangle T26 7 2
+Rotate T26
+Rotate T26
+Rotate T26
+Triangle T27 8 2
+Rotate T27
+Rotate T27
+Triangle T28 9 2
+Rotate T28
+Rotate T28
+Rotate T28
+Triangle T29 10 2
+Rotate T29
+Rotate T29
+Triangle T30 11 2
+Rotate T30
+Rotate T30
+Rotate T30
+Triangle T31 12 2
+Rotate T31
+Rotate T31
+Triangle T32 13 2
+Rotate T32
+Rotate T32
+Rotate T32
+Triangle T33 14 2
+Rotate T33
+Rotate T33
+Triangle T34 15 2
+Rotate T34
+Rotate T34
+Rotate T34
+Triangle T35 16 2
+Rotate T35
+Rotate T35
+Triangle T36 17 2
+Rotate T36
+Rotate T36
+Rotate T36
+Triangle T37 18 2
+Rotate T37
+Rotate T37
+Absorber A38 0 19 20 20
+KeyConnect key 127 down A38
+Ball B 19.5 19.5 0.0 -4.784902171261082
