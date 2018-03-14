@@ -70,7 +70,7 @@ public abstract class StandardGizmo implements Collideable {
     public boolean addGizmoTrigger(StandardGizmo gizmo) {
         if(!gizmo.equals(this)) {
             gizmos.add(gizmo);
-            return true;
+            return gizmos.add(gizmo);
         }
         return false;
     }

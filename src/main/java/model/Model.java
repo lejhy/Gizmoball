@@ -243,7 +243,7 @@ public class Model {
     }
 
     public StandardGizmo getGizmo(int x, int y) {
-        if(x >= 0 && x <= 20 && y >= 0 && y <= 20) {
+        if(x >= 0 && x <= 19 && y >= 0 && y <= 19) {
             if (grid[x][y]) {
                 for (StandardGizmo gizmo : gizmos) {
                     int xCoord = gizmo.getxCoordinate();
@@ -298,28 +298,25 @@ public class Model {
             return false; //Check for out of bounds
         }
 
-        for(Ball b : balls){
-            if((int)b.getExactX() == x && (int)b.getExactX() == y )
-                return false;
-        }
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (grid[x+i][y+j]) {
-                    return false; // Check that the gizmo can be moved - Should this not be done first?
-                }
-            }
-        }
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (grid[x+i][y+j]) {
-                    return false; // Check that the gizmo can be moved - Should this not be done first?
-                }
-            }
-        }
-        // Remove original coordinates from grid
+       // Remove original coordinates from grid
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 grid[xCoord+i][ycoord+j] = false; // Remove old coordinates
+            }
+        }
+
+        //Check that the gizmo can be moved
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (grid[x+i][y+j]) { // If gizmo cannot be moved
+                    // Put the original coordinates back into the grid
+                    for (i = 0; i < width; i++) {
+                        for (j = 0; j < height; j++) {
+                            grid[xCoord+i][ycoord+j] = true; // Restore old coordinates
+                        }
+                    }
+                    return false;
+                }
             }
         }
         for (int i = 0; i < width; i++) {
