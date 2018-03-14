@@ -46,6 +46,7 @@ BuildMenuController {
     @FXML
     private Label friction2Label;
 
+
     public BuildMenuController(Model model, Board board, Label textOutput) {
         this.model = model;
         this.board = board;
@@ -56,12 +57,16 @@ BuildMenuController {
         runMode.setOnAction(handler);
     }
 
+    public void removeHandler(){
+        board.removeMouseEventHandler(currentBoardMouseEventHandler);
+    }
+
     public void init() {
         propagateKeyEvents();
     }
 
     private void propagateKeyEvents() {
-        buildRoot.addEventFilter(KeyEvent.ANY, e->{
+        buildRoot.addEventFilter(KeyEvent.ANY, e -> {
             if (currentBoardMouseEventHandler instanceof ConnectMouseEventHandler) {
                 ((ConnectMouseEventHandler) currentBoardMouseEventHandler).handle(e);
                 e.consume();
@@ -71,6 +76,7 @@ BuildMenuController {
             }
         });
     }
+
 
     // FILE ACTION LISTENERS
     @FXML

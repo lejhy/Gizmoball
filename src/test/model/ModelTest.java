@@ -235,10 +235,12 @@ public class ModelTest {
 
     // Note: load from file doesn't handle exception
     @Test
-    public void loadFromFile() {
+    public void loadFromFile() throws Exception {
+        FileIO fileIO = new FileIO(model);
         exception.expect(FileNotFoundException.class);
-        exception.expectMessage("File Not Found");
-        model.setFilePath("src/saveFile111");
+        exception.expectMessage("src/saveFile111 (No such file or directory)");
+        fileIO.setFilePath("src/saveFile111");
+        fileIO.loadFromFile();
     }
 
     // Note: save to file handles exception

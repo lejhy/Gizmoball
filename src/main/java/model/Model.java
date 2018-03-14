@@ -302,7 +302,9 @@ public class Model {
             return false; //Check for out of bounds
         }
 
+       //for(){
 
+       //}
 
        // Remove original coordinates from grid
         for (int i = 0; i < width; i++) {
