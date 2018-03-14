@@ -30,6 +30,9 @@ public class AbsorberMouseEventHandler extends AddGizmoMouseEventHandler {
             }
         } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
             isDragging = true;
+            if(getAbsorber() != null){
+
+            }
             int newX = getAbsorber().getxCoordinate();
             int newY = getAbsorber().getyCoordinate();
             int newX1 = (int)Math.ceil(x);

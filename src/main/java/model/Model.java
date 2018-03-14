@@ -196,16 +196,14 @@ public class Model {
         double bX = ball.getExactX() + ball.getRadius();
         double bY = ball.getExactY() + ball.getRadius();
 
-        int ballX = (int) ball.getExactX();
-        int ballY = (int) ball.getExactY();
-        int ballRadius = (int) ball.getRadius();
+        double bXN = ball.getExactX() - ball.getRadius();
+        double bYN = ball.getExactY() - ball.getRadius();
 
-        for(Ball b : balls){
-            if(ballX == b.getExactX() && ballY == b.getExactY())
-                return false;
-        }
 
-        if (grid[(int) bX][(int) bY] == true) { // Check that all tiles are free
+
+
+
+        if (grid[(int) bX][(int) bY] || grid[(int)bXN][(int)bYN] || grid[(int)bX][(int)bYN] || grid[(int)bXN][(int)bY]) { // Check that all tiles are free
             return false;
         } else {
             balls.add(ball);
