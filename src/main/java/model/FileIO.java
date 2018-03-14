@@ -193,10 +193,6 @@ public class FileIO {
 
     }
 
-    private void parseFile(){
-
-    }
-
     private boolean checkTokens(String gizmo, int xcord, int ycord) {
         if(xcord < 0 || xcord > 19) {
             System.out.println(gizmo + " with X coordinate " + xcord + " is invalid.");
