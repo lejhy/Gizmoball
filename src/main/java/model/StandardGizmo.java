@@ -79,10 +79,8 @@ public abstract class StandardGizmo implements Collideable {
     }
 
     public void trigger(Ball ball) {
-        System.out.println(" this: " + this.getType());
         for(StandardGizmo gizmo : gizmos) {
             gizmo.action();
-            System.out.println(gizmo + " " + gizmo.isTriggered());
         }
     };
 

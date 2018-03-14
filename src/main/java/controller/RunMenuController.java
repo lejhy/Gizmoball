@@ -24,9 +24,6 @@ public class RunMenuController {
     @FXML
     Button buildMode;
 
-
-
-
     private Model model;
     private Board board;
     private Label textOutput;
@@ -45,11 +42,15 @@ public class RunMenuController {
         physicsTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), e->{
             model.tick(FPS);
         }));
-        renderTimeline.setCycleCount(Timeline.INDEFINITE);
-        renderTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), e->{
-            board.paintBoard();
-        }));
-        renderTimeline.play();
+        Thread renderThread = new Thread(() -> {
+            renderTimeline.setCycleCount(Timeline.INDEFINITE);
+            renderTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), e->{
+                board.paintBoard();
+            }));
+            renderTimeline.play();
+        });
+        renderThread.setDaemon(true);
+        renderThread.start();
     }
 
     public void init() {
@@ -59,9 +60,9 @@ public class RunMenuController {
     private void propagateKeyEvents() {
         root.addEventFilter(KeyEvent.ANY, e->{
             if (e.getEventType() == KeyEvent.KEY_PRESSED) {
-                model.handleKeyDown(e.getCode().impl_getCode());
+                model.handleKeyDown(e.getCode().getCode());
             } else if (e.getEventType() == KeyEvent.KEY_RELEASED) {
-                model.handleKeyUp(e.getCode().impl_getCode());
+                model.handleKeyUp(e.getCode().getCode());
             } else {
                 // ignore
             }

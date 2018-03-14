@@ -53,7 +53,6 @@ public class Model {
                 double timeUntilCollision = collisionDetails.getTimeUntilCollision();
                 int i = 0; // TODO remove this quickfix and fix it
                 while (timeUntilCollision < ballTickTime) { // TODO remove this quickfix and fix it
-                    System.out.println("The time until collision is: " + String.format("%.3f", timeUntilCollision) + "ms");
                     moveBall(ball, timeUntilCollision, collisionDetails, true); // We've got a collision in timeUntilCollision
                     ballTickTime -= timeUntilCollision;
                     collisionDetails = timeUntilCollision(ball);
@@ -81,13 +80,6 @@ public class Model {
             double yVel = ball.getVelo().y();
             newX = ball.getExactX() + (xVel * time);
             newY = ball.getExactY() + (yVel * time);
-            System.out.println("The current ball position is x: "
-                    + String.format("%.3f", ball.getExactX()) + " y: " + String.format("%.3f", ball.getExactY()) + "; "
-                    + " the updated ball position is x: " + String.format("%.3f", newX)
-                    + " y: " + String.format("%.3f", newY) + " the time is "
-                    + String.format("%.3f", time) + "ms");
-
-            System.out.println("The velocity in x direction is " + String.format("%.3f", xVel) + " in y direction is " + String.format("%.3f", yVel));
             ball.setExactX(newX);
             ball.setExactY(newY);
             if (isCollision) {
@@ -95,7 +87,6 @@ public class Model {
             }
             applyForces(ball, time);
             if (isCollision && collisionDetails.getColiding() != null) {
-                System.out.println("should have triggered: " + collisionDetails.getColiding().getType());
                 collisionDetails.getColiding().trigger(ball);
             }
         }
