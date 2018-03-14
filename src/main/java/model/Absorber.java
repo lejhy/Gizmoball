@@ -84,7 +84,6 @@ public class Absorber extends StandardGizmo{
         ball.setExactX(x1 - 0.5);
         ball.setExactY(y + 0.5);
         balls.add(ball);
-       // action();
     }
     
     @Override
