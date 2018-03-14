@@ -69,7 +69,6 @@ public abstract class StandardGizmo implements Collideable {
 
     public boolean addGizmoTrigger(StandardGizmo gizmo) {
         if(!gizmo.equals(this)) {
-            gizmos.add(gizmo);
             return gizmos.add(gizmo);
         }
         return false;
@@ -80,8 +79,10 @@ public abstract class StandardGizmo implements Collideable {
     }
 
     public void trigger(Ball ball) {
+        System.out.println(" this: " + this.getType());
         for(StandardGizmo gizmo : gizmos) {
             gizmo.action();
+            System.out.println(gizmo + " " + gizmo.isTriggered());
         }
     };
 
@@ -90,11 +91,7 @@ public abstract class StandardGizmo implements Collideable {
     }
     
     public void action() {
-        if (triggered) {
-            triggered = false;
-        } else {
-            triggered = true;
-        }
+        triggered = !triggered;
     };
 
     public void update(double deltaT) {

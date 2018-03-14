@@ -49,7 +49,7 @@ public class Absorber extends StandardGizmo{
     public int getWidth() { return Math.abs(x - x1); }
 
     public boolean setWidth(int width) {
-        if (width < 1) {
+        if (width < 1 || width > 20) {
             return false;
         }
         this.x1 = x + width;
@@ -57,7 +57,7 @@ public class Absorber extends StandardGizmo{
     }
 
     public boolean setHeight(int height) {
-        if (height < 1) {
+        if (height < 1 || height > 20) {
             return false;
         }
         this.y1 = y + height;
