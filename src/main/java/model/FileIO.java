@@ -26,6 +26,10 @@ public class FileIO {
         filePath = s;
     }
 
+    public String getFilePath() {
+        return filePath;
+    }
+
     public void saveToFile(){
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"))) {
             Map<StandardGizmo, String> gizmos = new HashMap<>();
