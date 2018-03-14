@@ -30,8 +30,12 @@ public class MoveMouseEventHandler implements EventHandler<MouseEvent> {
             double xStart = board.getLPos(event.getX());
             double yStart = board.getLPos(event.getY());
             draggedGizmo = model.getGizmo((int)xStart, (int)yStart);
-            System.out.println("start: " + event.getX() + " " +event.getY());
-            textOutput.setText("Moving Gizmo: "+draggedGizmo.getType()+" from ("+(int)xStart+", "+(int)yStart+")");
+            if (draggedGizmo != null) {
+                System.out.println("start: " + event.getX() + " " +event.getY());
+                textOutput.setText("Moving Gizmo: "+draggedGizmo.getType()+" from ("+(int)xStart+", "+(int)yStart+")");
+            } else {
+                textOutput.setText("No Gizmo selected");
+            }
         } else if (draggedGizmo != null && event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
             double xCurrent = board.getLPos(event.getX());
             double yCurrent = board.getLPos(event.getY());
