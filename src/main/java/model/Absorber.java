@@ -70,6 +70,9 @@ public class Absorber extends StandardGizmo{
     public List<LineSegment> getLines() {
         List<LineSegment> lines = new ArrayList<>();
         lines.add(new LineSegment(x, y, x1, y));
+        lines.add(new LineSegment(x1, y, x1, y1));
+        lines.add(new LineSegment(x1, y1, x, y1));
+        lines.add(new LineSegment(x, y1, x, y));
         return lines;
     }
 
@@ -83,6 +86,7 @@ public class Absorber extends StandardGizmo{
         ball.stop();
         ball.setExactX(x1 - 0.5);
         ball.setExactY(y + 0.5);
+        ball.setVelo(Vect.ZERO);
         balls.add(ball);
     }
     
