@@ -147,6 +147,11 @@ public class BallTest {
         assertTrue(ball.stopped());
     }
 
+    @Test
+    public void testToString(){
+        assertEquals(ball.toString(), "Ball B 1.0 11.0 0.0 0.0");
+    }
+
 //    @Test
 //    public void tesSetExactXOutOfBoundaries() {
 //        // implement
