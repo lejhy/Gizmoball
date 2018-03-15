@@ -313,6 +313,20 @@ public class Model {
             }
         }
 
+        //check if ball occupy's the tile
+        for(int i = 0; i < balls.size(); i++) {
+            Ball b = balls.get(i);
+            if(x == b.getExactX() && y == b.getExactY()) {
+                return false;
+            } else if(x == b.getExactX() - width && y == b.getExactY()) {
+                return false;
+            } else if(x == b.getExactX() && y == b.getExactY() - height) {
+                return false;
+            } else if(x == b.getExactX() - width && y == b.getExactY() - height) {
+                return false;
+            }
+        }
+
         //Check that the gizmo can be moved
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
