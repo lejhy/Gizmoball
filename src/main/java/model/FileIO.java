@@ -30,12 +30,12 @@ public class FileIO {
         return filePath;
     }
 
-    public void saveToFile(){
+    public void saveToFile() {
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"))) {
             Map<StandardGizmo, String> gizmos = new HashMap<>();
             // Gizmos
             int id = 0;
-            for(StandardGizmo gizmo : model.getGizmos()) {
+            for (StandardGizmo gizmo : model.getGizmos()) {
                 String output = gizmo.toString(id);
                 String identifier = output.split(" ")[1];
                 writer.write(output);
@@ -43,49 +43,49 @@ public class FileIO {
                 gizmos.put(gizmo, identifier);
                 Angle rotation = new Angle(gizmo.getRotation().radians());
                 while (rotation.compareTo(Angle.ZERO) > 0) {
-                    writer.write("Rotate "+identifier);
+                    writer.write("Rotate " + identifier);
                     writer.write("\n");
                     rotation = rotation.minus(Angle.DEG_90);
                 }
                 id++;
             }
             // Gizmo connects
-            for(StandardGizmo gizmo : model.getGizmos()) {
+            for (StandardGizmo gizmo : model.getGizmos()) {
                 String identifier = gizmos.get(gizmo);
                 for (StandardGizmo trigger : gizmo.getTriggers()) {
-                    writer.write("Connect "+identifier+" "+gizmos.get(trigger));
+                    writer.write("Connect " + identifier + " " + gizmos.get(trigger));
                     writer.write("\n");
                 }
             }
             // Key down connects
             Map<Integer, Set<StandardGizmo>> keyDowns = model.getKeyDownTriggers();
-            for(Integer key : keyDowns.keySet()) {
+            for (Integer key : keyDowns.keySet()) {
                 Set<StandardGizmo> currentKeyGizmos = keyDowns.get(key);
                 for (StandardGizmo gizmo : currentKeyGizmos) {
-                    writer.write("KeyConnect key "+key+" down "+gizmos.get(gizmo));
+                    writer.write("KeyConnect key " + key + " down " + gizmos.get(gizmo));
                     writer.write("\n");
                 }
             }
             // Key up connects
             Map<Integer, Set<StandardGizmo>> keyUps = model.getKeyUpTriggers();
-            for(Integer key : keyUps.keySet()) {
+            for (Integer key : keyUps.keySet()) {
                 Set<StandardGizmo> currentKeyGizmos = keyUps.get(key);
                 for (StandardGizmo gizmo : currentKeyGizmos) {
-                    writer.write("KeyConnect key "+key+" up "+gizmos.get(gizmo));
+                    writer.write("KeyConnect key " + key + " up " + gizmos.get(gizmo));
                     writer.write("\n");
                 }
             }
             // Balls
             // Gizmos
-            for(Ball ball : model.getBalls()) {
+            for (Ball ball : model.getBalls()) {
                 writer.write(ball.toString());
                 writer.write("\n");
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+         e.printStackTrace();
+    } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -190,10 +190,6 @@ public class FileIO {
         }
 
         return model;
-
-    }
-
-    private void parseFile(){
 
     }
 

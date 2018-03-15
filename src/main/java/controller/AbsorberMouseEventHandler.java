@@ -31,22 +31,22 @@ public class AbsorberMouseEventHandler extends AddGizmoMouseEventHandler {
         } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
             isDragging = true;
             if(getAbsorber() != null){
+                int newX = getAbsorber().getxCoordinate();
+                int newY = getAbsorber().getyCoordinate();
+                int newX1 = (int)Math.ceil(x);
+                int newY1 = (int)Math.ceil(y);
+                System.out.println("x: "+newX+"y: "+newY+"x1: "+newX1+"y1: "+newY1);
+                StandardGizmo gizmo = new Absorber(newX, newY, newX1, newY1);
+                model.removeGizmo(currentGizmo);
+                if (model.addGizmo(gizmo)) {
+                    System.out.println("first");
+                    currentGizmo = gizmo;
+                } else {
+                    System.out.println("second");
+                    model.addGizmo(currentGizmo);
+                }
+            }
 
-            }
-            int newX = getAbsorber().getxCoordinate();
-            int newY = getAbsorber().getyCoordinate();
-            int newX1 = (int)Math.ceil(x);
-            int newY1 = (int)Math.ceil(y);
-            System.out.println("x: "+newX+"y: "+newY+"x1: "+newX1+"y1: "+newY1);
-            StandardGizmo gizmo = new Absorber(newX, newY, newX1, newY1);
-            model.removeGizmo(currentGizmo);
-            if (model.addGizmo(gizmo)) {
-                System.out.println("first");
-                currentGizmo = gizmo;
-            } else {
-                System.out.println("second");
-                model.addGizmo(currentGizmo);
-            }
         } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
             isDragging = false;
             currentGizmo = null;

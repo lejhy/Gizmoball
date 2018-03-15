@@ -31,6 +31,13 @@ public class AbsorberTest {
     }
 
     @Test
+    public void testBadContructor(){
+        Absorber badAbsorber = new Absorber(1, 1, 0, 0);
+        assertEquals(badAbsorber.getxCoordinate()+badAbsorber.getWidth(), 2);
+        assertEquals(badAbsorber.getyCoordinate()+badAbsorber.getHeight(), 2);
+    }
+
+    @Test
     public void testGetCollider() {
         assertEquals(0, absorber.getCollider().getCircles().size());
         assertEquals(1, absorber.getCollider().getLines().size());
@@ -94,7 +101,7 @@ public class AbsorberTest {
 
     @Test
     public void testGetLines() {
-        assertEquals(absorber.getLines().size(), 1);
+        assertEquals(absorber.getLines().size(), 4);
         assertEquals(absorber.getLines().get(0).p1().x(), xPos0, 0.001);
         assertEquals(absorber.getLines().get(0).p1().y(), yPos0, 0.001);
         assertEquals(absorber.getLines().get(0).p2().x(), xPos1, 0.001);
@@ -139,5 +146,10 @@ public class AbsorberTest {
         assertFalse(absorber.isTriggered());
         absorber.trigger(ball);
         assertTrue(absorber.isTriggered());
+    }
+
+    @Test
+    public void testToString(){
+        assertEquals(absorber.toString(0), "Absorber A0 0 19 20 20");
     }
 }

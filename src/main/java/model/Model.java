@@ -57,11 +57,11 @@ public class Model {
                     ballTickTime -= timeUntilCollision;
                     collisionDetails = timeUntilCollision(ball);
                     timeUntilCollision = collisionDetails.getTimeUntilCollision();
-                    if (i > 100)  { // TODO remove this quickfix and fix it... is it even possible though??
-                        if (i > 1000 && timeUntilCollision == 0) {
+                    if (i > 10)  { // TODO remove this quickfix and fix it... is it even possible though??
+                        if (i > 100 && timeUntilCollision == 0) {
                             ballTickTime = 0;
                         } else {
-                            timeUntilCollision = 0.0001;
+                            timeUntilCollision = 0.00001;
                         }
                     }
                     i++; // TODO remove this quickfix and fix it
