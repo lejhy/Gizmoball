@@ -152,10 +152,14 @@ public class BallTest {
         assertEquals(ball.toString(), "Ball B 1.0 11.0 0.0 0.0");
     }
 
-//    @Test
-//    public void tesSetExactXOutOfBoundaries() {
-//        // implement
-//    }
+  //  @Test
+  //  public void tesSetExactXOutOfBoundaries() {
+  //      ball.setExactX(0);
+  //      ball.setExactX(-21);
+  //      assertTrue(ball.getExactX() == 0);
+  //  }
+    //I see why these are commented out now
+    //if the setX and setY methods are public, should they sanity check the input?
 //
 //    @Test
 //    public void testSetExactYOutOfBoundaries() {

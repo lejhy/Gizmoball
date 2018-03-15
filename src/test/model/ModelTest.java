@@ -110,6 +110,26 @@ public class ModelTest {
     }
 
     @Test
+    public void testAddBallOffGrid(){
+        assertFalse(model.addBall(new Ball(0, 0, 0, 0, 0.5)));
+        assertFalse(model.addBall(new Ball(20, 20, 0, 0, 0.5)));
+    }
+
+    @Test
+    public void testGetBall(){
+        model.clear();
+        Ball ball = new Ball(1, 1, 0, 0, 0.5);
+        model.addBall(ball);
+        assertEquals(model.getBall(1, 1), ball);
+    }
+
+    @Test
+    public void testGetNonexistingBall(){
+        model.clear();
+        assertNull(model.getBall(0, 0));
+    }
+
+    @Test
     public void testGetGizmos() {
         assertNotNull(model.getGizmos());
     }
@@ -260,7 +280,7 @@ public class ModelTest {
 
         assertFalse(gizmo.isTriggered());
 
-        gizmo.trigger(new Ball(0, 5, 0, 0, 0.5));
+        gizmo.trigger(new Ball(1, 5, 0, 0, 0.5));
         assertTrue(gizmo.isTriggered());
     }
 
@@ -271,12 +291,25 @@ public class ModelTest {
         model.addGizmo(gizmo1);
         gizmo.addGizmoTrigger(gizmo1);
 
-        gizmo.trigger(new Ball(0, 5, 0, 0, 0.5));
+        gizmo.trigger(new Ball(1, 5, 0, 0, 0.5));
 
         assertTrue(gizmo1.isTriggered());
 
         assertFalse(gizmo.addGizmoTrigger(gizmo));
         assertFalse(gizmo.removeGizmoTrigger(gizmo));
+    }
+
+    @Test
+    public void testCollisionSquareTop(){
+        model.clear();
+        Ball ball = new Ball(1, 1, 0, 0, 0.5);
+        SquareBumper squareBumper = new SquareBumper(1, 2);
+        model.addBall(ball);
+        model.addGizmo(squareBumper);
+        for(int x = 0; x < 16; x++){
+            model.tick(60);
+        }
+        assertTrue(squareBumper.isTriggered());
     }
 
     @After

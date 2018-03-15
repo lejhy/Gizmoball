@@ -69,12 +69,12 @@ public class FileIOTest {
 
         gizmo.addGizmoTrigger(gizmo2);
 
-       // gizmo.rotate(Angle.DEG_90);
 
         saveTestModel.addGizmo(gizmo);
-        saveTestModel.getGizmo(0, 0).rotate(Angle.DEG_90);
+        saveTestModel.addGizmo(gizmo2);
         saveTestModel.addGizmo(new CircularBumper(10, 10));
         saveTestModel.addGizmo(new TriangularBumper(15, 0));
+        saveTestModel.getGizmo(15, 0).rotate(Angle.DEG_270);
         saveTestModel.addGizmo(new RightFlipper(0, 15));
         saveTestModel.addGizmo(new LeftFlipper(3, 3));
         saveTestModel.addBall(new Ball(2, 4, 0, 0, 0.5));
@@ -89,13 +89,13 @@ public class FileIOTest {
         saveTestModel = new Model();
         saveTestModel.setFilePath("saveTest");
         saveTestModel.loadFromFile();
-        assertEquals(saveTestModel.getGizmos().size(), 5);
+        assertEquals(saveTestModel.getGizmos().size(), 6);
 
     }
 
     @Test
     public void testSaveNonexisitingFile(){
-        model.setFilePath("notAFilePath");
+        model.setFilePath("fakeDirectory/notAFilePath.fakeExtension");
         model.saveToFile();
         exception.expect(FileNotFoundException.class);
     }

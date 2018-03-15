@@ -15,7 +15,7 @@ public class StandardGizmoTest {
     @Before
     public void setUp(){
         model = new Model();
-        gizmo = new SquareBumper(0, 0);
+        gizmo = new TriangularBumper(0, 0);
     }
 
     @Test
@@ -62,6 +62,11 @@ public class StandardGizmoTest {
     public void testRotate(){
         gizmo.rotate(Angle.DEG_90);
         assertEquals(gizmo.getRotation(), Angle.DEG_90);
+        gizmo.rotate(Angle.DEG_90);
+        assertEquals(gizmo.getRotation(), Angle.DEG_180);
+        SquareBumper squareBumper = new SquareBumper(4, 18);
+        squareBumper.rotate(Angle.DEG_90);
+        assertEquals(squareBumper.getRotation(), Angle.ZERO);
     }
 
     @Test
@@ -118,12 +123,20 @@ public class StandardGizmoTest {
 
     @Test
     public void testToString(){
-        assertEquals(gizmo.toString(0), "Square S0 0 0");
+        assertEquals(gizmo.toString(0), "Triangle T0 0 0");
     }
 
     @Test
     public void testColiderVelocity(){
         assertEquals(gizmo.getCollider().getVelocity(), Vect.ZERO);
+    }
+
+    @Test
+    public void testCollision(){
+        model.addGizmo(new SquareBumper(5, 5));
+        model.addBall(new Ball(4.5, 4.5, 1, 1, 0.5));
+        //model.tick(60);
+
     }
 
 }

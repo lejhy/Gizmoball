@@ -200,8 +200,14 @@ public class Model {
         double bYN = ball.getExactY() - ball.getRadius();
 
 
+        //Ball not off screen
+        if(bXN <= 0 || bX > 20){
+            return false;
+        }
 
-
+        if(bYN <= 0 || bY > 20){
+            return false;
+        }
 
         if (grid[(int) bX][(int) bY] || grid[(int)bXN][(int)bYN] || grid[(int)bX][(int)bYN] || grid[(int)bXN][(int)bY]) { // Check that all tiles are free
             return false;

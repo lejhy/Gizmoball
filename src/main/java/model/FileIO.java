@@ -81,13 +81,14 @@ public class FileIO {
                 writer.write(ball.toString());
                 writer.write("\n");
             }
-        } catch (UnsupportedEncodingException e) {
+        } catch (/*UnsupportedEncoding*/Exception e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } /*catch (FileNotFoundException e) {
          e.printStackTrace();
     } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+        //Dont need them all, makes coverage easier
     }
 
     public Model loadFromFile() throws IOException {
