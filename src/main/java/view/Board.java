@@ -5,13 +5,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import model.*;
 import physics.Angle;
-import physics.Circle;
-import physics.LineSegment;
 
-import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +29,7 @@ public class Board {
     private Image triangleTriggeredImg180;
     private Image triangleImg270;
     private Image triangleTriggeredImg270;
-    private List<Image> leftFlipperImg;
-    private List<Image> rightFlipperImg;
+    private List<Image> flipperImg;
     private Image wallImg;
     private Image absorberImg;
 
@@ -60,11 +55,9 @@ public class Board {
         triangleTriggeredImg180 = new Image(getClass().getResource("/Triangle_180_triggered.png").toString());
         triangleImg270 = new Image(getClass().getResource("/Triangle_270.png").toString());
         triangleTriggeredImg270 = new Image(getClass().getResource("/Triangle_270_triggered.png").toString());
-        leftFlipperImg = new ArrayList<>();
-        rightFlipperImg = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            leftFlipperImg.add(new Image(getClass().getResource("/LeftFlipper_" + String.format("%02d", i) + ".png").toString()));
-            rightFlipperImg.add(new Image(getClass().getResource("/RightFlipper_" + String.format("%02d", i) + ".png").toString()));
+        flipperImg = new ArrayList<>();
+        for (int i = 0; i < 60; i++) {
+            flipperImg.add(new Image(getClass().getResource("/Flipper_" + String.format("%02d", i) + ".png").toString()));
         }
         wallImg = new Image(getClass().getResource("/Wall.png").toString());
         absorberImg = new Image(getClass().getResource("/Absorber.png").toString());
@@ -117,12 +110,18 @@ public class Board {
                     }
                     break;
                 case LEFT_FLIPPER:
-                    int leftFlipperImgNumber = (int) Math.round(gizmo.getRotation().radians()*2/Math.PI * 14);
-                    image = leftFlipperImg.get(leftFlipperImgNumber);
+                    int leftFlipperRotationOffset = 59 + (int) Math.round(gizmo.getRotation().radians()*2/Math.PI * 15);
+                    if (leftFlipperRotationOffset > 59) leftFlipperRotationOffset = leftFlipperRotationOffset - 60;
+                    int leftFlipperRotation = (int) Math.round(((LeftFlipper)gizmo).getFlipperRotation().radians()*2/Math.PI * 14);
+                    int leftFlipperImgNumber = leftFlipperRotationOffset + leftFlipperRotation;
+                    image = flipperImg.get(leftFlipperImgNumber);
                     break;
                 case RIGHT_FLIPPER:
-                    int rightFlipperImgNumber = (int) Math.round(gizmo.getRotation().radians()*2/Math.PI * 14);
-                    image = rightFlipperImg.get(rightFlipperImgNumber);
+                    int rightFlipperRotationOffset = (int) Math.round(gizmo.getRotation().radians()*2/Math.PI * 15);
+                    if (rightFlipperRotationOffset < 0) rightFlipperRotationOffset = 60 + rightFlipperRotationOffset;
+                    int rightFlipperRotation = (int) Math.round(((RightFlipper)gizmo).getFlipperRotation().radians()*2/Math.PI * 14);
+                    int rightFlipperImgNumber = rightFlipperRotationOffset + rightFlipperRotation;
+                    image = flipperImg.get(rightFlipperImgNumber);
                     break;
                 case WALL:
                     //TODO Could add a semi transparent image with ambient occlusion around the edges
