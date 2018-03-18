@@ -167,6 +167,41 @@ public class BallTest {
 //    }
 //
 
+    @Test
+    public void testTooManyBalls(){
+       Model tooManyBallsModel = new Model();
+       tooManyBallsModel.addGizmo(new SquareBumper(1, 2));
+       for(int balls = 0; balls < 100; balls++){
+           tooManyBallsModel.addBall(new Ball(1, 1, 0,0, 0.5));
+       }
+        for(int balls = 0; balls < 100; balls++){
+       //     tooManyBallsModel.tick(60);
+            //covers the branch that handles exceptional collisions
+            //but how to test for it?
+        }
+    }
+
+    @Test
+    public void testCollideWithBall(){
+        double oldX = 1;
+        double oldY = 19.725;
+        Model colideTest = new Model();
+        Ball ball1 = new Ball(oldX, oldY, 0, 0, 0.5);
+        Ball ball2 = new Ball(oldX, 18, 0, 0, 0.5);
+        colideTest.addBall(ball1);
+        colideTest.addBall(ball2);
+        for(int x = 0; x < 20; x++){
+            colideTest.tick(60);
+        }
+        assertTrue(ball1.getExactX() == oldX);
+        assertTrue(ball2.getExactX() == oldX);
+        assertTrue(ball2.getExactY() != 18);
+        assertTrue(ball1.getExactY() != oldY);
+        //should calculate new values and test for these
+        //easy once we have the position after tick test working
+    }
+
+
     public Vect applyForcesFormula(int loopCount, double velX, double velY) {
         Vect velocity = null;
 

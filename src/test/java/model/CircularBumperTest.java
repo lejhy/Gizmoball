@@ -14,17 +14,17 @@ public class CircularBumperTest {
     @Before
     public void setUp(){
         model = new Model();
-        gizmo = new CircularBumper(0, 0);
+        gizmo = new CircularBumper(2, 2);
     }
 
     @Test
     public void testGetX(){
-        assertEquals(gizmo.getxCoordinate(), 0);
+        assertEquals(gizmo.getxCoordinate(), 2);
     }
 
     @Test
     public void testGetY(){
-        assertEquals(gizmo.getyCoordinate(), 0);
+        assertEquals(gizmo.getyCoordinate(), 2);
     }
 
     @Test
@@ -62,6 +62,17 @@ public class CircularBumperTest {
         gizmo.trigger(new Ball(0, 0, 0, 0, 0.5));
         gizmo.action();
         assertFalse(gizmo.isTriggered());
+    }
+
+    @Test
+    public void testTrigger(){
+        model.addGizmo(gizmo);
+        model.addBall(new Ball(2, 1, 0, 0, 0.5));
+        while(!gizmo.isTriggered()){
+            model.tick(60);
+        }
+
+        assertTrue(gizmo.isTriggered());
     }
 
     @Test

@@ -31,6 +31,25 @@ public class ModelTest {
     }
 
     @Test
+    public void loadFromFile() throws Exception {
+        assertEquals(model.getBalls().size(), 1);
+        assertEquals(model.getGizmos().size(), 35);
+        assertEquals(model.getKeyDownTriggers().size(), 4);
+        assertEquals(model.getKeyUpTriggers().size(), 3);
+    }
+
+    @Test
+    public void loadFromNonexistentFile(){
+       model.setFilePath("lolgudkekm9");
+       model.loadFromFile();
+        assertEquals(model.getBalls().size(), 1);
+        assertEquals(model.getGizmos().size(), 35);
+        assertEquals(model.getKeyDownTriggers().size(), 4);
+        assertEquals(model.getKeyUpTriggers().size(), 3);
+
+    }
+
+    @Test
     public void testClear() {
         model.clear();
         assertEquals(0, model.getBalls().size());
@@ -112,7 +131,22 @@ public class ModelTest {
     @Test
     public void testAddBallOffGrid(){
         assertFalse(model.addBall(new Ball(0, 0, 0, 0, 0.5)));
+        assertFalse(model.addBall(new Ball(1, 0, 0, 0, 0.5)));
+        assertFalse(model.addBall(new Ball(0, 1, 0, 0, 0.5)));
+
+        assertFalse(model.addBall(new Ball(-1, -1, 0, 0, 0.5)));
+        assertFalse(model.addBall(new Ball(-1, 5, 0, 0, 0.5)));
+        assertFalse(model.addBall(new Ball(5, -1, 0, 0, 0.5)));
+
         assertFalse(model.addBall(new Ball(20, 20, 0, 0, 0.5)));
+        assertFalse(model.addBall(new Ball(1, 20, 0, 0, 0.5)));
+        assertFalse(model.addBall(new Ball(20, 1, 0, 0, 0.5)));
+    }
+
+    @Test
+    public void testAddBallToGizmo(){
+        assertFalse(model.addBall(new Ball(19, 0, 0, 0, 0.5)));
+        assertFalse(model.addBall(new Ball(1, 1, 0, 0, 0.5)));
     }
 
     @Test
@@ -126,7 +160,25 @@ public class ModelTest {
     @Test
     public void testGetNonexistingBall(){
         model.clear();
-        assertNull(model.getBall(0, 0));
+        model.addBall(new Ball(1, 1, 0, 0, 0.5));
+        assertNull(model.getBall(1, 2));
+    }
+
+    @Test
+    public void testRemoveBall(){
+        Ball ball = new Ball(1, 4, 0, 0, 0.5);
+        assertTrue(model.addBall(ball));
+        int oldSize = model.getBalls().size();
+        assertTrue(model.removeBall(ball));
+        assertEquals(model.getBalls().size(), oldSize-1);
+    }
+
+    @Test
+    public void testRemoveNonexistingBall(){
+        Ball ball = new Ball(1, 4, 0, 0, 0.5);
+        int oldSize = model.getBalls().size();
+        assertFalse(model.removeBall(ball));
+        assertEquals(model.getBalls().size(), oldSize);
     }
 
     @Test
@@ -201,8 +253,9 @@ public class ModelTest {
     @Test
     public void testMoveGizmoInsideGrid() {
         StandardGizmo gizmo = model.getGizmo(0, 2);
-        model.moveGizmo(gizmo, 2, 2);
-        assertTrue(model.getGizmo(2, 2) != null);
+        assertTrue(model.getGizmo(1, 3) == null);
+        assertTrue(model.moveGizmo(gizmo, 1, 3));
+        assertTrue(model.getGizmo(1, 3) != null);
     }
 
     @Test
@@ -227,6 +280,9 @@ public class ModelTest {
     public void testMoveGizmoToBall() {
         StandardGizmo gizmo = model.getGizmo(0, 2);
         assertFalse(model.moveGizmo(gizmo, 1, 11));
+        assertFalse(model.moveGizmo(gizmo, 0, 11));
+        assertFalse(model.moveGizmo(gizmo, 1, 10));
+        assertFalse(model.moveGizmo(gizmo, 0, 10));
     }
 
     @Test
@@ -241,26 +297,97 @@ public class ModelTest {
     public void setFrictionMU() {
         double mu1 = model.getFrictionMU(1);
         double mu2 = model.getFrictionMU(2);
+
         model.setFrictionMU(0.9001, 1);
         model.setFrictionMU(0.9002, 2);
+
         assertTrue(model.getFrictionMU(1) == 0.9001);
         assertTrue(model.getFrictionMU(2) == 0.9002);
+
         assertNotEquals(model.getFrictionMU(1), mu1);
         assertNotEquals(model.getFrictionMU(2), mu2);
+
         assertNotEquals(model.getFrictionMU(1), model.getFrictionMU(2));
+
+        assertTrue(model.getFrictionMU(3) ==  0.0);
     }
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
-    // Note: load from file doesn't handle exception
     @Test
-    public void loadFromFile() throws Exception {
-        FileIO fileIO = new FileIO(model);
-        exception.expect(FileNotFoundException.class);
-        exception.expectMessage("src/saveFile111 (No such file or directory)");
-        fileIO.setFilePath("src/saveFile111");
-        fileIO.loadFromFile();
+    public void testAddKeyTriggerUp(){
+        StandardGizmo gizmo = model.getGizmo(19, 0);
+        int oldSize = model.getKeyUpTriggers().size();
+        model.addKeyUp(42, gizmo);
+
+        assertEquals(model.getKeyUpTriggers().size(), oldSize+1);
+    }
+
+    @Test
+    public void testAddKeyTriggerDown(){
+        StandardGizmo gizmo = model.getGizmo(19, 0);
+        int oldSize = model.getKeyDownTriggers().size();
+        model.addKeyDown(42, gizmo);
+
+        assertEquals(model.getKeyDownTriggers().size(), oldSize+1);
+    }
+
+    @Test
+    public void testKeyTriggerUp(){
+        StandardGizmo gizmo = model.getGizmo(19, 0);
+        model.addKeyUp(42, gizmo);
+
+        model.handleKeyUp(42);
+        assertTrue(gizmo.isTriggered());
+    }
+
+    @Test
+    public void testKeyTriggerDown(){
+        StandardGizmo gizmo = model.getGizmo(19, 0);
+        model.addKeyDown(42, gizmo);
+
+        model.handleKeyDown(42);
+        assertTrue(gizmo.isTriggered());
+    }
+
+    @Test
+    public void testNonexistentKeyTriggerDown(){
+        StandardGizmo gizmo = model.getGizmo(19, 0);
+
+        model.handleKeyDown(42);
+        assertFalse(gizmo.isTriggered());
+    }
+
+    @Test
+    public void testNonexistentKeyTriggerUp(){
+        StandardGizmo gizmo = model.getGizmo(19, 0);
+
+        model.handleKeyUp(42);
+        assertFalse(gizmo.isTriggered());
+    }
+
+    @Test
+    public void testRemoveKeyTriggerDown(){
+        StandardGizmo gizmo = model.getGizmo(19, 0);
+        int oldSize = model.getKeyDownTriggers().size();
+        model.addKeyDown(9001, gizmo);
+        assertTrue(model.removeKeyDown(9001, gizmo));
+        assertEquals(model.getKeyDownTriggers().get(9001).size(), 0);
+    }
+
+    @Test
+    public void testRemoveKeyTriggerUp(){
+        StandardGizmo gizmo = model.getGizmo(19, 0);
+        int oldSize = model.getKeyUpTriggers().size();
+        model.addKeyUp(9001, gizmo);
+        assertTrue(model.removeKeyUp(9001, gizmo));
+        assertEquals(model.getKeyUpTriggers().get(9001).size(), 0);
+    }
+
+    @Test
+    public void testRemoveNonexistentKeyTrigger(){
+        StandardGizmo gizmo = model.getGizmo(19, 0);
+
+        assertFalse(model.removeKeyDown(9001, gizmo));
+        assertNull(model.getKeyDownTriggers().get(9001));
     }
 
     // Note: save to file handles exception

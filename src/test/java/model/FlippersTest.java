@@ -23,11 +23,22 @@ public class FlippersTest {
         model.addGizmo(gizmo);
         model.addGizmo(sBumper);
         model.addBall(new Ball(5, 4, 0, 0, 0.5));
-        assertEquals(gizmo.getRotation(), Angle.ZERO);
+
+        assertEquals(((RightFlipper)gizmo).getFlipperRotation(), Angle.ZERO);
+
         for(int x = 0; x < 16; x++){
             model.tick(60);
         }
+
+        assertTrue(((RightFlipper)gizmo).getFlipperRotation().compareTo(Angle.ZERO) > 0);
         assertTrue(gizmo.isTriggered());
+
+        for(int x = 0; x < 33; x++){//no of ticks to hit gizmo again
+            model.tick(60);
+        }
+
+        assertEquals(((RightFlipper)gizmo).getFlipperRotation().compareTo(Angle.ZERO) , 0);
+        assertTrue(!gizmo.isTriggered());
     }
 
     @Test
@@ -38,22 +49,35 @@ public class FlippersTest {
         model.addGizmo(gizmo);
         model.addGizmo(sBumper);
         model.addBall(new Ball(5, 4, 0, 0, 0.5));
+
         assertEquals(gizmo.getRotation(), Angle.ZERO);
-        for(int x = 0; x < 16; x++){
+
+        for(int x = 0; x < 16; x++){//no of hits to hit gizmo
             model.tick(60);
         }
+
+        assertEquals(((LeftFlipper)gizmo).getFlipperRotation().compareTo(Angle.ZERO), 1);
         assertTrue(gizmo.isTriggered());
+
+        for(int x = 0; x < 33; x++){//no of ticks to hit gizmo again
+            model.tick(60);
+        }
+
+        assertEquals(((LeftFlipper)gizmo).getFlipperRotation().compareTo(Angle.ZERO) , 0);
+        assertTrue(!gizmo.isTriggered());
     }
 
     @Test
-    public void testRotate(){
+    public void testFlipperRotate(){
         gizmo = new LeftFlipper(10, 10);
+        assertEquals(gizmo.getRotation(), Angle.ZERO);
         gizmo.rotate(Angle.DEG_180);
-        //replace with similar trigger example from above
-        assertEquals(gizmo.getRotation(), Angle.DEG_90);
-        //not sure why 90 is right
+        assertEquals(gizmo.getRotation(), Angle.DEG_180);
+
+
         gizmo = new RightFlipper(10, 10);
+        assertEquals(gizmo.getRotation(), Angle.ZERO);
         gizmo.rotate(Angle.DEG_180);
-        assertEquals(gizmo.getRotation(), Angle.DEG_90);
+        assertEquals(gizmo.getRotation(), Angle.DEG_180);
     }
 }
