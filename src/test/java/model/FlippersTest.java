@@ -82,10 +82,9 @@ public class FlippersTest {
     }
 
     @Test
-    public void testFlipperCollision(){
+    public void testLeftFlipperCollision(){
         model.clear();
-        //model.setFilePath("saveTestFile");
-      //  model.loadFromFile();
+
         gizmo = new LeftFlipper(15, 18);
 
         model.addGizmo(gizmo);
@@ -94,17 +93,45 @@ public class FlippersTest {
         for(int x = 0; x< 29; x++){
             model.tick(60);
         }
+
         assertTrue(model.getBalls().get(0).getExactX() == 16);
         assertTrue(model.getBalls().get(0).getExactY() > 18);
+
         gizmo.action();
         assertTrue(gizmo.isTriggered());
-        model.tick(60);
-        model.tick(60);
-        model.tick(60);
 
-
+        model.tick(60);
+        model.tick(60);
+        model.tick(60);
+        
         assertNotEquals((int)model.getBalls().get(0).getExactX() , 16);
 
+    }
+
+    @Test
+    public void testRightFlipperCollision(){
+        model.clear();
+
+        gizmo = new RightFlipper(15, 18);
+
+        model.addGizmo(gizmo);
+        model.addBall(new Ball(16, 17, 0, 0, 0.5));
+
+        for(int x = 0; x< 29; x++){
+            model.tick(60);
+        }
+
+        assertTrue(model.getBalls().get(0).getExactX() == 16);
+        assertTrue(model.getBalls().get(0).getExactY() > 18);
+
+        gizmo.action();
+        assertTrue(gizmo.isTriggered());
+
+        model.tick(60);
+        model.tick(60);
+        model.tick(60);
+
+        assertNotEquals((int)model.getBalls().get(0).getExactX() , 16);
 
     }
 
