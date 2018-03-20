@@ -97,110 +97,116 @@ public class FileIO {
 
     public Model loadFromFile() throws IOException {
 
-        FileReader fr = new FileReader(filePath);
-        List<String> fileIn = new ArrayList<>();
-        bR = new BufferedReader(fr);
-        String line = bR.readLine();
+        try {
+            FileReader fr = new FileReader(filePath);
+            List<String> fileIn = new ArrayList<>();
+            bR = new BufferedReader(fr);
+            String line = bR.readLine();
 
-        while(line != null){
-            if(!line.equals("\n")){
-                fileIn.add(line);
+            while(line != null){
+                if(!line.equals("\n")){
+                    fileIn.add(line);
+                }
+                System.out.println(line);
+                line = bR.readLine();
             }
-            System.out.println(line);
-            line = bR.readLine();
-        }
 
-        model.clear();
-        Map<String, StandardGizmo> gizmos = new HashMap<String, StandardGizmo>();
+            model.clear();
+            Map<String, StandardGizmo> gizmos = new HashMap<String, StandardGizmo>();
 
-        for(String s : fileIn){
-            String[] tokens = s.split(" ");
-            StandardGizmo gizmo;
-            switch(tokens[0]) {
-                case "Triangle":
-                    if(!checkTokens(tokens[0], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])))
+            for(String s : fileIn){
+                String[] tokens = s.split(" ");
+                StandardGizmo gizmo;
+                switch(tokens[0]) {
+                    case "Triangle":
+                        if(!checkTokens(tokens[0], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])))
+                            break;
+                        gizmo = new TriangularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
+                        gizmos.put(tokens[1], gizmo);
                         break;
-                    gizmo = new TriangularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
-                    gizmos.put(tokens[1], gizmo);
-                    break;
 
-                case "Square":
-                    if(!checkTokens(tokens[0], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])))
+                    case "Square":
+                        if(!checkTokens(tokens[0], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])))
+                            break;
+                        gizmo = new SquareBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
+                        gizmos.put(tokens[1], gizmo);
                         break;
-                    gizmo = new SquareBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
-                    gizmos.put(tokens[1], gizmo);
-                    break;
 
-                case "Circle":
-                    if(!checkTokens(tokens[0], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])))
+                    case "Circle":
+                        if(!checkTokens(tokens[0], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])))
+                            break;
+                        gizmo = new CircularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
+                        gizmos.put(tokens[1], gizmo);
                         break;
-                    gizmo = new CircularBumper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
-                    gizmos.put(tokens[1], gizmo);
-                    break;
 
-                case "LeftFlipper":
-                    if(!checkTokens(tokens[0], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])))
+                    case "LeftFlipper":
+                        if(!checkTokens(tokens[0], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])))
+                            break;
+                        gizmo = new LeftFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
+                        gizmos.put(tokens[1], gizmo);
                         break;
-                    gizmo = new LeftFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
-                    gizmos.put(tokens[1], gizmo);
-                    break;
 
-                case "RightFlipper":
-                    if(!checkTokens(tokens[0], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])))
+                    case "RightFlipper":
+                        if(!checkTokens(tokens[0], Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])))
+                            break;
+                        gizmo = new RightFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
+                        gizmos.put(tokens[1], gizmo);
                         break;
-                    gizmo = new RightFlipper(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
-                    gizmos.put(tokens[1], gizmo);
-                    break;
 
-                case "Absorber":
-                    gizmo = new Absorber(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]));
-                    gizmos.put(tokens[1], gizmo);
-                    break;
-
-                case "Ball":
-                    Ball ball = new Ball(Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]), Double.parseDouble(tokens[4]), Double.parseDouble(tokens[5]), 0.5);
-                    model.addBall(ball);
-                    break;
-
-                case "KeyConnect":
-                    if (tokens[3].equals("down")) {
-                        model.addKeyDown(Integer.parseInt(tokens[2]), gizmos.get(tokens[4]));
-                    } else if (tokens[3].equals("up")) {
-                        model.addKeyUp(Integer.parseInt(tokens[2]), gizmos.get(tokens[4]));
-                    } else {
-                        throw new RuntimeException("Corrupted Save File");
-                    }
-                    break;
-
-                case "Connect":
-                    gizmos.get(tokens[1]).addGizmoTrigger(gizmos.get(tokens[2]));
-                    break;
-
-                case "Rotate":
-                    gizmos.get(tokens[1]).rotate(Angle.DEG_90);
-                    break;
-
-                case "Gravity":
-                    model.setGravityForce(Double.parseDouble(tokens[1]));
-                    break;
-
-                case "Friction":
-                    model.setFrictionMU(Double.parseDouble(tokens[1]), 1);
-                    model.setFrictionMU(Double.parseDouble(tokens[2]), 2);
-                    break;
-
-                default:
-                    if(tokens[0].isEmpty()) {
+                    case "Absorber":
+                        gizmo = new Absorber(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]));
+                        gizmos.put(tokens[1], gizmo);
                         break;
-                    } else {
-                        System.out.println(tokens[0] + " is not a gizmo.");
+
+                    case "Ball":
+                        Ball ball = new Ball(Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]), Double.parseDouble(tokens[4]), Double.parseDouble(tokens[5]), 0.5);
+                        model.addBall(ball);
                         break;
-                    }
+
+                    case "KeyConnect":
+                        if (tokens[3].equals("down")) {
+                            model.addKeyDown(Integer.parseInt(tokens[2]), gizmos.get(tokens[4]));
+                        } else if (tokens[3].equals("up")) {
+                            model.addKeyUp(Integer.parseInt(tokens[2]), gizmos.get(tokens[4]));
+                        } else {
+                            throw new RuntimeException("Corrupted Save File");
+                        }
+                        break;
+
+                    case "Connect":
+                        gizmos.get(tokens[1]).addGizmoTrigger(gizmos.get(tokens[2]));
+                        break;
+
+                    case "Rotate":
+                        gizmos.get(tokens[1]).rotate(Angle.DEG_90);
+                        break;
+
+                    case "Gravity":
+                        model.setGravityForce(Double.parseDouble(tokens[1]));
+                        break;
+
+                    case "Friction":
+                        model.setFrictionMU(Double.parseDouble(tokens[1]), 1);
+                        model.setFrictionMU(Double.parseDouble(tokens[2]), 2);
+                        break;
+
+                    default:
+                        if(tokens[0].isEmpty()) {
+                            break;
+                        } else {
+                            System.out.println(tokens[0] + " is not a gizmo.");
+                            break;
+                        }
+                }
             }
-        }
 
-        for(StandardGizmo gizmo : gizmos.values()) {
-            model.addGizmo(gizmo);
+            for(StandardGizmo gizmo : gizmos.values()) {
+                model.addGizmo(gizmo);
+            }
+        } catch (RuntimeException e) {
+            System.out.println("ERROR: File may be too large or invalid.");
+        } catch (IOException e) {
+            System.out.println("ERROR: Invalid file.");
         }
 
         return model;
