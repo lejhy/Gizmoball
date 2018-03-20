@@ -309,28 +309,33 @@ public class Model {
             return false; //Check for out of bounds
         }
 
-       //for(){
-
-       //}
+        //check if ball occupy's the tile
+        for(int i = 0; i < balls.size(); i++) {
+            Ball b = balls.get(i);
+            double bx = b.getExactX();
+            double by = b.getExactY();
+            double r = b.getRadius();
+            for (int j = 0; j < width; j++) {
+                for (int k = 0; k < height; k++) {
+                    if (((int)bx) == x+j && ((int)by) == y+j) {
+                        return false;
+                    } else if ((int)(bx+r) == x+j && (int)(by+r) == y+j) {
+                        return false;
+                    } else if ((int)(bx+r) == x+j && (int)(by-r) == y+j) {
+                        return false;
+                    } else if ((int)(bx-r) == x+j && (int)(by+r) == y+j) {
+                        return false;
+                    } else if ((int)(bx-r) == x+j && (int)(by-r) == y+j) {
+                        return false;
+                    }
+                }
+            }
+        }
 
        // Remove original coordinates from grid
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 grid[xCoord+i][ycoord+j] = false; // Remove old coordinates
-            }
-        }
-
-        //check if ball occupy's the tile
-        for(int i = 0; i < balls.size(); i++) {
-            Ball b = balls.get(i);
-            if(x == b.getExactX() && y == b.getExactY()) {
-                return false;
-            } else if(x == b.getExactX() - width && y == b.getExactY()) {
-                return false;
-            } else if(x == b.getExactX() && y == b.getExactY() - height) {
-                return false;
-            } else if(x == b.getExactX() - width && y == b.getExactY() - height) {
-                return false;
             }
         }
 
