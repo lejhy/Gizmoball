@@ -43,11 +43,6 @@ public class RightFlipper extends StandardGizmo {
         // create circles
         circles.add(new Circle(flipperRotationPivot, radius));
         circles.add(new Circle(movingCenter, radius));
-
-        circles.add(new Circle(x + 2*edgeLength, ((int)( y + radius)), 0));
-        circles.add(new Circle(x + 2*edgeLength - edgeLength/2.0, ((int)( y + radius)), 0));
-        circles.add(new Circle(x + 2*edgeLength, ((int)( y + radius)), 0));
-        circles.add(new Circle(x + 2*edgeLength - edgeLength/2.0, ((int)( y + radius)), 0));
         return circles;
     }
 
