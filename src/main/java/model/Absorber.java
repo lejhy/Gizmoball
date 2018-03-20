@@ -78,6 +78,10 @@ public class Absorber extends StandardGizmo{
 
     public List<Circle> getCircles() {
         List<Circle> circles = new ArrayList<>();
+        circles.add(new Circle(x, y, 0));
+        circles.add(new Circle(x1, y, 0));
+        circles.add(new Circle(x1, y1, 0));
+        circles.add(new Circle(x, y1, 0));
         return circles;
     }
 

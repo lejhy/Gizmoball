@@ -49,7 +49,7 @@ public class CircularBumperTest {
 
     @Test
     public void testGetCenter(){
-        assertTrue(gizmo.getCollider().center.equals(new Vect(0.5, 0.5)));
+        assertTrue(gizmo.getCollider().center.equals(new Vect(2+1/2, 2+1/2)));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class CircularBumperTest {
 
     @Test
     public void testToString(){
-        assertEquals(gizmo.toString(0), "Circle C0 0 0");
+        assertEquals(gizmo.toString(0), "Circle C0 2 2");
     }
 
 }

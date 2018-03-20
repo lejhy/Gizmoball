@@ -71,7 +71,7 @@ public class StandardGizmoTest {
 
     @Test
     public void testGetType(){
-        assertEquals(gizmo.getType(), StandardGizmo.Type.SQUARE);
+        assertEquals(gizmo.getType(), StandardGizmo.Type.TRIANGLE);
     }
 
     @Test
@@ -96,17 +96,17 @@ public class StandardGizmoTest {
 
     @Test
     public void testGetLines(){
-        assertEquals(gizmo.getCollider().lines.size(), 4 );
+        assertEquals(gizmo.getCollider().lines.size(), 3 );
     }
 
     @Test
     public void testGetCircles(){
-        assertEquals(gizmo.getCollider().circles.size(), 4);
+        assertEquals(gizmo.getCollider().circles.size(), 3);
     }
 
     @Test
     public void testGetCenter(){
-        assertTrue(gizmo.getCollider().center.equals(new Vect(0.5, 0.5)));
+        assertTrue(gizmo.getCollider().center.equals(new Vect(gizmo.x + gizmo.edgeLength/2, gizmo.y + gizmo.edgeLength/2)));
     }
 
     @Test

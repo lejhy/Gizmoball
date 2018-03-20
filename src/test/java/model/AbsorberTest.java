@@ -39,8 +39,8 @@ public class AbsorberTest {
 
     @Test
     public void testGetCollider() {
-        assertEquals(0, absorber.getCollider().getCircles().size());
-        assertEquals(1, absorber.getCollider().getLines().size());
+        assertEquals(4, absorber.getCollider().getCircles().size());
+        assertEquals(4, absorber.getCollider().getLines().size());
     }
 
     @Test
@@ -110,7 +110,7 @@ public class AbsorberTest {
 
     @Test
     public void testGetCircles() {
-        assertEquals(absorber.getCircles().size(), 0);
+        assertEquals(absorber.getCircles().size(), 4);
     }
 
     @Test

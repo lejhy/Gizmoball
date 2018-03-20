@@ -50,7 +50,7 @@ public class SquareBumperTest {
 
     @Test
     public void testGetCenter(){
-        assertTrue(gizmo.getCollider().center.equals(new Vect(0.5, 0.5)));
+        assertTrue(gizmo.getCollider().center.equals(new Vect(gizmo.x + gizmo.edgeLength/2, gizmo.y+gizmo.edgeLength/2)));
     }
 
     @Test
