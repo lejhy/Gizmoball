@@ -83,6 +83,7 @@ public class FlippersTest {
 
     @Test
     public void testLeftFlipperCollision(){
+        //Test for hitting line segment
         model.clear();
 
         gizmo = new LeftFlipper(15, 18);
@@ -106,19 +107,15 @@ public class FlippersTest {
         model.tick(60);
         
         assertNotEquals((int)model.getBalls().get(0).getExactX() , 16);
-
-    }
-
-    @Test
-    public void testRightFlipperCollision(){
+        //Test for hitting ball at end
         model.clear();
 
-        gizmo = new RightFlipper(15, 18);
+        gizmo = new LeftFlipper(15, 18);
 
         model.addGizmo(gizmo);
         model.addBall(new Ball(16, 17, 0, 0, 0.5));
 
-        for(int x = 0; x< 29; x++){
+        for(int x = 0; x< 28; x++){
             model.tick(60);
         }
 
@@ -128,6 +125,60 @@ public class FlippersTest {
         gizmo.action();
         assertTrue(gizmo.isTriggered());
 
+        model.tick(60);
+        model.tick(60);
+        model.tick(60);
+        model.tick(60);
+
+        assertNotEquals((int)model.getBalls().get(0).getExactX() , 16);
+
+    }
+
+    @Test
+    public void testRightFlipperCollision(){
+        //Test for hitting line segment
+        model.clear();
+
+        gizmo = new RightFlipper(15, 18);
+
+        model.addGizmo(gizmo);
+        model.addBall(new Ball(16, 17, 0, 0, 0.5));
+
+        for(int x = 0; x< 28; x++){
+            model.tick(60);
+        }
+
+        assertTrue(model.getBalls().get(0).getExactX() == 16);
+        assertTrue(model.getBalls().get(0).getExactY() > 18);
+
+        gizmo.action();
+        assertTrue(gizmo.isTriggered());
+
+        model.tick(60);
+        model.tick(60);
+        model.tick(60);
+        model.tick(60);
+
+        assertNotEquals((int)model.getBalls().get(0).getExactX() , 16);
+        //Test for hitting ball at end
+        model.clear();
+
+        gizmo = new RightFlipper(15, 18);
+
+        model.addGizmo(gizmo);
+        model.addBall(new Ball(16, 17, 0, 0, 0.5));
+
+        for(int x = 0; x< 28; x++){
+            model.tick(60);
+        }
+
+        assertTrue(model.getBalls().get(0).getExactX() == 16);
+        assertTrue(model.getBalls().get(0).getExactY() > 18);
+
+        gizmo.action();
+        assertTrue(gizmo.isTriggered());
+
+        model.tick(60);
         model.tick(60);
         model.tick(60);
         model.tick(60);

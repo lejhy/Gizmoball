@@ -274,6 +274,12 @@ public class ModelTest {
         assertFalse(model.moveGizmo(gizmo, 0, 11));
         assertFalse(model.moveGizmo(gizmo, 1, 10));
         assertFalse(model.moveGizmo(gizmo, 0, 10));
+        for(int x = 0; x < 16; x++){
+            model.tick(60);
+            //move ball to intersect a tile
+            //but not share an x and y coordinate with it
+        }
+        assertFalse(model.moveGizmo(gizmo, 1, 12));
     }
 
     @Test

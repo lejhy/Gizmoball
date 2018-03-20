@@ -35,14 +35,11 @@ public class AbsorberMouseEventHandler extends AddGizmoMouseEventHandler {
                 int newY = getAbsorber().getyCoordinate();
                 int newX1 = (int)Math.ceil(x);
                 int newY1 = (int)Math.ceil(y);
-                System.out.println("x: "+newX+"y: "+newY+"x1: "+newX1+"y1: "+newY1);
                 StandardGizmo gizmo = new Absorber(newX, newY, newX1, newY1);
                 model.removeGizmo(currentGizmo);
                 if (model.addGizmo(gizmo)) {
-                    System.out.println("first");
                     currentGizmo = gizmo;
                 } else {
-                    System.out.println("second");
                     model.addGizmo(currentGizmo);
                 }
             }

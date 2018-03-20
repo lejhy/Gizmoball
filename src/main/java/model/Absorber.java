@@ -92,11 +92,13 @@ public class Absorber extends StandardGizmo{
         ball.setExactY(y + 0.5);
         ball.setVelo(Vect.ZERO);
         balls.add(ball);
+        super.trigger(ball);
     }
     
     @Override
     public void action() {
     	if(balls.size() > 0){
+    	    System.out.println("huh");
     	    Ball ball = balls.get(0);
     	    ball.setExactX(x1 - 0.5);
     	    ball.setExactY(y - 0.25); // TODO needs to be (y1 - 0.25) but causes subsequent triggers on Absorber... need to find a way to temporarily disable them until the ball leaves the Absorber (disable the ball and use the update method to check on every tick whether the ball has left the absorber and then enable it)

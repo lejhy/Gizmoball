@@ -48,7 +48,7 @@ public class MoveMouseEventHandler implements EventHandler<MouseEvent> {
             if(oldY >= 10){
                 offset++;
             }
-            if(xCurrent > 0 && xCurrent < 21 && yCurrent > 0 && yCurrent < 21 && model.getGizmo((int)xCurrent, (int)yCurrent).equals(draggedGizmo)){
+            if(xCurrent > 0 && xCurrent < 21 && yCurrent > 0 && yCurrent < 21 && model.getGizmo((int)xCurrent, (int)yCurrent) != null && model.getGizmo((int)xCurrent, (int)yCurrent).equals(draggedGizmo)){
                 if(textOutput.getText().contains("to"))
                     textOutput.setText(textOutput.getText().substring(0, (textOutput.getText().length()-10)-offset)+" to ("+(int)xCurrent+", "+(int)yCurrent+")");
                 else

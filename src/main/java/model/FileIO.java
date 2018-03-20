@@ -85,14 +85,9 @@ public class FileIO {
             writer.write("\n");
             writer.write("Friction "+model.getFrictionMU(1)+" "+model.getFrictionMU(2));
             writer.write("\n");
-        } catch (/*UnsupportedEncoding*/Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } /*catch (FileNotFoundException e) {
-         e.printStackTrace();
-    } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-        //Dont need them all, makes coverage easier
+        }
     }
 
     public Model loadFromFile() throws IOException {
