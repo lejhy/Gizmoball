@@ -1,5 +1,8 @@
 package model;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
 import physics.Circle;
 import physics.Geometry;
 import physics.LineSegment;
@@ -21,11 +24,11 @@ public class Model {
     private static List<Integer> waitingForKeyUp; //list of key down events without corresponding key up events
 
     // friction coefficients
-    private double mu1 = 0.025; // per second
-    private double mu2 = 0.025; // per L
+    private DoubleProperty mu1 = new SimpleDoubleProperty(0.025); // per second
+    private DoubleProperty mu2 = new SimpleDoubleProperty(0.025); // per L
 
     private FileIO fileInOut;
-    private double gravityMultiplier = 25.0;
+    private DoubleProperty gravityMultiplier = new SimpleDoubleProperty(25.0);
 
 
     public Model() {
@@ -361,34 +364,47 @@ public class Model {
     }
 
     public double getGravityForce(double deltaT) {
-        return gravityMultiplier*deltaT;
+        return gravityMultiplier.get()*deltaT;
     }
 
     public void setGravityForce(double mult) {
-        gravityMultiplier = mult;
+        gravityMultiplier.set(mult);
+    }
+
+    public void addGravityListener(ChangeListener<Number> listener) {
+        gravityMultiplier.addListener(listener);
     }
 
     private void applyFriction(Ball ball, double deltaT) {
-        ball.setVelo(ball.getVelo().times(1 - (mu1 * deltaT) - (mu2 * Math.abs(ball.getVelo().length()) * deltaT)));
+        ball.setVelo(ball.getVelo().times(1 - (mu1.get() * deltaT) - (mu2.get() * Math.abs(ball.getVelo().length()) * deltaT)));
     }
 
     public void setFrictionMU(double mult, int delim){
         if(delim == 1){
-            mu1 = mult;
+            mu1.set(mult);
         }
         if(delim == 2){
-            mu2 = mult;
+            mu2.set(mult);
         }
     }
 
     public double getFrictionMU(int delim){
         if(delim == 1){
-            return mu1;
+            return mu1.get();
         }
         if(delim == 2){
-            return mu2;
+            return mu2.get();
         }
         return 0.0;
+    }
+
+    public void addFrictionListener(ChangeListener<Number> listener, int delim) {
+        if(delim == 1){
+            mu1.addListener(listener);
+        }
+        if(delim == 2){
+            mu2.addListener(listener);
+        }
     }
 
     public void loadFromFile() {

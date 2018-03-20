@@ -76,11 +76,15 @@ public class FileIO {
                 }
             }
             // Balls
-            // Gizmos
             for (Ball ball : model.getBalls()) {
                 writer.write(ball.toString());
                 writer.write("\n");
             }
+            // Gravity and Friction
+            writer.write("Gravity "+model.getGravityForce(1));
+            writer.write("\n");
+            writer.write("Friction "+model.getFrictionMU(1)+" "+model.getFrictionMU(2));
+            writer.write("\n");
         } catch (/*UnsupportedEncoding*/Exception e) {
             e.printStackTrace();
         } /*catch (FileNotFoundException e) {
@@ -174,6 +178,15 @@ public class FileIO {
 
                 case "Rotate":
                     gizmos.get(tokens[1]).rotate(Angle.DEG_90);
+                    break;
+
+                case "Gravity":
+                    model.setGravityForce(Double.parseDouble(tokens[1]));
+                    break;
+
+                case "Friction":
+                    model.setFrictionMU(Double.parseDouble(tokens[1]), 1);
+                    model.setFrictionMU(Double.parseDouble(tokens[2]), 2);
                     break;
 
                 default:

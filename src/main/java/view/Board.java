@@ -92,7 +92,7 @@ public class Board {
                     break;
                 case TRIANGLE:
                     Angle rotation = gizmo.getRotation();
-                    if (gizmo.equals(Angle.ZERO)) {
+                    if (rotation.equals(Angle.ZERO)) {
                         if (gizmo.isTriggered()) image = triangleTriggeredImg0;
                         else image = triangleImg0;
                     } else if (rotation.equals(Angle.DEG_90)) {

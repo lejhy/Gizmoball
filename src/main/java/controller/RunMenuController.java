@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -24,6 +25,24 @@ public class RunMenuController {
     @FXML
     Button buildMode;
 
+    @FXML
+    private Slider friction2;
+
+    @FXML
+    private Slider gravity;
+
+    @FXML
+    private Slider friction1;
+
+    @FXML
+    private Label gravityLabel;
+
+    @FXML
+    private Label friction1Label;
+
+    @FXML
+    private Label friction2Label;
+
     private Model model;
     private Board board;
     private Label textOutput;
@@ -37,6 +56,9 @@ public class RunMenuController {
         this.model = model;
         this.board = board;
         this.textOutput = textOutput;
+        model.addGravityListener((obs, o, n) -> updateGravity(n.doubleValue()));
+        model.addFrictionListener((obs, o, n) -> updateFricitonCoefficient1(n.doubleValue()), 1);
+        model.addFrictionListener((obs, o, n) -> updateFricitonCoefficient2(n.doubleValue()), 2);
 
         physicsTimeline.setCycleCount(Timeline.INDEFINITE);
         physicsTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000/FPS), e->{
@@ -60,9 +82,9 @@ public class RunMenuController {
     private void propagateKeyEvents() {
         root.addEventFilter(KeyEvent.ANY, e->{
             if (e.getEventType() == KeyEvent.KEY_PRESSED) {
-                model.handleKeyDown(e.getCode().impl_getCode());
+                model.handleKeyDown(e.getCode().getCode());
             } else if (e.getEventType() == KeyEvent.KEY_RELEASED) {
-                model.handleKeyUp(e.getCode().impl_getCode());
+                model.handleKeyUp(e.getCode().getCode());
             } else {
                 // ignore
             }
@@ -124,8 +146,16 @@ public class RunMenuController {
     @FXML
     void onSaveButtonClicked()  {
         onStopButtonClicked();
-        textOutput.setText("Game saved");
-        System.out.println("Save button clicked");
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("All Files", "*.*"));
+        File selectedFile = fc.showSaveDialog(null);
+        if(selectedFile != null) {
+            model.setFilePath(selectedFile.getAbsolutePath());
+            model.saveToFile();
+            textOutput.setText("Game saved");
+        }
     }
 
     @FXML
@@ -133,5 +163,42 @@ public class RunMenuController {
         textOutput.setText("Goodbye!");
         onStopButtonClicked();
         Platform.exit();
+    }
+
+    // SETTINGS ACTION LISTENERS
+    @FXML
+    public void changeGravity() {
+        gravityLabel.setText("Gravity: "+String.format("%.0f", gravity.getValue()) +" L");
+        System.out.println("Set gravity value to " + gravity.getValue() + "% of the maximum value");
+        model.setGravityForce(gravity.getValue());
+    }
+
+    public void updateGravity(double value) {
+        gravityLabel.setText("Gravity: "+String.format("%.0f", value) +" L");
+        gravity.setValue(value);
+    }
+
+    @FXML
+    public void changeFricitonCoefficient1() {
+        friction1Label.setText("Friction (mu): "+String.format("%.3f", friction1.getValue()) +" L");
+        System.out.println("Set friction coefficient value to " + friction1.getValue() + "% of the maximum value");
+        model.setFrictionMU(friction1.getValue(), 1);
+    }
+
+    public void updateFricitonCoefficient1(double value) {
+        friction1Label.setText("Friction (mu): "+String.format("%.3f", value) +" L");
+        friction1.setValue(value);
+    }
+
+    @FXML
+    public void changeFricitonCoefficient2() {
+        friction2Label.setText("Friction (mu2): "+String.format("%.3f", friction2.getValue()) +" L");
+        System.out.println("Set friction coefficinet value to " + friction2.getValue() + "% of the maximum value");
+        model.setFrictionMU(friction2.getValue(), 2);
+    }
+
+    public void updateFricitonCoefficient2(double value) {
+        friction2Label.setText("Friction (mu): "+String.format("%.3f", value) +" L");
+        friction2.setValue(value);
     }
 }
