@@ -117,11 +117,6 @@ BuildMenuController {
     }
 
     @FXML
-    public void onCloseButtonClicked() {
-        System.out.println("Close button clicked");
-    }
-
-    @FXML
     public void onQuitButtonClicked() { Platform.exit(); }
 
     // EDIT ACTION LISTENERS
@@ -179,6 +174,7 @@ BuildMenuController {
 
     @FXML
     public void onClearBondButtonClicked() {
+        textOutput.setText("Board cleared!");
         model.clear();
     }
 

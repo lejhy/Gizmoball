@@ -13,10 +13,12 @@ public class RightFlipperMouseEventHandler extends AddGizmoMouseEventHandler{
     }
 
     @Override
-    protected void createGizmo(int x, int y) {
+    protected boolean createGizmo(int x, int y) {
         StandardGizmo gizmo = new RightFlipper(x, y);
         if (model.addGizmo(gizmo)) {
             currentGizmo = gizmo;
+            return true;
         }
+        return false;
     }
 }

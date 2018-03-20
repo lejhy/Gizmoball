@@ -28,6 +28,7 @@ public class RightFlipper extends StandardGizmo {
         Vect flipperRotationPivot = new Vect(x + edgeLength*2 - radius, y + radius).rotateBy(rotation, rotationPivot);
         lines.add(new LineSegment(new Vect(x + 2*edgeLength, y + radius).rotateBy(rotation, rotationPivot).rotateBy(flipperRotation, flipperRotationPivot), new Vect(x + 2*edgeLength, y + 2*edgeLength - radius).rotateBy(rotation, rotationPivot).rotateBy(flipperRotation, flipperRotationPivot)));
         lines.add(new LineSegment(new Vect(x + + 2*edgeLength - edgeLength/2.0, y + radius).rotateBy(rotation, rotationPivot).rotateBy(flipperRotation, flipperRotationPivot), new Vect(x  + 2*edgeLength - edgeLength/2.0, y + 2*edgeLength - radius).rotateBy(rotation, rotationPivot).rotateBy(flipperRotation, flipperRotationPivot)));
+        System.out.println(lines.get(0).toLine2D().x1);
         return lines;
     }
 
@@ -42,6 +43,11 @@ public class RightFlipper extends StandardGizmo {
         // create circles
         circles.add(new Circle(flipperRotationPivot, radius));
         circles.add(new Circle(movingCenter, radius));
+
+        circles.add(new Circle(x + 2*edgeLength, ((int)( y + radius)), 0));
+        circles.add(new Circle(x + 2*edgeLength - edgeLength/2.0, ((int)( y + radius)), 0));
+        circles.add(new Circle(x + 2*edgeLength, ((int)( y + radius)), 0));
+        circles.add(new Circle(x + 2*edgeLength - edgeLength/2.0, ((int)( y + radius)), 0));
         return circles;
     }
 

@@ -58,11 +58,13 @@ public class AbsorberMouseEventHandler extends AddGizmoMouseEventHandler {
     }
 
     @Override
-    public void createGizmo(int x, int y) {
+    public boolean createGizmo(int x, int y) {
         StandardGizmo gizmo = new Absorber(x, y, x+1, y+1);
         if (model.addGizmo(gizmo)) {
             currentGizmo = gizmo;
+            return true;
         }
+        return false;
     }
 
     private Absorber getAbsorber() {

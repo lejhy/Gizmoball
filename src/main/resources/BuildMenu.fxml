@@ -11,7 +11,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane fx:id="buildRoot" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:id="buildRoot" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox alignment="CENTER">
          <children>
@@ -25,7 +25,7 @@
             </Button>
             <TitledPane expanded="false" text="File">
                <content>
-                  <VBox prefHeight="319.0" prefWidth="196.0">
+                  <VBox prefHeight="200.0" prefWidth="196.0">
                      <children>
                         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onReloadButtonClicked" text="Reload">
                            <VBox.margin>
@@ -42,11 +42,6 @@
                               <Insets bottom="20.0" />
                            </VBox.margin>
                         </Button>
-                        <Button layoutX="24.0" layoutY="83.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCloseButtonClicked" text="Close">
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin>
-                        </Button>
                         <Button layoutX="24.0" layoutY="142.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onQuitButtonClicked" text="Quit">
                            <VBox.margin>
                               <Insets bottom="20.0" />
@@ -56,7 +51,7 @@
                   </VBox>
                </content>
             </TitledPane>
-            <TitledPane text="Editing tools">
+            <TitledPane expanded="false" text="Editing tools">
                <content>
                   <VBox>
                      <children>
@@ -113,7 +108,7 @@
                   </VBox>
                </content>
             </TitledPane>
-            <TitledPane text="Settings">
+            <TitledPane expanded="false" text="Settings">
                <content>
                   <VBox>
                      <children>

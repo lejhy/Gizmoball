@@ -26,12 +26,15 @@ public abstract class AddGizmoMouseEventHandler extends BoardEventHandler {
         double x = board.getLPos(event.getX());
         double y = board.getLPos(event.getY());
         if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-            createGizmo((int)x, (int)y);
+            if(createGizmo((int)x, (int)y))
+                textOutput.setText("Adding Gizmo at: (" + (int)x + ", " + (int)y + ")");
         } else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {
             if (currentGizmo != null) {
-                model.moveGizmo(currentGizmo, (int) x, (int) y);
+                if(model.moveGizmo(currentGizmo, (int) x, (int) y))
+                    textOutput.setText("Adding Gizmo at: (" + (int)x + ", " + (int)y + ")");
             } else {
-                createGizmo((int) x, (int) y);
+                if(createGizmo((int) x, (int) y))
+                    textOutput.setText("Adding Gizmo at: (" + (int)x + ", " + (int)y + ")");
             }
         } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
             currentGizmo = null;
@@ -52,5 +55,5 @@ public abstract class AddGizmoMouseEventHandler extends BoardEventHandler {
         }
     }
 
-    protected abstract void createGizmo(int x, int y);
+    protected abstract boolean createGizmo(int x, int y);
 }

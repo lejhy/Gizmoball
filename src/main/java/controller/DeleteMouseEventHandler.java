@@ -33,7 +33,7 @@ public class DeleteMouseEventHandler implements EventHandler<MouseEvent> {
             if (model.removeBall(ball)) {
                 textOutput.setText("Deleting ball at ("+x+", "+y+")");
             }else if(model.removeGizmo(gizmo)){
-                textOutput.setText("Deleting Gizmo: "+gizmo.getType()+" at ("+x+", "+y+")");
+                textOutput.setText("Deleting Gizmo: "+gizmo.getType()+" at ("+(int)x+", "+(int)y+")");
             }else{
                 textOutput.setText("No Gizmo selected");
             }
