@@ -68,6 +68,10 @@ BuildMenuController {
         propagateKeyEvents();
     }
 
+    public void setPaintGrid(boolean paintGrid){
+        board.setPaintGrid(paintGrid);
+    }
+
     private void propagateKeyEvents() {
         buildRoot.addEventFilter(KeyEvent.ANY, e -> {
             if (currentBoardMouseEventHandler instanceof ConnectMouseEventHandler) {

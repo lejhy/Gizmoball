@@ -36,6 +36,8 @@ public class Board {
     private int boardSize = 800;
     private int LSize;
 
+    private boolean paintGrid = true;
+
     public Board(Model model, Canvas canvas) {
         this.model = model;
         this.canvas = canvas;
@@ -63,6 +65,10 @@ public class Board {
         absorberImg = new Image(getClass().getResource("/Absorber.png").toString());
     }
 
+    public void setPaintGrid(boolean paintGrid){
+        this.paintGrid = paintGrid;
+    }
+
     public void paintBoard() {
 
         // Draw Background
@@ -71,6 +77,9 @@ public class Board {
             for (int j = 0; j < gridDimensions; j += 6) {
                 gc.drawImage(wallImg, i*LSize, j*LSize, LSize*6, LSize*6);
             }
+        }
+        if(paintGrid){
+            paintGrid();
         }
 
         // Gizmos
@@ -158,7 +167,7 @@ public class Board {
                 gc.drawImage(ballImg, x * LSize, y * LSize, width * LSize, width * LSize);
             }
         }
-        //paintGrid();
+
 
     }
 

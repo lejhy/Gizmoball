@@ -84,7 +84,11 @@ public class GizmoballController extends BorderPane {
 
     private void swapMode(Node node){
         setLeft(node);
+        if(node.getId().equals("root")){
+            buildMenuController.setPaintGrid(false);
+        }
         buildMenuController.removeHandler();
+
     }
     
 }
