@@ -51,7 +51,18 @@ public class RightFlipper extends StandardGizmo {
         List<Circle> circles = getCircles();
         Vect rotationPivot = new Vect(x+edgeLength, y+edgeLength);
         Vect flipperRotationPivot = new Vect(x + edgeLength*2 - radius, y + radius).rotateBy(rotation, rotationPivot);
-        double angVelocity = isRotating() ? angularVelocity : 0;
+
+        double angVelocity;
+        if (isRotating()) {
+            if (isTriggered()) {
+                angVelocity = angularVelocity;
+            } else {
+                angVelocity = -angularVelocity;
+            }
+        } else {
+            angVelocity = 0;
+        }
+
         return new Collider(lines, circles, flipperRotationPivot, angVelocity, Vect.ZERO);
     }
 

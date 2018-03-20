@@ -154,6 +154,11 @@ public class Board {
                 default:
             }
             gc.drawImage(image, xCoord, yCoord, width, height);
+            if (gizmo.getType()== StandardGizmo.Type.RIGHT_FLIPPER) {
+                RightFlipper test = (RightFlipper) gizmo;
+                double r = test.getCollider().getCircles().get(1).getRadius();
+                gc.drawImage(ballImg, (test.getCollider().getCircles().get(1).getCenter().x()-r) * LSize, (test.getCollider().getCircles().get(1).getCenter().y()-r) * LSize, 2*r * LSize, 2*r * LSize);
+            }
         }
 
         // Draw ballImg

@@ -148,7 +148,7 @@ public class Model {
                     time = Geometry.timeUntilRotatingWallCollision(line, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity);
                     if (time < shortestTime) {
                         shortestTime = time;
-                        newVelo = Geometry.reflectRotatingWall(line, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0);
+                        newVelo = Geometry.reflectRotatingWall(line, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0.1);
                         colidingGizmo = gizmo;
                     }
                 }
@@ -156,7 +156,8 @@ public class Model {
                     time = Geometry.timeUntilRotatingCircleCollision(circle, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity);
                     if (time < shortestTime) {
                         shortestTime = time;
-                        newVelo = Geometry.reflectRotatingCircle(circle, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0);
+                        System.out.println(shortestTime);
+                        newVelo = Geometry.reflectRotatingCircle(circle, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0.1);
                         colidingGizmo = gizmo;
                     }
                 }
@@ -237,6 +238,9 @@ public class Model {
             return false; //Check for out of bounds
         }
 
+        //check if ball occupy's the tile
+        if (containsBall(xCoord, ycoord, width, height)) return false;
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (grid[xCoord + i][ycoord + j] == true) { // Check that all tiles are free
@@ -251,6 +255,31 @@ public class Model {
         }
         gizmos.add(gizmo);
         return true;
+    }
+
+    public boolean containsBall(int x, int y, int width, int height) {
+        for(int i = 0; i < balls.size(); i++) {
+            Ball b = balls.get(i);
+            double bx = b.getExactX();
+            double by = b.getExactY();
+            double r = b.getRadius();
+            for (int j = 0; j < width; j++) {
+                for (int k = 0; k < height; k++) {
+                    if (((int)bx) == x+j && ((int)by) == y+k) {
+                        return true;
+                    } else if ((int)(bx+r) == x+j && (int)(by+r) == y+k) {
+                        return true;
+                    } else if ((int)(bx+r) == x+j && (int)(by-r) == y+k) {
+                        return true;
+                    } else if ((int)(bx-r) == x+j && (int)(by+r) == y+k) {
+                        return true;
+                    } else if ((int)(bx-r) == x+j && (int)(by-r) == y+k) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public StandardGizmo getGizmo(int x, int y) {
@@ -310,27 +339,7 @@ public class Model {
         }
 
         //check if ball occupy's the tile
-        for(int i = 0; i < balls.size(); i++) {
-            Ball b = balls.get(i);
-            double bx = b.getExactX();
-            double by = b.getExactY();
-            double r = b.getRadius();
-            for (int j = 0; j < width; j++) {
-                for (int k = 0; k < height; k++) {
-                    if (((int)bx) == x+j && ((int)by) == y+j) {
-                        return false;
-                    } else if ((int)(bx+r) == x+j && (int)(by+r) == y+j) {
-                        return false;
-                    } else if ((int)(bx+r) == x+j && (int)(by-r) == y+j) {
-                        return false;
-                    } else if ((int)(bx-r) == x+j && (int)(by+r) == y+j) {
-                        return false;
-                    } else if ((int)(bx-r) == x+j && (int)(by-r) == y+j) {
-                        return false;
-                    }
-                }
-            }
-        }
+        if (containsBall(x, y, width, height)) return false;
 
        // Remove original coordinates from grid
         for (int i = 0; i < width; i++) {
