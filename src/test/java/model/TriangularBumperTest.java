@@ -50,7 +50,8 @@ public class TriangularBumperTest {
 
     @Test
     public void testGetCenter(){
-        assertTrue(gizmo.getCollider().center.equals(new Vect(0.5, 0.5)));
+        System.out.println("edge: " + gizmo.edgeLength);
+        assertTrue(gizmo.getCollider().center.equals(new Vect(1/2, 1/2)));
     }
 
     @Test
