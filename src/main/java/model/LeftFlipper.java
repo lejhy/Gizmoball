@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LeftFlipper extends StandardGizmo {
     private final double radius = edgeLength/4.0;
-    private final double angularVelocity = Math.toRadians(1080);
+    private final double angularVelocity = -Math.toRadians(1080);
     private boolean isRotating;
     private Angle flipperRotation;
 
@@ -49,8 +49,19 @@ public class LeftFlipper extends StandardGizmo {
         List<Circle> circles = getCircles();
         Vect rotationPivot = new Vect(x+edgeLength, y+edgeLength);
         Vect center = new Vect(x + radius, y + radius).rotateBy(rotation, rotationPivot);
-        double angVelocity = isRotating() ? angularVelocity : 0;
-        return new Collider(lines, circles, center, -angVelocity, Vect.ZERO);
+
+        double angVelocity;
+        if (isRotating()) {
+            if (isTriggered()) {
+                angVelocity = angularVelocity;
+            } else {
+                angVelocity = -angularVelocity;
+            }
+        } else {
+            angVelocity = 0;
+        }
+
+        return new Collider(lines, circles, center, angVelocity, Vect.ZERO);
     }
 
     @Override
@@ -64,10 +75,10 @@ public class LeftFlipper extends StandardGizmo {
 	@Override
     public void update(double deltaT) {
         if (triggered) {
-            Angle angle = new Angle(-angularVelocity * deltaT);
+            Angle angle = new Angle(angularVelocity * deltaT);
             flipperRotate(angle);
         } else {
-            Angle angle = new Angle(angularVelocity * deltaT);
+            Angle angle = new Angle(-angularVelocity * deltaT);
             flipperRotate(angle);
         }
     }
