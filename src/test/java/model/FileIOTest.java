@@ -29,12 +29,12 @@ public class FileIOTest {
         assertEquals(filePath, fileInOut.getFilePath());
     }
 
-   /* @Test
+    @Test
     public void loadFromExistingFile() throws Exception {
         fileInOut.setFilePath(filePath);
         Model newModel = fileInOut.loadFromFile();
         assertEquals(newModel.getGizmos().size(), 35);
-    }*/
+    }
 
     /* gizmos have wrong coordinates */
     @Test
@@ -44,8 +44,8 @@ public class FileIOTest {
     }
 
     // Note: different exception catching doesn't work
-    @Test  (expected = RuntimeException.class)
-    public void loadFromFileWithWrongConnects() throws Exception {
+    @Test
+    public void loadFromFileWithWrongConnects() throws  Exception{
         fileInOut.setFilePath("src/wrongConnects");
         fileInOut.loadFromFile();
     }
@@ -104,6 +104,7 @@ public class FileIOTest {
         model.setFilePath("fakeDirectory/notAFilePath.fakeExtension");
         model.saveToFile();
         exception.expect(FileNotFoundException.class);
+
     }
 
 

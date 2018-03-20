@@ -419,7 +419,6 @@ public class ModelTest {
 
         assertTrue(gizmo1.isTriggered());
 
-        assertFalse(gizmo.addGizmoTrigger(gizmo));
         assertFalse(gizmo.removeGizmoTrigger(gizmo));
     }
 

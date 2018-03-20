@@ -90,7 +90,7 @@ public class FileIO {
         }
     }
 
-    public Model loadFromFile() throws IOException {
+    public Model loadFromFile(){
 
         try {
             FileReader fr = new FileReader(filePath);

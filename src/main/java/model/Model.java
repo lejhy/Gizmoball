@@ -425,7 +425,7 @@ public class Model {
 
         try {
             fileInOut.loadFromFile();
-        } catch(IOException e) {
+        } catch(Exception e) {
             System.out.println("File not found.");
         }
     }
