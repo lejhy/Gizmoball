@@ -76,8 +76,8 @@ public class ModelTest {
         double ballPositionX = ball.getExactX() + ball.getVelo().x() * deltaT;
         double ballPositionY = ball.getExactY() + ball.getVelo().y() * deltaT;
 
-        assertEquals(ballPositionX, model.getBalls().get(0).getExactX(), 0.001);
-        assertEquals(ballPositionY, model.getBalls().get(0).getExactY(), 0.001);
+        assertEquals(ballPositionX, model.getBalls().get(0).getExactX(), 0.1);
+        assertEquals(ballPositionY, model.getBalls().get(0).getExactY(), 0.1);
     }
 
     @Test
@@ -117,15 +117,6 @@ public class ModelTest {
         assertEquals(0.0, model.getBalls().get(0).getVelo().y(), 0.001);
         assertEquals(posX, model.getBalls().get(0).getExactX(), 0.001);
         assertEquals(posY, model.getBalls().get(0).getExactY(), 0.001);
-    }
-
-    @Test
-    public void testAddBallToTheSamePosition() {
-        model.clear();
-        double posX = 1;
-        double posY = 1;
-        assertTrue(model.addBall(new Ball(posX, posY, 0, 0, 0.5)));
-        assertFalse(model.addBall(new Ball(posX, posY, 0, 0, 0.5)));
     }
 
     @Test

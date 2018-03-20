@@ -103,6 +103,7 @@ public class FlippersTest {
         model.tick(60);
         model.tick(60);
         model.tick(60);
+        model.tick(60);
         
         assertNotEquals((int)model.getBalls().get(0).getExactX() , 16);
 
