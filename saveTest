@@ -1,0 +1,21 @@
+Square S0 0 0
+Square S1 1 1
+Circle C2 10 10
+Triangle T3 15 0
+Rotate T3
+Rotate T3
+Rotate T3
+RightFlipper RF4 0 15
+Rotate RF4
+Rotate RF4
+Rotate RF4
+LeftFlipper LF5 3 3
+Rotate LF5
+Rotate LF5
+Rotate LF5
+Connect S0 S1
+KeyConnect key 34 down S0
+KeyConnect key 34 up S0
+Ball B 2.0 4.0 0.0 0.0
+Gravity 25.0
+Friction 0.025 0.025

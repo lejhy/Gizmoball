@@ -74,7 +74,7 @@ public class DisconnectMouseEventHandler extends BoardEventHandler {
                         clear();
                     }
                 } else {
-                    keyToBeRemoved = event.getCode().impl_getCode();
+                    keyToBeRemoved = event.getCode().getCode();
                     keyToBeRemovedChar = event.getCode().getName();
                     textOutput.setText("Press UP_ARROW key to disconnect key release, DOWN_ARROW key to disconnect key press");
                 }

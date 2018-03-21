@@ -129,7 +129,7 @@ public class Model {
             if (collider.getAngVelocity() == 0) {
                 for (LineSegment line : collider.getLines()) {
                     time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
-                    if (time < shortestTime) {
+                    if (time <= shortestTime) {
                         shortestTime = time;
                         newVelo = Geometry.reflectWall(line, ballVelocity, 1.0);
                         colidingGizmo = gizmo;
@@ -137,7 +137,7 @@ public class Model {
                 }
                 for (Circle circle : collider.getCircles()) {
                     time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
-                    if (time < shortestTime) {
+                    if (time <= shortestTime) {
                         shortestTime = time;
                         newVelo = Geometry.reflectCircle(circle.getCenter(), ballCenter, ballVelocity, 1.0);
                         colidingGizmo = gizmo;
@@ -146,7 +146,7 @@ public class Model {
             } else {
                 for (LineSegment line : collider.getLines()) {
                     time = Geometry.timeUntilRotatingWallCollision(line, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity);
-                    if (time < shortestTime) {
+                    if (time <= shortestTime) {
                         shortestTime = time;
                         newVelo = Geometry.reflectRotatingWall(line, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0.1);
                         colidingGizmo = gizmo;
@@ -154,9 +154,8 @@ public class Model {
                 }
                 for (Circle circle : collider.getCircles()) {
                     time = Geometry.timeUntilRotatingCircleCollision(circle, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity);
-                    if (time < shortestTime) {
+                    if (time <= shortestTime) {
                         shortestTime = time;
-                        System.out.println(shortestTime);
                         newVelo = Geometry.reflectRotatingCircle(circle, collider.getCenter(), collider.getAngVelocity(), ballCircle, ballVelocity, 0.1);
                         colidingGizmo = gizmo;
                     }
@@ -237,9 +236,6 @@ public class Model {
         if (xCoord < 0 || ycoord < 0 || xCoord+width > grid.length || ycoord+height > grid[0].length) {
             return false; //Check for out of bounds
         }
-
-        //check if ball occupy's the tile
-        if (containsBall(xCoord, ycoord, width, height)) return false;
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -337,9 +333,6 @@ public class Model {
         if (x < 0 || y < 0 || x+width > grid.length || y+height > grid[0].length) {
             return false; //Check for out of bounds
         }
-
-        //check if ball occupy's the tile
-        if (containsBall(x, y, width, height)) return false;
 
        // Remove original coordinates from grid
         for (int i = 0; i < width; i++) {
