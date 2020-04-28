@@ -92,5 +92,6 @@ Triangle T37 18 2
 Rotate T37
 Rotate T37
 Absorber A38 0 19 20 20
-KeyConnect key 127 down A38
+KeyConnect key Space down A38
 Ball B 19.5 19.5 0.0 -4.784902171261082
+Gravity 0.0

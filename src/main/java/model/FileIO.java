@@ -1,15 +1,10 @@
 package model;
 
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import physics.Angle;
-import physics.Circle;
-import physics.LineSegment;
 
 import java.io.*;
 import java.util.*;
-
-import static model.StandardGizmo.Type.*;
 
 public class FileIO {
     private String filePath = "";
@@ -58,20 +53,20 @@ public class FileIO {
                 }
             }
             // Key down connects
-            Map<Integer, Set<StandardGizmo>> keyDowns = model.getKeyDownTriggers();
-            for (Integer key : keyDowns.keySet()) {
+            Map<KeyCode, Set<StandardGizmo>> keyDowns = model.getKeyDownTriggers();
+            for (KeyCode key : keyDowns.keySet()) {
                 Set<StandardGizmo> currentKeyGizmos = keyDowns.get(key);
                 for (StandardGizmo gizmo : currentKeyGizmos) {
-                    writer.write("KeyConnect key " + key + " down " + gizmos.get(gizmo));
+                    writer.write("KeyConnect key " + key.getName() + " down " + gizmos.get(gizmo));
                     writer.write("\n");
                 }
             }
             // Key up connects
-            Map<Integer, Set<StandardGizmo>> keyUps = model.getKeyUpTriggers();
-            for (Integer key : keyUps.keySet()) {
+            Map<KeyCode, Set<StandardGizmo>> keyUps = model.getKeyUpTriggers();
+            for (KeyCode key : keyUps.keySet()) {
                 Set<StandardGizmo> currentKeyGizmos = keyUps.get(key);
                 for (StandardGizmo gizmo : currentKeyGizmos) {
-                    writer.write("KeyConnect key " + key + " up " + gizmos.get(gizmo));
+                    writer.write("KeyConnect key " + key.getName() + " up " + gizmos.get(gizmo));
                     writer.write("\n");
                 }
             }
@@ -160,9 +155,9 @@ public class FileIO {
 
                     case "KeyConnect":
                         if (tokens[3].equals("down")) {
-                            model.addKeyDown(Integer.parseInt(tokens[2]), gizmos.get(tokens[4]));
+                            model.addKeyDown(KeyCode.getKeyCode(tokens[2]), gizmos.get(tokens[4]));
                         } else if (tokens[3].equals("up")) {
-                            model.addKeyUp(Integer.parseInt(tokens[2]), gizmos.get(tokens[4]));
+                            model.addKeyUp(KeyCode.getKeyCode(tokens[2]), gizmos.get(tokens[4]));
                         } else {
                             throw new RuntimeException("Corrupted Save File");
                         }
@@ -200,6 +195,7 @@ public class FileIO {
             }
         } catch (RuntimeException e) {
             System.out.println("ERROR: File may be too large or invalid.");
+            System.out.println(e);
         } catch (IOException e) {
             System.out.println("ERROR: Invalid file.");
         }

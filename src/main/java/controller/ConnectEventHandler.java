@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -9,24 +8,21 @@ import model.Model;
 import model.StandardGizmo;
 import view.Board;
 
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
-
-public class ConnectMouseEventHandler extends BoardEventHandler {
+public class ConnectEventHandler extends BoardEventHandler {
 
     private Model model;
     private view.Board board;
     private StandardGizmo gizmoToBeConnected;
-    private Integer keyToBeAssigned;
-    private String keyToBeAssignedChar;
+    private KeyCode keyToBeAssigned;
     private Label textOutput;
     private boolean gizmoSet = false;
 
-    public ConnectMouseEventHandler(Model model, Board board, Label textOutput) {
+    public ConnectEventHandler(Model model, Board board, Label textOutput) {
         this.model = model;
         this.board = board;
         this.textOutput = textOutput;
         gizmoToBeConnected = null;
-        keyToBeAssigned = -1;
+        keyToBeAssigned = null;
         textOutput.setText("Click on a gizmo you want to connect...");
     }
 
@@ -57,7 +53,7 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
     public void handle(KeyEvent event) {
         if (gizmoToBeConnected != null) {
             if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-                if (keyToBeAssigned >= 0) {
+                if (keyToBeAssigned != null) {
                     if (event.getCode() == KeyCode.DOWN) {
                         if (model.addKeyDown(keyToBeAssigned, gizmoToBeConnected)) {
                             textOutput.setText("Successfully connected: " + "key DOWN: " + keyToBeAssigned);
@@ -76,8 +72,7 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
                         System.out.println(event.isShortcutDown());
                     }
                 } else {
-                    keyToBeAssigned = event.getCode().getCode();
-                    keyToBeAssignedChar = event.getCode().getName();
+                    keyToBeAssigned = event.getCode();
                     textOutput.setText("Press UP_ARROW key to connect key release, DOWN_ARROW key to connect key press");
                 }
             }
@@ -87,6 +82,6 @@ public class ConnectMouseEventHandler extends BoardEventHandler {
 
     public void clear() {
         gizmoToBeConnected = null;;
-        keyToBeAssigned = -1;
+        keyToBeAssigned = null;
     }
 }

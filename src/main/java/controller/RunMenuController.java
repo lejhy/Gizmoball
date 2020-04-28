@@ -82,9 +82,9 @@ public class RunMenuController {
     private void propagateKeyEvents() {
         root.addEventFilter(KeyEvent.ANY, e->{
             if (e.getEventType() == KeyEvent.KEY_PRESSED) {
-                model.handleKeyDown(e.getCode().getCode());
+                model.handleKeyDown(e.getCode());
             } else if (e.getEventType() == KeyEvent.KEY_RELEASED) {
-                model.handleKeyUp(e.getCode().getCode());
+                model.handleKeyUp(e.getCode());
             } else {
                 // ignore
             }

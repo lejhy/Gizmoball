@@ -3,13 +3,12 @@ package model;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.scene.input.KeyCode;
 import physics.Circle;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
-import java.io.IOException;
-import java.rmi.StubNotFoundException;
 import java.util.*;
 
 public class Model {
@@ -19,9 +18,9 @@ public class Model {
     private List<Ball> balls;
     private Walls walls;
     public static ArrayList<StandardGizmo> gizmos;
-    private static Map<Integer, Set<StandardGizmo>> keyDownTriggers; //allows gizmos lookup based on key down events
-    private static Map<Integer, Set<StandardGizmo>> keyUpTriggers; //allows gizmos lookup based on key up events
-    private static List<Integer> waitingForKeyUp; //list of key down events without corresponding key up events
+    private static Map<KeyCode, Set<StandardGizmo>> keyDownTriggers; //allows gizmos lookup based on key down events
+    private static Map<KeyCode, Set<StandardGizmo>> keyUpTriggers; //allows gizmos lookup based on key up events
+    private static List<KeyCode> waitingForKeyUp; //list of key down events without corresponding key up events
 
     // friction coefficients
     private DoubleProperty mu1 = new SimpleDoubleProperty(0.025); // per second
@@ -431,15 +430,15 @@ public class Model {
         fileInOut.setFilePath(s);
     }
 
-    public boolean addKeyDown(Integer keyCode, StandardGizmo gizmo) {
+    public boolean addKeyDown(KeyCode keyCode, StandardGizmo gizmo) {
         return addKey(keyCode, gizmo, keyDownTriggers);
     }
 
-    public boolean addKeyUp(Integer keyCode, StandardGizmo gizmo) {
+    public boolean addKeyUp(KeyCode keyCode, StandardGizmo gizmo) {
         return addKey(keyCode, gizmo, keyUpTriggers);
     }
 
-    private boolean addKey(Integer keyCode, StandardGizmo gizmo, Map<Integer, Set<StandardGizmo>> keyTriggers) {
+    private boolean addKey(KeyCode keyCode, StandardGizmo gizmo, Map<KeyCode, Set<StandardGizmo>> keyTriggers) {
         Set<StandardGizmo> gizmos = keyTriggers.get(keyCode);
         if (gizmos != null) {
             return gizmos.add(gizmo);
@@ -451,19 +450,19 @@ public class Model {
         }
     }
 
-    public Map<Integer, Set<StandardGizmo>> getKeyDownTriggers() {return keyDownTriggers; }
+    public Map<KeyCode, Set<StandardGizmo>> getKeyDownTriggers() {return keyDownTriggers; }
 
-    public Map<Integer, Set<StandardGizmo>> getKeyUpTriggers() {return keyUpTriggers; }
+    public Map<KeyCode, Set<StandardGizmo>> getKeyUpTriggers() {return keyUpTriggers; }
 
-    public boolean removeKeyUp(Integer keyCode, StandardGizmo gizmo){
+    public boolean removeKeyUp(KeyCode keyCode, StandardGizmo gizmo){
         return removeKey(keyCode, gizmo, keyUpTriggers);
     }
 
-    public boolean removeKeyDown(Integer keyCode, StandardGizmo gizmo){
+    public boolean removeKeyDown(KeyCode keyCode, StandardGizmo gizmo){
         return removeKey(keyCode, gizmo, keyDownTriggers);
     }
 
-    private boolean removeKey(Integer keyCode, StandardGizmo gizmo, Map<Integer, Set<StandardGizmo>> keyTriggers){
+    private boolean removeKey(KeyCode keyCode, StandardGizmo gizmo, Map<KeyCode, Set<StandardGizmo>> keyTriggers){
         Set<StandardGizmo> gizmos = keyTriggers.get(keyCode);
         if (gizmos != null) {
             return gizmos.remove(gizmo);
@@ -471,19 +470,19 @@ public class Model {
         return false;
     }
 
-    public void handleKeyDown(Integer keyCode) {
+    public void handleKeyDown(KeyCode keyCode) {
         if(!waitingForKeyUp.contains(keyCode)) {
             waitingForKeyUp.add(keyCode);
             handleKey(keyCode, keyDownTriggers);
         }
     }
 
-    public void handleKeyUp(Integer keyCode) {
+    public void handleKeyUp(KeyCode keyCode) {
         waitingForKeyUp.remove(keyCode);
         handleKey(keyCode, keyUpTriggers);
     }
 
-    private void handleKey(Integer keyCode, Map<Integer, Set<StandardGizmo>> keyTriggers) {
+    private void handleKey(KeyCode keyCode, Map<KeyCode, Set<StandardGizmo>> keyTriggers) {
         Set <StandardGizmo> gizmos = keyTriggers.get(keyCode);
         if (gizmos != null) {
             for (StandardGizmo gizmo : gizmos) {

@@ -74,11 +74,11 @@ BuildMenuController {
 
     private void propagateKeyEvents() {
         buildRoot.addEventFilter(KeyEvent.ANY, e -> {
-            if (currentBoardMouseEventHandler instanceof ConnectMouseEventHandler) {
-                ((ConnectMouseEventHandler) currentBoardMouseEventHandler).handle(e);
+            if (currentBoardMouseEventHandler instanceof ConnectEventHandler) {
+                ((ConnectEventHandler) currentBoardMouseEventHandler).handle(e);
                 e.consume();
-            } else if (currentBoardMouseEventHandler instanceof DisconnectMouseEventHandler) {
-                ((DisconnectMouseEventHandler) currentBoardMouseEventHandler).handle(e);
+            } else if (currentBoardMouseEventHandler instanceof DisconnectEventHandler) {
+                ((DisconnectEventHandler) currentBoardMouseEventHandler).handle(e);
                 e.consume();
             }
         });
@@ -162,10 +162,10 @@ BuildMenuController {
     }
 
     @FXML
-    public void onConnectButtonClicked() { swapBoardMouseEventHandler(new ConnectMouseEventHandler(model, board, textOutput)); }
+    public void onConnectButtonClicked() { swapBoardMouseEventHandler(new ConnectEventHandler(model, board, textOutput)); }
 
     @FXML
-    public void onDisconnectButtonClicked() { swapBoardMouseEventHandler(new DisconnectMouseEventHandler(model, board, textOutput)); }
+    public void onDisconnectButtonClicked() { swapBoardMouseEventHandler(new DisconnectEventHandler(model, board, textOutput)); }
 
     @FXML
     public void onDeleteButtonClicked() {

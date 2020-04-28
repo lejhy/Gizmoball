@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -9,24 +8,21 @@ import model.Model;
 import model.StandardGizmo;
 import view.Board;
 
-import java.security.Key;
-
-public class DisconnectMouseEventHandler extends BoardEventHandler {
+public class DisconnectEventHandler extends BoardEventHandler {
 
     private Model model;
     private Board board;
     private StandardGizmo gizmoToBeDisconnected;
-    private int keyToBeRemoved;
-    private String keyToBeRemovedChar;
+    private KeyCode keyToBeRemoved;
     private Label textOutput;
     private boolean gizmoSet = false;
 
-    public DisconnectMouseEventHandler(Model model, Board board, Label textOutput) {
+    public DisconnectEventHandler(Model model, Board board, Label textOutput) {
         this.model = model;
         this.board = board;
         this.textOutput = textOutput;
         gizmoToBeDisconnected = null;
-        keyToBeRemoved = -1;
+        keyToBeRemoved = null;
         textOutput.setText("Click on a gizmo you want to disconnect...");
     }
 
@@ -57,25 +53,24 @@ public class DisconnectMouseEventHandler extends BoardEventHandler {
     public void handle(KeyEvent event) {
         if (gizmoToBeDisconnected != null) {
             if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-                if (keyToBeRemoved >= 0) {
+                if (keyToBeRemoved != null) {
                     if (event.getCode() == KeyCode.DOWN) {
                         if (model.removeKeyDown(keyToBeRemoved, gizmoToBeDisconnected)) {
-                            textOutput.setText("Successfully disconnected: " + "key DOWN: " + keyToBeRemovedChar);
+                            textOutput.setText("Successfully disconnected: " + "key DOWN: " + keyToBeRemoved);
                         } else {
-                            textOutput.setText("No connection found for: " + "key DOWN: " + keyToBeRemovedChar);
+                            textOutput.setText("No connection found for: " + "key DOWN: " + keyToBeRemoved);
                         }
                         clear();
                     } else if (event.getCode() == KeyCode.UP) {
                         if (model.removeKeyUp(keyToBeRemoved, gizmoToBeDisconnected)) {
-                            textOutput.setText("Successfully disconnected: " + "key UP: " + keyToBeRemovedChar);
+                            textOutput.setText("Successfully disconnected: " + "key UP: " + keyToBeRemoved);
                         } else {
-                            textOutput.setText("No connection found for: " + "key UP: " + keyToBeRemovedChar);
+                            textOutput.setText("No connection found for: " + "key UP: " + keyToBeRemoved);
                         }
                         clear();
                     }
                 } else {
-                    keyToBeRemoved = event.getCode().getCode();
-                    keyToBeRemovedChar = event.getCode().getName();
+                    keyToBeRemoved = event.getCode();
                     textOutput.setText("Press UP_ARROW key to disconnect key release, DOWN_ARROW key to disconnect key press");
                 }
             }
@@ -84,6 +79,6 @@ public class DisconnectMouseEventHandler extends BoardEventHandler {
 
     public void clear() {
         gizmoToBeDisconnected = null;;
-        keyToBeRemoved = -1;
+        keyToBeRemoved = null;
     }
 }
