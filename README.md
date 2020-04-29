@@ -1,6 +1,6 @@
 # Gizmoball
 
-An implementation of a university 3rd year group coursework assignment, a sandbox Pinball like game with an editor.
+An implementation of a 3rd year group coursework assignment at Strathclyde, a sandbox Pinball like game with an editor.
 
 ## Features
 * Cool physics engine
@@ -14,9 +14,3 @@ An implementation of a university 3rd year group coursework assignment, a sandbo
 
 ![gameplay](screenshots/gameplay.gif)
 ![editor](screenshots/editor.gif)
-
-## Screenshots
-
-![screenshot0](screenshots/img_000.PNG)
-![screenshot1](screenshots/img_001.PNG)
-![screenshot2](screenshots/img_002.PNG)
