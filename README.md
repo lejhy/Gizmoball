@@ -12,11 +12,11 @@ An implementation of a university 3rd year group coursework assignment, a sandbo
 
 ## Gifs
 
-![screenshot1](screenshots/gameplay.gif)
-![screenshot1](screenshots/editor.gif)
+![gameplay](screenshots/gameplay.gif)
+![editor](screenshots/editor.gif)
 
 ## Screenshots
 
-![screenshot1](screenshots/img_000.PNG)
+![screenshot0](screenshots/img_000.PNG)
 ![screenshot1](screenshots/img_001.PNG)
-![screenshot1](screenshots/img_002.PNG)
+![screenshot2](screenshots/img_002.PNG)
